@@ -1,0 +1,10 @@
+network:
+  wifi:
+    state: off
+    ssid: None
+    password: None
+  eth0:
+    mode: static
+    ip: 192.168.42.11
+    mask: 255.255.255.0
+    gateway: None
