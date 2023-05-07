@@ -19,7 +19,11 @@
 import yaml
 
 
-def network_configurator():
+def form_network_settings() -> str:
+    """
+
+    :return:
+    """
     ETH0_DHCP_STRING = "auto eth0\n   iface eth0 inet dhcp"
     ETH0_CONN_SETTINGS_STRING = ""
     WIFI_CONN_SETTINGS_STRING = ""
@@ -65,9 +69,20 @@ def network_configurator():
     return network_settings
 
 
+def write_network_configs(network_conf: str) -> None:
+    """
+
+    :param network_conf:
+    :return:
+    """
+    network_configs = network_conf
+    with open("C:/wk/korobka/interface_test", "w") as f:
+        f.write(network_configs)
+
+
 def test():
-    n = network_configurator()
-    print(n)
+    n = form_network_settings()
+    write_network_configs(n)
 
 
 if __name__ == "__main__":
