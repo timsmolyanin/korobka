@@ -1,3 +1,4 @@
+#!/root/wk/py392/bin/python
 
 """
 Настройки ethernet порта:
@@ -17,16 +18,20 @@
 """
 
 import yaml
-
+import subprocess as p
 
 def form_network_settings() -> str:
     """
 
     :return:
     """
+
     ETH0_DHCP_STRING = "auto eth0\n   iface eth0 inet dhcp"
     ETH0_CONN_SETTINGS_STRING = ""
     WIFI_CONN_SETTINGS_STRING = ""
+
+    template = "# /etc/network/interfaces -- configuration file for ifup(8), ifdown(8)\n\n" \
+               "# The loopback interface\nauto lo\niface lo inet loopback"
 
     with open("config.yaml") as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
@@ -62,27 +67,37 @@ def form_network_settings() -> str:
 
     # print(ETH0_CONN_SETTINGS_STRING)
 
-    with open("C:/wk/korobka/network_config_template", "r") as f:
-        template = f.read()
-
     network_settings = f"{template}{WIFI_CONN_SETTINGS_STRING}\n\n{ETH0_CONN_SETTINGS_STRING}"
     return network_settings
 
 
-def write_network_configs(network_conf: str) -> None:
+def write_network_configs(network_conf: str, path: str) -> None:
     """
 
+    :param path:
     :param network_conf:
     :return:
     """
     network_configs = network_conf
-    with open("C:/wk/korobka/interface_test", "w") as f:
+    with open(path, "w") as f:
         f.write(network_configs)
 
 
 def test():
     n = form_network_settings()
-    write_network_configs(n)
+    # print(n)
+    # создаем бэкап файл прежней конфигурации
+    p.run(["cp", "/etc/network/interfaces", "/etc/network/interfaces.backup"])
+
+    # удаляем файл со старой конфигурацией
+    p.run(["rm", "/etc/network/interfaces"])
+
+    # подсовываем файл с новой конфигой
+    path = "/etc/network/interfaces"
+    write_network_configs(n, path)
+
+    # далее необходимо перезагрузить интерфейсы и как-то проверить, что конфиги приняты
+
 
 
 if __name__ == "__main__":

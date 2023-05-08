@@ -1,8 +1,8 @@
 network:
   wifi:
-    state: off
-    ssid: None
-    password: None
+    state: on
+    ssid: rp-link
+    password: meowkissme
   eth0:
     mode: static
     ip: 192.168.42.11
