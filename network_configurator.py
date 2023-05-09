@@ -26,6 +26,18 @@ import yaml
 import subprocess as p
 
 
+class MyException(Exception):
+    """
+    Надо будет переименовать, возможно в другой файл вынести.
+    В общем чего-то с ним сделать... Здесь он быть не должен
+    """
+    def __init__(self, message):
+        self.message = message
+
+    def __str__(self):
+        return self.message
+
+
 def make_config_backup(file: str) -> list:
     """
     Функция создает резервную копию конфигурационного файла.
@@ -61,8 +73,9 @@ def del_old_network_config(file: str) -> list:
 
 def form_network_settings() -> str:
     """
-
-    :return:
+    Функция формирует строку на основе шаблона и на основе конфига, в котором хранятся введенные пользователем
+    данные для сетевых интерфейсов.
+    :return: тип str, конфиг в виде строки
     """
 
     ETH0_DHCP_STRING = "auto eth0\n   iface eth0 inet dhcp"
@@ -87,8 +100,6 @@ def form_network_settings() -> str:
         WIFI_CONN_SETTINGS_STRING = f"\n# Wireless interfaces wlan0\nauto wlan0\niface wlan0 inet dhcp\n" \
                                     f"   wpa-ssid {wifi_ssid}\n   wpa-psk {wifi_password}"
 
-    # print(WIFI_CONN_SETTINGS_STRING)
-
     # ETHERNET
     eth_mode = eth_configs["mode"]
     if eth_mode == "static":
@@ -97,14 +108,12 @@ def form_network_settings() -> str:
         eth0_gateway = eth_configs["gateway"]
         if eth0_gateway == "None":
             ETH0_CONN_SETTINGS_STRING = f"# Ethernet Port1 eth0\niface eth0 inet static\n   address {eth0_ip}\n" \
-                                f"   netmask {eth0_mask}"
+                                        f"   netmask {eth0_mask}"
         else:
             ETH0_CONN_SETTINGS_STRING = f"# Ethernet Port1 eth0\niface eth0 inet static\n   address {eth0_ip}\n" \
-                                    f"   netmask {eth0_mask}\n   gateway {eth0_gateway}"
+                                        f"   netmask {eth0_mask}\n   gateway {eth0_gateway}"
     elif eth_mode == "dhcp":
         ETH0_CONN_SETTINGS_STRING = ETH0_DHCP_STRING
-
-    # print(ETH0_CONN_SETTINGS_STRING)
 
     network_settings = f"{template}{WIFI_CONN_SETTINGS_STRING}\n\n{ETH0_CONN_SETTINGS_STRING}"
     return network_settings
@@ -144,7 +153,6 @@ def restart_network_interfaces(interface: str) -> list:
 
     cmd = f"ifdown {interface} && sudo ifup {interface}"
     # output = p.Popen(cmd, shell=True, stdout=p.PIPE)
-    # output = p.Popen(cmd, shell=True)
     output = p.run(cmd, shell=True, capture_output=True)
     return_code = output.returncode
     if return_code != 0:
@@ -153,66 +161,62 @@ def restart_network_interfaces(interface: str) -> list:
     return [return_code, error_desc]
 
 
-def test():
-    # orig_conf_file = "/etc/network/interfaces"
-    #
-    # new_conf_file = ""
-    # test_conf_file = "/root/wk/korobka/int"
-    # global_st = 0
-    #
-    # """ 1. Создаем копию конфиги """
-    # print("1. Create copy of orig config")
-    # st = make_config_backup(orig_conf_file)
-    # if st[0] == 0:
-    #     global_st = 0
-    # else:
-    #     global_st = 1
-    #     print(st)
-    #
-    # print("1. done")
-    #
-    # """ 2. Удаляем оригинал """
-    # print("2. Delete orig config")
-    # if global_st == 0:
-    #     st = del_old_network_config(orig_conf_file)
-    #     if st[0] == 0:
-    #         global_st = 0
-    #     else:
-    #         global_st = 1
-    #         print(st)
-    #
-    # print("2. done")
-    #
-    # """ 3. Формируем новый конфиг """
-    # print("3. Forming new config")
-    # if global_st == 0:
-    #     new_conf_file = form_network_settings()
-    #
-    # print("3. done")
-    # print(new_conf_file)
-    # """ 4. Подсовываем файл с новой конфигой """
-    # print("4. Added new config")
-    # st = write_network_configs(new_conf_file, orig_conf_file)
-    # if st == 0:
-    #     global_st = 0
-    # else:
-    #     global_st = 1
-    #     print(st)
-    #
-    # print("4 done")
-    #
-    # """ 5. Рестартуем сетевые интерфейсы """
-    # print("5. Restarting network")
-    # if global_st == 0:
-    #     st = restart_network_interfaces()
-        # print(st)
-    #
-    # print("5 done")
+def change_network_interface_config():
+    """
+    Функция осущетсвляет последовательный вызов функций и генерирует исключения, если какая-либо
+    из функций выполнилась с ошибкой. Соответсовенно, если одна из функций похерила последовтельность, то мы
+    свалимся в исключение и последующие функции не будут вызваны.
+    :return:
+    """
+    orig_conf_file = "/etc/network/interfaces"
+    new_conf_file = ""
+    status = 0  # for status of how functions work
 
-    print("RESTART wlan0")
-    st = restart_network_interfaces("wlan2")
-    print(st)
+    test_conf_file = "/root/wk/korobka/int"  # for testing
+
+    """ 1. Создаем копию конфиги """
+    print("1. Create copy of orig config")
+    arg = make_config_backup(test_conf_file)
+    status = bool(arg[0])
+    desc = arg[1].decode("utf-8")
+    if status:
+        raise MyException(f"No copy of the configuration was made. Reasons: {desc}")
+    print("1. done")
+
+    """ 2. Удаляем оригинал """
+    print("2. Delete orig config")
+    arg = del_old_network_config(orig_conf_file)
+    status = bool(arg[0])
+    desc = arg[1].decode("utf-8")
+    if status:
+        raise MyException(f"Delete operation of the original configuration was not made. Reasons: {desc}")
+    print("2. done")
+
+    """ 3. Формируем новый конфиг """
+    print("3. Forming new config")
+    new_conf_file = form_network_settings()
+    print("3. done")
+
+    """ 4. Подсовываем файл с новой конфигой """
+    print("4. Added new config")
+    arg = write_network_configs(new_conf_file, orig_conf_file)
+    status = bool(arg[0])
+    desc = arg[1].decode("utf-8")
+    if status:
+        raise MyException(f"Added operation of the new configuration was not made. Reasons: {desc}")
+    print("4 done")
+
+    """ 5. Рестартуем сетевые интерфейсы """
+    print("5. Restarting network")
+    for interface in ["wlan0", "eth0"]:
+        arg = restart_network_interfaces(interface)
+        status = bool(arg[0])
+        desc = arg[1].decode("utf-8")
+        if status:
+            raise MyException(f"Added operation of the new configuration was not made. Reasons: {desc}")
+    print("5 done")
 
 
+# for testing
 if __name__ == "__main__":
-    test()
+    change_network_interface_config()
