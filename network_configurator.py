@@ -70,7 +70,7 @@ def form_network_settings() -> str:
     WIFI_CONN_SETTINGS_STRING = ""
 
     template = "# /etc/network/interfaces -- configuration file for ifup(8), ifdown(8)\n\n" \
-               "# The loopback interface\nauto lo\niface lo inet loopback"
+               "# The loopback interface\nauto lo\niface lo inet loopback\n"
 
     with open("config.yaml") as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
@@ -84,7 +84,7 @@ def form_network_settings() -> str:
     else:
         wifi_ssid = wifi_configs["ssid"]
         wifi_password = wifi_configs["password"]
-        WIFI_CONN_SETTINGS_STRING = f"# Wireless interfaces wlan0\nauto wlan0\niface wlan0 inet dhcp\n" \
+        WIFI_CONN_SETTINGS_STRING = f"\n# Wireless interfaces wlan0\nauto wlan0\niface wlan0 inet dhcp\n" \
                                     f"   wpa-ssid {wifi_ssid}\n   wpa-psk {wifi_password}"
 
     # print(WIFI_CONN_SETTINGS_STRING)
@@ -131,44 +131,81 @@ def write_network_configs(network_conf: str, path: str) -> list:
     return [return_code, error_desc]
 
 
+def restart_network_interfaces() -> list:
+    """
+    Function is restarting NetworkManager process to accepting configs which has been wrote
+    systemctl restart NetworkManager
+    :return: тип list, код операции (0-успех, 1-ошибка) и описание ошибки (понадобится для логов)
+    """
+    return_code = 0
+    error_desc = ""
+
+    cmd = "ifdown wlan0 && sudo ifup wlan0"
+    output = p.Popen(cmd, shell=True, stdout=p.PIPE)
+    print(output)
+
+    return [return_code, error_desc]
+
+
 def test():
-    orig_conf_file = "/etc/network/interfaces"
-
-    new_conf_file = ""
-    test_conf_file = "/root/wk/korobka/int"
-    global_st = 0
-
-    """ 1. Создаем копию конфиги """
-    st = make_config_backup(test_conf_file)
-    if st[0] == 0:
-        global_st = 0
-    else:
-        global_st = 1
-        print(st)
-
-    """ 2. Удаляем оригинал """
-    if global_st == 0:
-        st = del_old_network_config(test_conf_file)
-        if st[0] == 0:
-            global_st = 0
-        else:
-            global_st = 1
-            print(st)
-
-    """ 3. Формируем новый конфиг """
-    if global_st == 0:
-        new_conf_file = form_network_settings()
-
-    """ 4. Подсовываем файл с новой конфигой """
-    st = write_network_configs(new_conf_file, test_conf_file)
-    if st == 0:
-        global_st = 0
-    else:
-        global_st = 1
-        print(st)
-
-    """ 5. Рестартуем сетевые интерфейсы """
+    # orig_conf_file = "/etc/network/interfaces"
+    #
+    # new_conf_file = ""
+    # test_conf_file = "/root/wk/korobka/int"
+    # global_st = 0
+    #
+    # """ 1. Создаем копию конфиги """
+    # print("1. Create copy of orig config")
+    # st = make_config_backup(orig_conf_file)
+    # if st[0] == 0:
+    #     global_st = 0
+    # else:
+    #     global_st = 1
+    #     print(st)
+    #
+    # print("1. done")
+    #
+    # """ 2. Удаляем оригинал """
+    # print("2. Delete orig config")
     # if global_st == 0:
+    #     st = del_old_network_config(orig_conf_file)
+    #     if st[0] == 0:
+    #         global_st = 0
+    #     else:
+    #         global_st = 1
+    #         print(st)
+    #
+    # print("2. done")
+    #
+    # """ 3. Формируем новый конфиг """
+    # print("3. Forming new config")
+    # if global_st == 0:
+    #     new_conf_file = form_network_settings()
+    #
+    # print("3. done")
+    # print(new_conf_file)
+    # """ 4. Подсовываем файл с новой конфигой """
+    # print("4. Added new config")
+    # st = write_network_configs(new_conf_file, orig_conf_file)
+    # if st == 0:
+    #     global_st = 0
+    # else:
+    #     global_st = 1
+    #     print(st)
+    #
+    # print("4 done")
+    #
+    # """ 5. Рестартуем сетевые интерфейсы """
+    # print("5. Restarting network")
+    # if global_st == 0:
+    #     st = restart_network_interfaces()
+        # print(st)
+    #
+    # print("5 done")
+
+    print("RESTART wlan0")
+    st = restart_network_interfaces()
+    print(st)
 
 
 if __name__ == "__main__":

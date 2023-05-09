@@ -1,7 +1,7 @@
 network:
   wifi:
     state: on
-    ssid: rp-link
+    ssid: Redmi
     password: meowkissme
   eth0:
     mode: static
