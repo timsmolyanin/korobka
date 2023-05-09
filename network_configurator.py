@@ -16,9 +16,11 @@
 
 
 """
+from functools import partial
 
 import yaml
 import subprocess as p
+
 
 def form_network_settings() -> str:
     """
@@ -83,18 +85,41 @@ def write_network_configs(network_conf: str, path: str) -> None:
         f.write(network_configs)
 
 
+def del_old_network_config(file: str) -> list:
+    """
+    Функция удаляет файл, указанный в аргументе.
+    :param file: тип str, абсолютный путь до файла /a/b/c/file
+    :return: list, код операции (0-успех, 1-ошибка) и описание ошибки (понадобится для логов)
+    """
+    return_code = 0
+    error_desc = ""
+    try:
+        output = p.run(["rm", file], capture_output=True)
+        return_code = output.returncode
+        if return_code != 0:
+            error_desc = output.stderr
+    except Exception as exc:
+        print(exc)
+
+    return [return_code, error_desc]
+
+
 def test():
-    n = form_network_settings()
+    # file = "/etc/network/interfaces"
+    test_file = "/root/wk/korobka/int"
+    st = del_old_network_config(test_file)
+    print(st)
+    # n = form_network_settings()
     # print(n)
     # создаем бэкап файл прежней конфигурации
-    p.run(["cp", "/etc/network/interfaces", "/etc/network/interfaces.backup"])
+    # p.run(["cp", "/etc/network/interfaces", "/etc/network/interfaces.backup"])
 
     # удаляем файл со старой конфигурацией
-    p.run(["rm", "/etc/network/interfaces"])
+    # p.run(["rm", "/etc/network/interfaces"])
 
     # подсовываем файл с новой конфигой
-    path = "/etc/network/interfaces"
-    write_network_configs(n, path)
+    # path = "/etc/network/interfaces"
+    # write_network_configs(n, path)
 
     # далее необходимо перезагрузить интерфейсы и как-то проверить, что конфиги приняты
 
