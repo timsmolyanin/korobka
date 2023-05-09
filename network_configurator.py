@@ -131,18 +131,24 @@ def write_network_configs(network_conf: str, path: str) -> list:
     return [return_code, error_desc]
 
 
-def restart_network_interfaces() -> list:
+def restart_network_interfaces(interface: str) -> list:
     """
     Function is restarting NetworkManager process to accepting configs which has been wrote
-    systemctl restart NetworkManager
+    linux cmd: ifdown interfaceName && ifup interfaceName
+    :param interface: тип str, название сетевого интерфейса
     :return: тип list, код операции (0-успех, 1-ошибка) и описание ошибки (понадобится для логов)
     """
+
     return_code = 0
     error_desc = ""
 
-    cmd = "ifdown wlan0 && sudo ifup wlan0"
-    output = p.Popen(cmd, shell=True, stdout=p.PIPE)
-    print(output)
+    cmd = f"ifdown {interface} && sudo ifup {interface}"
+    # output = p.Popen(cmd, shell=True, stdout=p.PIPE)
+    # output = p.Popen(cmd, shell=True)
+    output = p.run(cmd, shell=True, capture_output=True)
+    return_code = output.returncode
+    if return_code != 0:
+        error_desc = output.stderr
 
     return [return_code, error_desc]
 
@@ -204,7 +210,7 @@ def test():
     # print("5 done")
 
     print("RESTART wlan0")
-    st = restart_network_interfaces()
+    st = restart_network_interfaces("wlan2")
     print(st)
 
 
