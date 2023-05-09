@@ -9,17 +9,54 @@
 - login/password
 
 Алгоритм:
-Когда пользователь осуществляет настройку сети, сначала осуществляется запись в
-конфигурационный файл введеных пользователем данных.
-Затем вызывается функция, которая считывает с конфигурационного файла настройки
-и которая записывает введенные настройки в /etc/network/interfaces файл.
-
+Пользователь вводит данные, нажимает ОК или что там будет.
+Введенные данные сохраняются в общй конфигурационный файл config.yaml.
+Затем происходят следующие действия:
+1. Спасаем файл конфигурации "/etc/network/interfaces", создавая его резервную копию "/etc/network/interfaces.backup";
+2. Удаляем оригинал "/etc/network/interfaces";
+3. Формируем новый "/etc/network/interfaces" файл на основе введеных пользователем данных;
+4. Записываем новый конфиг и проверим его наличие;
+5. Если все успешно, то рестартуем сетевые интерфейсы (пока для простоты будут перезагружаться и wi-fi и eth
+независимо от того, что настраивал пользователь), чтобы новый конфиг применился;
+6. Еще бы как-то проверять, что настройки применились и все работает...
 
 """
-from functools import partial
 
 import yaml
 import subprocess as p
+
+
+def make_config_backup(file: str) -> list:
+    """
+    Функция создает резервную копию конфигурационного файла.
+    Копия сохраняется там же, где лежит оригинал, но с расширением ".backup"
+    :param file: тип str, абсолютный путь до спасаемого файла
+    :return: тип list, код операции (0-успех, 1-ошибка) и описание ошибки (понадобится для логов)
+    """
+    return_code = 0
+    error_desc = ""
+    output = p.run(["cp", file, f"{file}.backup"], capture_output=True)
+    return_code = output.returncode
+    if return_code != 0:
+        error_desc = output.stderr
+
+    return [return_code, error_desc]
+
+
+def del_old_network_config(file: str) -> list:
+    """
+    Функция удаляет файл, указанный в аргументе.
+    :param file: тип str, абсолютный путь до удаляемого файла /a/b/c/file
+    :return: тип list, код операции (0-успех, 1-ошибка) и описание ошибки (понадобится для логов)
+    """
+    return_code = 0
+    error_desc = ""
+    output = p.run(["rm", file], capture_output=True)
+    return_code = output.returncode
+    if return_code != 0:
+        error_desc = output.stderr
+
+    return [return_code, error_desc]
 
 
 def form_network_settings() -> str:
@@ -73,56 +110,65 @@ def form_network_settings() -> str:
     return network_settings
 
 
-def write_network_configs(network_conf: str, path: str) -> None:
+def write_network_configs(network_conf: str, path: str) -> list:
     """
+    Сохраняет сформированный текст конфигурации сетевых интерфейсов в файл
 
-    :param path:
-    :param network_conf:
-    :return:
-    """
-    network_configs = network_conf
-    with open(path, "w") as f:
-        f.write(network_configs)
-
-
-def del_old_network_config(file: str) -> list:
-    """
-    Функция удаляет файл, указанный в аргументе.
-    :param file: тип str, абсолютный путь до файла /a/b/c/file
-    :return: list, код операции (0-успех, 1-ошибка) и описание ошибки (понадобится для логов)
+    :param network_conf: тип str, текст конфигурации
+    :param path: тип str, абсолютный путь файла /a/b/c/fileName
+    :return: тип list, код операции (0-успех, 1-ошибка) и описание ошибки (понадобится для логов)
     """
     return_code = 0
     error_desc = ""
     try:
-        output = p.run(["rm", file], capture_output=True)
-        return_code = output.returncode
-        if return_code != 0:
-            error_desc = output.stderr
+        network_configs = network_conf
+        with open(path, "w") as f:
+            f.write(network_configs)
     except Exception as exc:
-        print(exc)
+        return_code = 1
+        error_desc = exc
 
     return [return_code, error_desc]
 
 
 def test():
-    # file = "/etc/network/interfaces"
-    test_file = "/root/wk/korobka/int"
-    st = del_old_network_config(test_file)
-    print(st)
-    # n = form_network_settings()
-    # print(n)
-    # создаем бэкап файл прежней конфигурации
-    # p.run(["cp", "/etc/network/interfaces", "/etc/network/interfaces.backup"])
+    orig_conf_file = "/etc/network/interfaces"
 
-    # удаляем файл со старой конфигурацией
-    # p.run(["rm", "/etc/network/interfaces"])
+    new_conf_file = ""
+    test_conf_file = "/root/wk/korobka/int"
+    global_st = 0
 
-    # подсовываем файл с новой конфигой
-    # path = "/etc/network/interfaces"
-    # write_network_configs(n, path)
+    """ 1. Создаем копию конфиги """
+    st = make_config_backup(test_conf_file)
+    if st[0] == 0:
+        global_st = 0
+    else:
+        global_st = 1
+        print(st)
 
-    # далее необходимо перезагрузить интерфейсы и как-то проверить, что конфиги приняты
+    """ 2. Удаляем оригинал """
+    if global_st == 0:
+        st = del_old_network_config(test_conf_file)
+        if st[0] == 0:
+            global_st = 0
+        else:
+            global_st = 1
+            print(st)
 
+    """ 3. Формируем новый конфиг """
+    if global_st == 0:
+        new_conf_file = form_network_settings()
+
+    """ 4. Подсовываем файл с новой конфигой """
+    st = write_network_configs(new_conf_file, test_conf_file)
+    if st == 0:
+        global_st = 0
+    else:
+        global_st = 1
+        print(st)
+
+    """ 5. Рестартуем сетевые интерфейсы """
+    # if global_st == 0:
 
 
 if __name__ == "__main__":
