@@ -163,7 +163,7 @@ def restart_network_interfaces(interface: str) -> list:
 
 def change_network_interface_config():
     """
-    Функция осущетсвляет последовательный вызов функций и генерирует исключения, если какая-либо
+    Функция осущеcтвляет последовательный вызов функций и генерирует исключения, если какая-либо
     из функций выполнилась с ошибкой. Соответсовенно, если одна из функций похерила последовтельность, то мы
     свалимся в исключение и последующие функции не будут вызваны.
     :return:
@@ -174,47 +174,49 @@ def change_network_interface_config():
 
     test_conf_file = "/root/wk/korobka/int"  # for testing
 
-    """ 1. Создаем копию конфиги """
-    print("1. Create copy of orig config")
-    arg = make_config_backup(test_conf_file)
-    status = bool(arg[0])
-    desc = arg[1].decode("utf-8")
-    if status:
-        raise MyException(f"No copy of the configuration was made. Reasons: {desc}")
-    print("1. done")
+    # """ 1. Создаем копию конфиги """
+    # print("1. Create copy of orig config")
+    # arg = make_config_backup(test_conf_file)
+    # status = bool(arg[0])
+    # desc = arg[1].decode("utf-8")
+    # if status:
+    #     raise MyException(f"No copy of the configuration was made. Reasons: {desc}")
+    # print("1. done")
 
-    """ 2. Удаляем оригинал """
-    print("2. Delete orig config")
-    arg = del_old_network_config(orig_conf_file)
-    status = bool(arg[0])
-    desc = arg[1].decode("utf-8")
-    if status:
-        raise MyException(f"Delete operation of the original configuration was not made. Reasons: {desc}")
-    print("2. done")
+    # """ 2. Удаляем оригинал """
+    # print("2. Delete orig config")
+    # arg = del_old_network_config(orig_conf_file)
+    # status = bool(arg[0])
+    # desc = arg[1].decode("utf-8")
+    # if status:
+    #     raise MyException(f"Delete operation of the original configuration was not made. Reasons: {desc}")
+    # print("2. done")
 
     """ 3. Формируем новый конфиг """
     print("3. Forming new config")
     new_conf_file = form_network_settings()
     print("3. done")
 
-    """ 4. Подсовываем файл с новой конфигой """
-    print("4. Added new config")
-    arg = write_network_configs(new_conf_file, orig_conf_file)
-    status = bool(arg[0])
-    desc = arg[1].decode("utf-8")
-    if status:
-        raise MyException(f"Added operation of the new configuration was not made. Reasons: {desc}")
-    print("4 done")
+    print(new_conf_file)
 
-    """ 5. Рестартуем сетевые интерфейсы """
-    print("5. Restarting network")
-    for interface in ["wlan0", "eth0"]:
-        arg = restart_network_interfaces(interface)
-        status = bool(arg[0])
-        desc = arg[1].decode("utf-8")
-        if status:
-            raise MyException(f"Added operation of the new configuration was not made. Reasons: {desc}")
-    print("5 done")
+    # """ 4. Подсовываем файл с новой конфигой """
+    # print("4. Added new config")
+    # arg = write_network_configs(new_conf_file, orig_conf_file)
+    # status = bool(arg[0])
+    # desc = arg[1].decode("utf-8")
+    # if status:
+    #     raise MyException(f"Added operation of the new configuration was not made. Reasons: {desc}")
+    # print("4 done")
+    #
+    # """ 5. Рестартуем сетевые интерфейсы """
+    # print("5. Restarting network")
+    # for interface in ["wlan0", "eth0"]:
+    #     arg = restart_network_interfaces(interface)
+    #     status = bool(arg[0])
+    #     desc = arg[1].decode("utf-8")
+    #     if status:
+    #         raise MyException(f"Added operation of the new configuration was not made. Reasons: {desc}")
+    # print("5 done")
 
 
 # for testing

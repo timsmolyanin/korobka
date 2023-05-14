@@ -1,10 +1,10 @@
 network:
   wifi:
     state: on
-    ssid: Redmi
+    ssid: rp-link
     password: meowkissme
   eth0:
     mode: static
-    ip: 192.168.42.11
+    ip: 192.168.44.10
     mask: 255.255.255.0
     gateway: None
