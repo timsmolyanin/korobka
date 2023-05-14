@@ -3,6 +3,10 @@ import serial
 
 
 class SerialPort(Thread):
+    """
+    Класс для реализации взаимодействия с Nextion через COM-порт.
+    Еще чего-то...
+    """
     def __init__(self, comport, baudrate, callback, parent=None):
         super(SerialPort, self).__init__(parent)
         self.serial_port = None
@@ -19,15 +23,41 @@ class SerialPort(Thread):
                                          timeout=1)
 
     def serial_read(self):
+        """
+        Метод, который осуществляет постоянное чтение COM-порта.
+        Происходит проверка открыт ли порт, если да, то читаем данные с порта,
+        исключаем пустые строки, которые Nextion шлет каждую секунду,
+        исключаем данные без терминатора /r/n, т.к. все валидные данные с Nextion должны его содержать,
+        и если все хорошо - выдаем данные в callback функцию для дальнейшей обработки.
+
+        Структура данных принимаемых с Nextion:
+
+        !ВОЗМОЖНЫ ИЗМЕНЕНИЯ!
+
+        aaa.bbb.ccc/r/n
+        aaa - [electric, light, temperature, water]
+        bbb - совпадает с MQTT топиком, example - OutletGroup1
+        ccc - ON/OF, чего-то такое
+        :return:
+
+        TODO:
+        - если серийный порт закрыт, то чего тогда?
+        - если данные без терминатора, то чего тогда?
+        -
+        """
+        response = ""
         if self.serial_port.isOpen():
-            response = ""
             while True:
                 try:
                     response = self.serial_port.read(100)
                     if response == b'':
+                        # Nextion send empty string every second
                         pass
                     else:
-                        self.cb(response)
+                        decode_data = response.decode('Ascii')
+                        if str(decode_data[-2:]).encode('Ascii') == b'\r\n':
+                            # убираем /r/n в конце строки, получается список [decode_data], поэтому отдаем нулевой id
+                            self.cb(decode_data.splitlines()[0])
                         response = ""
                 except Exception as exc:
                     print("Exception while serial_read method.", exc)
@@ -35,6 +65,16 @@ class SerialPort(Thread):
             print("Not open")
 
     def serial_write(self):
+        """
+        Метод для записи в COM-порт команд для Nextion
+
+        TODO:
+        - структура команд
+        - если серийный порт закрыт, то чего тогда?
+        - если данные без терминатора, то чего тогда?
+        -
+        :return:
+        """
         if self.serial_port.isOpen():
             cmd = ""
             try:

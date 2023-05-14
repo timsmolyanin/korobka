@@ -3,8 +3,7 @@ import serial_port
 
 def test_cb(data):
     print(data)
-    decode_data = data.decode('Ascii')
-    print(decode_data.split("."))
+    print(data.split("."))
 
 
 def main():
