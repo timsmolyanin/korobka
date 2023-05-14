@@ -1,5 +1,5 @@
 import serial_port
-import mqtt_send
+import mqtt_communication
 
 
 def test_cb(data):
@@ -12,7 +12,7 @@ def test_cb(data):
     mqtt_ch = tmp[1]
     val = int(tmp[2])
 
-    mqtt_send.wb_mqtt_switch(wb_dev, mqtt_ch, val)
+    mqtt_communication.wb_mqtt_switch(wb_dev, mqtt_ch, val)
 
 
 def main():

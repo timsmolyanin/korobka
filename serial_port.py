@@ -1,5 +1,6 @@
 from threading import Thread
 import serial
+import struct
 
 
 class SerialPort(Thread):
@@ -64,7 +65,7 @@ class SerialPort(Thread):
         else:
             print("Not open")
 
-    def serial_write(self):
+    def serial_write(self, cmd):
         """
         Метод для записи в COM-порт команд для Nextion
 
@@ -75,10 +76,15 @@ class SerialPort(Thread):
         -
         :return:
         """
+        eof = struct.pack('B', 0xff)
+
         if self.serial_port.isOpen():
-            cmd = ""
+            # cmd = ""
             try:
-                self.serial_port.write(cmd)
+                self.serial_port.write(cmd.encode())
+                self.serial_port.write(eof)
+                self.serial_port.write(eof)
+                self.serial_port.write(eof)
             except Exception as exc:
                 print("Exception while serial_write method.", exc)
         else:
@@ -90,3 +96,18 @@ class SerialPort(Thread):
                 self.serial_read()
             except Exception as exc:
                 print(exc)
+
+
+def _test_cb(data):
+    print(data)
+
+
+def _test_main():
+    s = SerialPort("COM3", 115200, _test_cb)
+    cmd = 'elec_ctrl.b0.picc=28'
+    print(cmd)
+    s.serial_write(cmd)
+
+
+if __name__ == "__main__":
+    _test_main()
