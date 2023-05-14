@@ -1,9 +1,18 @@
 import serial_port
+import mqtt_send
 
 
 def test_cb(data):
-    print(data)
-    print(data.split("."))
+    tmp = data.split(".")
+    wb_dev = None
+    mqtt_ch = None
+    val = None
+    if tmp[0] == "electric":
+        wb_dev = "outletcontrol_34"
+    mqtt_ch = tmp[1]
+    val = int(tmp[2])
+
+    mqtt_send.wb_mqtt_switch(wb_dev, mqtt_ch, val)
 
 
 def main():
