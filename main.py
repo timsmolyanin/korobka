@@ -1,23 +1,22 @@
 import serial_port
 import mqtt_communication
-
-
-def test_cb(data):
-    tmp = data.split(".")
-    wb_dev = None
-    mqtt_ch = None
-    val = None
-    if tmp[0] == "electric":
-        wb_dev = "outletcontrol_34"
-    mqtt_ch = tmp[1]
-    val = int(tmp[2])
-
-    mqtt_communication.wb_mqtt_switch(wb_dev, mqtt_ch, val)
+import paho.mqtt.client as mqtt
 
 
 def main():
-    s = serial_port.SerialPort("COM3", 115200, test_cb)
-    s.start()
+    sp = serial_port.serial_connect("COM3", 115200)
+    if sp[0]:
+
+        client = mqtt.Client()
+        mqtt_subscribe_topics = [("/devices/outletcontrol_34/controls/OutletGroup1", 0),
+                             ("/devices/outletcontrol_34/controls/OutletGroup2", 0),
+                             ("/devices/outletcontrol_34/controls/OutletGroup3", 0)]
+
+        mqtt_test = mqtt_communication.MQTTSubscriberThread(client, "192.168.4.9", 1883, mqtt_subscribe_topics, sp[1])
+        mqtt_test.start()
+
+        nex_reader = serial_port.NextionReader(sp[0], sp[1])
+        nex_reader.start()
 
 
 if __name__ == "__main__":
