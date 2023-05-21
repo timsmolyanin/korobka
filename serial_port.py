@@ -2,6 +2,7 @@ import time
 from threading import Thread
 import serial
 import struct
+import mqtt_communication
 
 
 class NextionReader(Thread):
@@ -20,6 +21,18 @@ class NextionReader(Thread):
 
     def cb(self, data):
         print(data)
+        tmp = data.split(".")
+        wb_dev = None
+        mqtt_ch = None
+        val = None
+        if tmp[0] == "electric":
+            wb_dev = "outletcontrol_34"
+        elif tmp[0] == "light":
+            wb_dev = "lightcontrol_145"
+
+        mqtt_ch = tmp[1]
+        val = int(tmp[2])
+        mqtt_communication.wb_mqtt_switch(wb_dev, mqtt_ch, val)
 
 
 def serial_connect(com: str, baud: int) -> list:
