@@ -6,5 +6,5 @@ network:
   eth0:
     mode: static
     ip: 192.168.44.10
-    mask: 255.255.255.0
+    mask: 24
     gateway: None
