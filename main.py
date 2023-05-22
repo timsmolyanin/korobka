@@ -16,7 +16,9 @@ def main():
                                  ("/devices/lightcontrol_145/controls/LightGroup4", 0),
                                  ("/devices/lightcontrol_145/controls/LightGroup5", 0),
                                  ("/devices/lightcontrol_145/controls/LightGroup6", 0),
-                                 ("/devices/0xa4c1387ec9c1d434/controls/water_leak", 0)
+                                 ("/devices/0xa4c1387ec9c1d434/controls/water_leak", 0),
+                                 ("/devices/network/controls/Ethernet IP", 0),
+                                 ("/devices/network/controls/Wi-Fi IP", 0)
                                  ]
 
         mqtt_test = mqtt_communication.MQTTSubscriberThread(client, "192.168.4.9", 1883, mqtt_subscribe_topics, sp[1])

@@ -3,6 +3,8 @@ from threading import Thread
 import serial
 import struct
 import mqtt_communication
+import yaml
+from datetime import datetime
 
 
 class NextionReader(Thread):
@@ -27,12 +29,26 @@ class NextionReader(Thread):
         val = None
         if tmp[0] == "electric":
             wb_dev = "outletcontrol_34"
+            mqtt_ch = tmp[1]
+            val = int(tmp[2])
+            mqtt_communication.wb_mqtt_switch(wb_dev, mqtt_ch, val)
         elif tmp[0] == "light":
             wb_dev = "lightcontrol_145"
+            mqtt_ch = tmp[1]
+            val = int(tmp[2])
+            mqtt_communication.wb_mqtt_switch(wb_dev, mqtt_ch, val)
+        # elif tmp[0] == "network":
+            # if tmp[1] == "1":
+                # with open("config.yaml", "r") as f:
+                #     data = yaml.safe_load(f)
+                #     data["general"][f"room{room_number}"]["operation_mode"] = operation_method
+                # with open('config.yaml', 'w') as file:
+                #     yaml.dump(data, file, sort_keys=False)
+            # print(tmp)
 
-        mqtt_ch = tmp[1]
-        val = int(tmp[2])
-        mqtt_communication.wb_mqtt_switch(wb_dev, mqtt_ch, val)
+        # mqtt_ch = tmp[1]
+        # val = int(tmp[2])
+        # mqtt_communication.wb_mqtt_switch(wb_dev, mqtt_ch, val)
 
 
 def serial_connect(com: str, baud: int) -> list:
@@ -90,6 +106,7 @@ def serial_read(st, com, cb):
         response = ""
         try:
             response = com.read(100)
+            # print(response)
             if response == b'':
                 # Nextion send empty string every second
                 pass
@@ -118,6 +135,7 @@ def serial_write(sp, cmd):
     """
 
     eof = struct.pack('B', 0xff)
+    escape = '\xff'
     try:
         sp.write(cmd.encode())
         sp.write(eof)
@@ -128,12 +146,21 @@ def serial_write(sp, cmd):
 
 
 def _test_main():
-    cmd1 = 'electric_ctrl.b3.picc=53'
-    sp = serial_connect("COM3", 115200)
-    sp_st, ser_port = sp[0], sp[1]
-    if sp_st:
-        serial_write(ser_port, cmd1)
-    print(sp)
+    serial_port = serial.Serial(port="COM3",
+                                baudrate=115200,
+                                parity=serial.PARITY_NONE,
+                                stopbits=serial.STOPBITS_ONE,
+                                bytesize=serial.EIGHTBITS,
+                                timeout=1)
+    eof = struct.pack('B', 0xff)
+    cmd = 'electric_ctrl.t0.txt="' + "abcde" + '"'
+    try:
+        serial_port.write(cmd.encode())
+        serial_port.write(eof)
+        serial_port.write(eof)
+        serial_port.write(eof)
+    except Exception as exc:
+        print("Exception while serial_write method.", exc)
 
 
 if __name__ == "__main__":

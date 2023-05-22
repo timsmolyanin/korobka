@@ -34,11 +34,8 @@ class MQTTSubscriberThread(Thread):
 
     # The callback for when a PUBLISH message is received from the server.
     def on_message(self, client, userdata, msg):
-        print(f"Topic: {msg.topic}, value: {str(msg.payload)}")
         topic_name = msg.topic.split("/")
-        # print(msg.payload.decode("utf-8"))
         topic_val = msg.payload.decode("utf-8")
-        # print(topic_name, topic_val, type(topic_val))
         if topic_name[2] == "outletcontrol_34":
             ch = topic_name[-1]
             if ch == "OutletGroup1":
@@ -159,6 +156,13 @@ class MQTTSubscriberThread(Thread):
                 serial_port.serial_write(self.comport, cmd1)
                 serial_port.serial_write(self.comport, cmd2)
                 serial_port.serial_write(self.comport, cmd3)
+        elif topic_name[2] == "network":
+            if topic_name[4] == "Ethernet IP":
+                cmd = 'network_conf.t5.txt="' + topic_val + '"'
+                serial_port.serial_write(self.comport, cmd)
+            elif topic_name[4] == "Wi-Fi IP":
+                cmd = 'network_conf.t6.txt="' + topic_val + '"'
+                serial_port.serial_write(self.comport, cmd)
 
     def run(self):
         while True:
