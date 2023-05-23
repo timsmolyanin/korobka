@@ -36,6 +36,7 @@ class MQTTSubscriberThread(Thread):
     def on_message(self, client, userdata, msg):
         topic_name = msg.topic.split("/")
         topic_val = msg.payload.decode("utf-8")
+        # print(topic_name, topic_val)
         if topic_name[2] == "outletcontrol_34":
             ch = topic_name[-1]
             if ch == "OutletGroup1":
@@ -145,17 +146,50 @@ class MQTTSubscriberThread(Thread):
                 cmd1 = "water_ctrl.q0.picc=171"
                 cmd2 = "water_ctrl.q6.picc=183"
                 cmd3 = "water_ctrl.q7.picc=185"
+                cmd4 = "water_ctrl.q8.picc=187"
+                cmd5 = "water_ctrl.q9.picc=189"
                 serial_port.serial_write(self.comport, cmd1)
                 serial_port.serial_write(self.comport, cmd2)
                 serial_port.serial_write(self.comport, cmd3)
+                serial_port.serial_write(self.comport, cmd4)
+                serial_port.serial_write(self.comport, cmd5)
             elif topic_val == 'true':
                 smart_valve_controller("close")
                 cmd1 = "water_ctrl.q0.picc=177"
                 cmd2 = "water_ctrl.q6.picc=184"
                 cmd3 = "water_ctrl.q7.picc=186"
+                cmd4 = "water_ctrl.q8.picc=188"
+                cmd5 = "water_ctrl.q9.picc=190"
                 serial_port.serial_write(self.comport, cmd1)
                 serial_port.serial_write(self.comport, cmd2)
                 serial_port.serial_write(self.comport, cmd3)
+                serial_port.serial_write(self.comport, cmd4)
+                serial_port.serial_write(self.comport, cmd5)
+        elif topic_name[2] == "0xa4c1386c14f32cb1":
+            if topic_val == "false":
+                smart_valve_controller("open")
+                cmd1 = "water_ctrl.q1.picc=172"
+                cmd2 = "water_ctrl.q6.picc=183"
+                cmd3 = "water_ctrl.q7.picc=185"
+                cmd4 = "water_ctrl.q8.picc=187"
+                cmd5 = "water_ctrl.q9.picc=189"
+                serial_port.serial_write(self.comport, cmd1)
+                serial_port.serial_write(self.comport, cmd2)
+                serial_port.serial_write(self.comport, cmd3)
+                serial_port.serial_write(self.comport, cmd4)
+                serial_port.serial_write(self.comport, cmd5)
+            elif topic_val == 'true':
+                smart_valve_controller("close")
+                cmd1 = "water_ctrl.q1.picc=178"
+                cmd2 = "water_ctrl.q6.picc=184"
+                cmd3 = "water_ctrl.q7.picc=186"
+                cmd4 = "water_ctrl.q8.picc=188"
+                cmd5 = "water_ctrl.q9.picc=190"
+                serial_port.serial_write(self.comport, cmd1)
+                serial_port.serial_write(self.comport, cmd2)
+                serial_port.serial_write(self.comport, cmd3)
+                serial_port.serial_write(self.comport, cmd4)
+                serial_port.serial_write(self.comport, cmd5)
         elif topic_name[2] == "network":
             if topic_name[4] == "Ethernet IP":
                 cmd = 'network_conf.t5.txt="' + topic_val + '"'
@@ -163,13 +197,50 @@ class MQTTSubscriberThread(Thread):
             elif topic_name[4] == "Wi-Fi IP":
                 cmd = 'network_conf.t6.txt="' + topic_val + '"'
                 serial_port.serial_write(self.comport, cmd)
+        elif topic_name[2] == "0x00158d00091c5b60":
+            if topic_name[4] == "battery":
+                cmd = 'temp_ctrl.t20.txt="' + topic_val + '"'
+                serial_port.serial_write(self.comport, cmd)
+            elif topic_name[4] == "temperature":
+                cmd = 'temp_ctrl.t21.txt="' + topic_val + '"'
+                serial_port.serial_write(self.comport, cmd)
+        elif topic_name[2] == "0x00158d00091c5aea":
+            if topic_name[4] == "battery":
+                cmd = 'temp_ctrl.t23.txt="' + topic_val + '"'
+                serial_port.serial_write(self.comport, cmd)
+            elif topic_name[4] == "temperature":
+                cmd = 'temp_ctrl.t24.txt="' + topic_val + '"'
+                serial_port.serial_write(self.comport, cmd)
+        elif topic_name[2] == "0x84fd27fffe0e709f":
+            if topic_name[4] == "battery_low":
+                if topic_val == "false":
+                    cmd1 = "temp_ctrl.q16.picc=140"
+                    cmd2 = "temp_ctrl.q17.picc=141"
+                    cmd3 = "temp_ctrl.q18.picc=142"
+                    cmd4 = "temp_ctrl.q19.picc=143"
+                    serial_port.serial_write(self.comport, cmd1)
+                    serial_port.serial_write(self.comport, cmd2)
+                    serial_port.serial_write(self.comport, cmd3)
+                    serial_port.serial_write(self.comport, cmd4)
+                elif topic_val == "true":
+                    cmd1 = "temp_ctrl.q16.picc=124"
+                    cmd2 = "temp_ctrl.q17.picc=125"
+                    cmd3 = "temp_ctrl.q18.picc=126"
+                    cmd4 = "temp_ctrl.q19.picc=127"
+                    serial_port.serial_write(self.comport, cmd1)
+                    serial_port.serial_write(self.comport, cmd2)
+                    serial_port.serial_write(self.comport, cmd3)
+                    serial_port.serial_write(self.comport, cmd4)
+            elif topic_name[4] == "current_heating_setpoint":
+                cmd = 'temp_ctrl.t22.txt="' + topic_val + '"'
+                serial_port.serial_write(self.comport, cmd)
 
     def run(self):
         while True:
             try:
                 self.mqtt_client.loop_forever()
             except Exception as exc:
-                print(exc)
+                print("mqtt thread run", exc)
 
 
 def wb_mqtt_switch(mqtt_dev_id: str, mqtt_control: str, val: int):
@@ -178,7 +249,7 @@ def wb_mqtt_switch(mqtt_dev_id: str, mqtt_control: str, val: int):
         topic = f"/devices/{mqtt_dev_id}/controls/{mqtt_control}/on"
         publish.single(topic, val, hostname=mqtt_host)
     except Exception as exc:
-        print(exc)
+        print("mqtt_switch", exc)
 
 
 def smart_valve_controller(val):
@@ -193,11 +264,11 @@ def smart_valve_controller(val):
         }
     cmd_str = json.dumps(cmd)
     try:
-        mqtt_host = "192.168.4.9"
+        mqtt_host = "192.168.44.10"
         topic = "zigbee2mqtt/0xa4c13844020516ee/set"
         publish.single(topic, cmd_str, hostname=mqtt_host)
     except Exception as exc:
-        print(exc)
+        print("smart_valve_controller", exc)
 
 
 def _test_main():

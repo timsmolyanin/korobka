@@ -17,8 +17,15 @@ def main():
                                  ("/devices/lightcontrol_145/controls/LightGroup5", 0),
                                  ("/devices/lightcontrol_145/controls/LightGroup6", 0),
                                  ("/devices/0xa4c1387ec9c1d434/controls/water_leak", 0),
+                                 ("/devices/0xa4c1386c14f32cb1/controls/water_leak", 0),
                                  ("/devices/network/controls/Ethernet IP", 0),
-                                 ("/devices/network/controls/Wi-Fi IP", 0)
+                                 ("/devices/network/controls/Wi-Fi IP", 0),
+                                 ("/devices/0x00158d00091c5b60/controls/battery", 0),
+                                 ("/devices/0x00158d00091c5b60/controls/temperature", 0),
+                                 ("/devices/0x00158d00091c5aea/controls/battery", 0),
+                                 ("/devices/0x00158d00091c5aea/controls/temperature", 0),
+                                 ("/devices/0x84fd27fffe0e709f/controls/current_heating_setpoint", 0),
+                                 ("/devices/0x84fd27fffe0e709f/controls/battery_low", 0)
                                  ]
 
         mqtt_test = mqtt_communication.MQTTSubscriberThread(client, "192.168.44.10", 1883, mqtt_subscribe_topics, sp[1])

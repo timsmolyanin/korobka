@@ -22,11 +22,8 @@ class NextionReader(Thread):
             serial_read(self.comport_status, self.comport, self.cb)
 
     def cb(self, data):
-        # print(data)
         tmp = data.split(".")
-        wb_dev = None
-        mqtt_ch = None
-        val = None
+        print(tmp)
         match tmp[0]:
             case "electric":
                 wb_dev = "outletcontrol_34"
@@ -44,32 +41,32 @@ class NextionReader(Thread):
                         match tmp[2]:
                             case "state":
                                 wifi_state = tmp[-1]
-                                print(wifi_state)
+                                write_to_config_file("wifi", "state", wifi_state)
                             case "ssid":
                                 wifi_ssid = tmp[-1]
-                                print(wifi_ssid)
+                                write_to_config_file("wifi", "ssid", wifi_ssid)
                             case "password":
                                 wifi_passwd = tmp[-1]
-                                print(wifi_passwd)
+                                write_to_config_file("wifi", "password", wifi_passwd)
                     case "eth0":
                         match tmp[2]:
                             case "mode":
                                 eth0_mode = tmp[-1]
-                                print(eth0_mode)
+                                write_to_config_file("eth0", "mode", eth0_mode)
                             case "ip":
                                 eth0_ip = tmp[-1]
-                                print(eth0_ip)
+                                write_to_config_file("eth0", "ip", eth0_ip)
                             case "mask":
                                 eth0_mask = tmp[-1]
-                                print(eth0_mask)
+                                write_to_config_file("eth0", "mask", eth0_mask)
 
 
-                # with open("config.yaml", "r") as f:
-                #     data = yaml.safe_load(f)
-                #     data["general"][f"room{room_number}"]["operation_mode"] = operation_method
-                # with open('config.yaml', 'w') as file:
-                #     yaml.dump(data, file, sort_keys=False)
-            # print(tmp)
+def write_to_config_file(interface: str, param: str, val: str) -> None:
+    with open("config.yaml", "r") as f:
+        data = yaml.safe_load(f)
+        data["network"][f"{interface}"][f"{param}"] = val
+    with open('config.yaml', 'w') as file:
+        yaml.dump(data, file, sort_keys=False)
 
 
 def serial_connect(com: str, baud: int) -> list:

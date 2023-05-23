@@ -1,10 +1,10 @@
 network:
   wifi:
-    state: on
-    ssid: rp-link
-    password: meowkissme
+    state: 'on'
+    ssid: redmi
+    password: password
   eth0:
     mode: static
-    ip: 192.168.44.10
-    mask: 24
+    ip: jjjjjjj
+    mask: jhhgg
     gateway: None
