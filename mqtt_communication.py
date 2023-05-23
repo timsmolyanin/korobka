@@ -174,7 +174,7 @@ class MQTTSubscriberThread(Thread):
 
 def wb_mqtt_switch(mqtt_dev_id: str, mqtt_control: str, val: int):
     try:
-        mqtt_host = "192.168.4.9"
+        mqtt_host = "192.168.44.10"
         topic = f"/devices/{mqtt_dev_id}/controls/{mqtt_control}/on"
         publish.single(topic, val, hostname=mqtt_host)
     except Exception as exc:

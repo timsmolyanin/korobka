@@ -21,7 +21,7 @@ def main():
                                  ("/devices/network/controls/Wi-Fi IP", 0)
                                  ]
 
-        mqtt_test = mqtt_communication.MQTTSubscriberThread(client, "192.168.4.9", 1883, mqtt_subscribe_topics, sp[1])
+        mqtt_test = mqtt_communication.MQTTSubscriberThread(client, "192.168.44.10", 1883, mqtt_subscribe_topics, sp[1])
         mqtt_test.start()
 
         nex_reader = serial_port.NextionReader(sp[0], sp[1])

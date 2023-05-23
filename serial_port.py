@@ -22,33 +22,54 @@ class NextionReader(Thread):
             serial_read(self.comport_status, self.comport, self.cb)
 
     def cb(self, data):
-        print(data)
+        # print(data)
         tmp = data.split(".")
         wb_dev = None
         mqtt_ch = None
         val = None
-        if tmp[0] == "electric":
-            wb_dev = "outletcontrol_34"
-            mqtt_ch = tmp[1]
-            val = int(tmp[2])
-            mqtt_communication.wb_mqtt_switch(wb_dev, mqtt_ch, val)
-        elif tmp[0] == "light":
-            wb_dev = "lightcontrol_145"
-            mqtt_ch = tmp[1]
-            val = int(tmp[2])
-            mqtt_communication.wb_mqtt_switch(wb_dev, mqtt_ch, val)
-        # elif tmp[0] == "network":
-            # if tmp[1] == "1":
+        match tmp[0]:
+            case "electric":
+                wb_dev = "outletcontrol_34"
+                mqtt_ch = tmp[1]
+                val = int(tmp[2])
+                mqtt_communication.wb_mqtt_switch(wb_dev, mqtt_ch, val)
+            case "light":
+                wb_dev = "lightcontrol_145"
+                mqtt_ch = tmp[1]
+                val = int(tmp[2])
+                mqtt_communication.wb_mqtt_switch(wb_dev, mqtt_ch, val)
+            case "network":
+                match tmp[1]:
+                    case "wifi":
+                        match tmp[2]:
+                            case "state":
+                                wifi_state = tmp[-1]
+                                print(wifi_state)
+                            case "ssid":
+                                wifi_ssid = tmp[-1]
+                                print(wifi_ssid)
+                            case "password":
+                                wifi_passwd = tmp[-1]
+                                print(wifi_passwd)
+                    case "eth0":
+                        match tmp[2]:
+                            case "mode":
+                                eth0_mode = tmp[-1]
+                                print(eth0_mode)
+                            case "ip":
+                                eth0_ip = tmp[-1]
+                                print(eth0_ip)
+                            case "mask":
+                                eth0_mask = tmp[-1]
+                                print(eth0_mask)
+
+
                 # with open("config.yaml", "r") as f:
                 #     data = yaml.safe_load(f)
                 #     data["general"][f"room{room_number}"]["operation_mode"] = operation_method
                 # with open('config.yaml', 'w') as file:
                 #     yaml.dump(data, file, sort_keys=False)
             # print(tmp)
-
-        # mqtt_ch = tmp[1]
-        # val = int(tmp[2])
-        # mqtt_communication.wb_mqtt_switch(wb_dev, mqtt_ch, val)
 
 
 def serial_connect(com: str, baud: int) -> list:
@@ -105,8 +126,7 @@ def serial_read(st, com, cb):
             break
         response = ""
         try:
-            response = com.read(100)
-            # print(response)
+            response = com.readline()
             if response == b'':
                 # Nextion send empty string every second
                 pass
@@ -152,15 +172,19 @@ def _test_main():
                                 stopbits=serial.STOPBITS_ONE,
                                 bytesize=serial.EIGHTBITS,
                                 timeout=1)
-    eof = struct.pack('B', 0xff)
-    cmd = 'electric_ctrl.t0.txt="' + "abcde" + '"'
-    try:
-        serial_port.write(cmd.encode())
-        serial_port.write(eof)
-        serial_port.write(eof)
-        serial_port.write(eof)
-    except Exception as exc:
-        print("Exception while serial_write method.", exc)
+
+    # while True:
+    #     serial_read(True, serial_port, test_cb)
+
+    # eof = struct.pack('B', 0xff)
+    # cmd = 'electric_ctrl.t0.txt="' + "abcde" + '"'
+    # try:
+    #     serial_port.write(cmd.encode())
+    #     serial_port.write(eof)
+    #     serial_port.write(eof)
+    #     serial_port.write(eof)
+    # except Exception as exc:
+    #     print("Exception while serial_write method.", exc)
 
 
 if __name__ == "__main__":
