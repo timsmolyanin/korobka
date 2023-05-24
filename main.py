@@ -20,6 +20,7 @@ def main():
                                  ("/devices/0xa4c1386c14f32cb1/controls/water_leak", 0),
                                  ("/devices/network/controls/Ethernet IP", 0),
                                  ("/devices/network/controls/Wi-Fi IP", 0),
+                                 ("/devices/network/controls/Wi-Fi IP Online Status", 0),
                                  ("/devices/0x00158d00091c5b60/controls/battery", 0),
                                  ("/devices/0x00158d00091c5b60/controls/temperature", 0),
                                  ("/devices/0x00158d00091c5aea/controls/battery", 0),
@@ -33,6 +34,9 @@ def main():
 
         nex_reader = serial_port.NextionReader(sp[0], sp[1])
         nex_reader.start()
+
+        cmd = "main.q0.picc=2"
+        serial_port.serial_write(sp[1], cmd)
 
 
 if __name__ == "__main__":

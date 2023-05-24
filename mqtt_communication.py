@@ -148,11 +148,15 @@ class MQTTSubscriberThread(Thread):
                 cmd3 = "water_ctrl.q7.picc=185"
                 cmd4 = "water_ctrl.q8.picc=187"
                 cmd5 = "water_ctrl.q9.picc=189"
+                cmd6 = "main.b4.picc=29"
+                cmd7 = "main.b4.picc2=30"
                 serial_port.serial_write(self.comport, cmd1)
                 serial_port.serial_write(self.comport, cmd2)
                 serial_port.serial_write(self.comport, cmd3)
                 serial_port.serial_write(self.comport, cmd4)
                 serial_port.serial_write(self.comport, cmd5)
+                serial_port.serial_write(self.comport, cmd6)
+                serial_port.serial_write(self.comport, cmd7)
             elif topic_val == 'true':
                 smart_valve_controller("close")
                 cmd1 = "water_ctrl.q0.picc=177"
@@ -160,11 +164,15 @@ class MQTTSubscriberThread(Thread):
                 cmd3 = "water_ctrl.q7.picc=186"
                 cmd4 = "water_ctrl.q8.picc=188"
                 cmd5 = "water_ctrl.q9.picc=190"
+                cmd6 = "main.b4.picc=31"
+                cmd7 = "main.b4.picc2=32"
                 serial_port.serial_write(self.comport, cmd1)
                 serial_port.serial_write(self.comport, cmd2)
                 serial_port.serial_write(self.comport, cmd3)
                 serial_port.serial_write(self.comport, cmd4)
                 serial_port.serial_write(self.comport, cmd5)
+                serial_port.serial_write(self.comport, cmd6)
+                serial_port.serial_write(self.comport, cmd7)
         elif topic_name[2] == "0xa4c1386c14f32cb1":
             if topic_val == "false":
                 smart_valve_controller("open")
@@ -173,11 +181,15 @@ class MQTTSubscriberThread(Thread):
                 cmd3 = "water_ctrl.q7.picc=185"
                 cmd4 = "water_ctrl.q8.picc=187"
                 cmd5 = "water_ctrl.q9.picc=189"
+                cmd6 = "main.b4.picc=29"
+                cmd7 = "main.b4.picc2=30"
                 serial_port.serial_write(self.comport, cmd1)
                 serial_port.serial_write(self.comport, cmd2)
                 serial_port.serial_write(self.comport, cmd3)
                 serial_port.serial_write(self.comport, cmd4)
                 serial_port.serial_write(self.comport, cmd5)
+                serial_port.serial_write(self.comport, cmd6)
+                serial_port.serial_write(self.comport, cmd7)
             elif topic_val == 'true':
                 smart_valve_controller("close")
                 cmd1 = "water_ctrl.q1.picc=178"
@@ -185,11 +197,15 @@ class MQTTSubscriberThread(Thread):
                 cmd3 = "water_ctrl.q7.picc=186"
                 cmd4 = "water_ctrl.q8.picc=188"
                 cmd5 = "water_ctrl.q9.picc=190"
+                cmd6 = "main.b4.picc=31"
+                cmd7 = "main.b4.picc2=32"
                 serial_port.serial_write(self.comport, cmd1)
                 serial_port.serial_write(self.comport, cmd2)
                 serial_port.serial_write(self.comport, cmd3)
                 serial_port.serial_write(self.comport, cmd4)
                 serial_port.serial_write(self.comport, cmd5)
+                serial_port.serial_write(self.comport, cmd6)
+                serial_port.serial_write(self.comport, cmd7)
         elif topic_name[2] == "network":
             if topic_name[4] == "Ethernet IP":
                 cmd = 'network_conf.t5.txt="' + topic_val + '"'
@@ -197,6 +213,19 @@ class MQTTSubscriberThread(Thread):
             elif topic_name[4] == "Wi-Fi IP":
                 cmd = 'network_conf.t6.txt="' + topic_val + '"'
                 serial_port.serial_write(self.comport, cmd)
+            elif topic_name[4] == "Wi-Fi IP Online Status":
+                print(topic_name, topic_val)
+                if topic_val == "0":
+                    cmd1 = "main.b0.picc=3"
+                    cmd2 = "main.b0.picc2=4"
+                    serial_port.serial_write(self.comport, cmd1)
+                    serial_port.serial_write(self.comport, cmd2)
+                elif topic_val == "1":
+                    cmd1 = "main.b0.picc=5"
+                    cmd2 = "main.b0.picc2=6"
+                    serial_port.serial_write(self.comport, cmd1)
+                    serial_port.serial_write(self.comport, cmd2)
+
         elif topic_name[2] == "0x00158d00091c5b60":
             if topic_name[4] == "battery":
                 cmd = 'temp_ctrl.t20.txt="' + topic_val + '"'
