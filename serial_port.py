@@ -23,7 +23,6 @@ class NextionReader(Thread):
 
     def cb(self, data):
         tmp = data.split(".")
-        print(tmp)
         match tmp[0]:
             case "electric":
                 wb_dev = "outletcontrol_34"
@@ -59,6 +58,17 @@ class NextionReader(Thread):
                             case "mask":
                                 eth0_mask = tmp[-1]
                                 write_to_config_file("eth0", "mask", eth0_mask)
+            case "temperature":
+                match tmp[1]:
+                    case "room1":
+                        match tmp[2]:
+                            case "setpoint":
+                                setpoint = int(tmp[-1])
+                                print(setpoint, type(setpoint))
+                                dev1 = "0x84fd27fffe6d74bb"
+                                dev2 = "0x84fd27fffe0e709f"
+                                mqtt_communication.mqtt_set_heating_setpoint(dev1, setpoint)
+                                mqtt_communication.mqtt_set_heating_setpoint(dev2, setpoint)
 
 
 def write_to_config_file(interface: str, param: str, val: str) -> None:

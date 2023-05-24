@@ -26,7 +26,9 @@ def main():
                                  ("/devices/0x00158d00091c5aea/controls/battery", 0),
                                  ("/devices/0x00158d00091c5aea/controls/temperature", 0),
                                  ("/devices/0x84fd27fffe0e709f/controls/current_heating_setpoint", 0),
-                                 ("/devices/0x84fd27fffe0e709f/controls/battery_low", 0)
+                                 ("/devices/0x84fd27fffe0e709f/controls/battery_low", 0),
+                                 ("/devices/0x84fd27fffe6d74bb/controls/current_heating_setpoint", 0),
+                                 ("/devices/0x84fd27fffe6d74bb/controls/battery_low", 0)
                                  ]
 
         mqtt_test = mqtt_communication.MQTTSubscriberThread(client, "192.168.44.10", 1883, mqtt_subscribe_topics, sp[1])

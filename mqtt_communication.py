@@ -244,24 +244,31 @@ class MQTTSubscriberThread(Thread):
             if topic_name[4] == "battery_low":
                 if topic_val == "false":
                     cmd1 = "temp_ctrl.q16.picc=140"
-                    cmd2 = "temp_ctrl.q17.picc=141"
-                    cmd3 = "temp_ctrl.q18.picc=142"
-                    cmd4 = "temp_ctrl.q19.picc=143"
+                    cmd2 = "temp_ctrl.q0.picc=92"
                     serial_port.serial_write(self.comport, cmd1)
                     serial_port.serial_write(self.comport, cmd2)
-                    serial_port.serial_write(self.comport, cmd3)
-                    serial_port.serial_write(self.comport, cmd4)
                 elif topic_val == "true":
                     cmd1 = "temp_ctrl.q16.picc=124"
-                    cmd2 = "temp_ctrl.q17.picc=125"
-                    cmd3 = "temp_ctrl.q18.picc=126"
-                    cmd4 = "temp_ctrl.q19.picc=127"
+                    cmd2 = "temp_ctrl.q0.picc=92"
                     serial_port.serial_write(self.comport, cmd1)
                     serial_port.serial_write(self.comport, cmd2)
-                    serial_port.serial_write(self.comport, cmd3)
-                    serial_port.serial_write(self.comport, cmd4)
             elif topic_name[4] == "current_heating_setpoint":
                 cmd = 'temp_ctrl.t22.txt="' + topic_val + '"'
+                serial_port.serial_write(self.comport, cmd)
+        elif topic_name[2] == "0x84fd27fffe6d74bb":
+            if topic_name[4] == "battery_low":
+                if topic_val == "false":
+                    cmd1 = "temp_ctrl.q17.picc=141"
+                    cmd2 = "temp_ctrl.q1.picc=93"
+                    serial_port.serial_write(self.comport, cmd1)
+                    serial_port.serial_write(self.comport, cmd2)
+                elif topic_val == "true":
+                    cmd1 = "temp_ctrl.q17.picc=125"
+                    cmd2 = "temp_ctrl.q1.picc=93"
+                    serial_port.serial_write(self.comport, cmd1)
+                    serial_port.serial_write(self.comport, cmd2)
+            elif topic_name[4] == "current_heating_setpoint":
+                cmd = 'temp_ctrl.t25.txt="' + topic_val + '"'
                 serial_port.serial_write(self.comport, cmd)
 
     def run(self):
@@ -279,6 +286,16 @@ def wb_mqtt_switch(mqtt_dev_id: str, mqtt_control: str, val: int):
         publish.single(topic, val, hostname=mqtt_host)
     except Exception as exc:
         print("mqtt_switch", exc)
+
+
+def mqtt_set_heating_setpoint(mqtt_dev_id: str, val: int):
+    try:
+        # /devices/0x84fd27fffe6d74bb/controls/current_heating_setpoin
+        mqtt_host = "192.168.44.10"
+        topic = f"/devices/{mqtt_dev_id}/controls/current_heating_setpoint"
+        publish.single(topic, val, hostname=mqtt_host)
+    except Exception as exc:
+        print("mqtt_set_heating_setpoint", exc)
 
 
 def smart_valve_controller(val):
