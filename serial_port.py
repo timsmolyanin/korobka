@@ -4,6 +4,8 @@ import serial
 import struct
 import mqtt_communication
 import yaml
+import network_configurator
+import os
 from datetime import datetime
 
 
@@ -40,6 +42,8 @@ class NextionReader(Thread):
                         match tmp[2]:
                             case "state":
                                 wifi_state = tmp[-1]
+                                if wifi_state == "off":
+                                    network_configurator.config_wifi_settings()
                                 write_to_config_file("wifi", "state", wifi_state)
                             case "ssid":
                                 wifi_ssid = tmp[-1]
@@ -47,6 +51,8 @@ class NextionReader(Thread):
                             case "password":
                                 wifi_passwd = tmp[-1]
                                 write_to_config_file("wifi", "password", wifi_passwd)
+                                network_configurator.config_wifi_settings()
+
                     case "eth0":
                         match tmp[2]:
                             case "mode":
@@ -58,6 +64,7 @@ class NextionReader(Thread):
                             case "mask":
                                 eth0_mask = tmp[-1]
                                 write_to_config_file("eth0", "mask", eth0_mask)
+                                network_configurator.config_eth_settings()
             case "temperature":
                 match tmp[1]:
                     case "room1":
@@ -70,12 +77,16 @@ class NextionReader(Thread):
                                 mqtt_communication.mqtt_set_heating_setpoint(dev1, setpoint)
                                 mqtt_communication.mqtt_set_heating_setpoint(dev2, setpoint)
 
+            case "system":
+                print(tmp)
+                os.system('reboot')
+
 
 def write_to_config_file(interface: str, param: str, val: str) -> None:
-    with open("config.yaml", "r") as f:
+    with open("/root/wk/korobka_app/korobka/config.yaml", "r") as f:
         data = yaml.safe_load(f)
         data["network"][f"{interface}"][f"{param}"] = val
-    with open('config.yaml', 'w') as file:
+    with open('/root/wk/korobka_app/korobka/config.yaml', 'w') as file:
         yaml.dump(data, file, sort_keys=False)
 
 

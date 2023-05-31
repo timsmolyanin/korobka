@@ -6,7 +6,7 @@ After=multi-user.target
 User=root
 Type=simple
 Restart=always
-ExecStart=/root/wk/py310/bin/python /root/wk/korobka_app/main.py
+ExecStart=/root/wk/py310/bin/python /root/wk/korobka_app/korobka/main.py
 
 [Install]
 WantedBy=multi-user.target

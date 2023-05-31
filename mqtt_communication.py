@@ -281,7 +281,7 @@ class MQTTSubscriberThread(Thread):
 
 def wb_mqtt_switch(mqtt_dev_id: str, mqtt_control: str, val: int):
     try:
-        mqtt_host = "192.168.44.10"
+        mqtt_host = "localhost"
         topic = f"/devices/{mqtt_dev_id}/controls/{mqtt_control}/on"
         publish.single(topic, val, hostname=mqtt_host)
     except Exception as exc:
@@ -291,7 +291,7 @@ def wb_mqtt_switch(mqtt_dev_id: str, mqtt_control: str, val: int):
 def mqtt_set_heating_setpoint(mqtt_dev_id: str, val: int):
     try:
         # /devices/0x84fd27fffe6d74bb/controls/current_heating_setpoin
-        mqtt_host = "192.168.44.10"
+        mqtt_host = "localhost"
         topic = f"/devices/{mqtt_dev_id}/controls/current_heating_setpoint"
         publish.single(topic, val, hostname=mqtt_host)
     except Exception as exc:
@@ -310,7 +310,7 @@ def smart_valve_controller(val):
         }
     cmd_str = json.dumps(cmd)
     try:
-        mqtt_host = "192.168.44.10"
+        mqtt_host = "localhost"
         topic = "zigbee2mqtt/0xa4c13844020516ee/set"
         publish.single(topic, cmd_str, hostname=mqtt_host)
     except Exception as exc:

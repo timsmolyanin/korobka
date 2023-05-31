@@ -1,8 +1,8 @@
 serial:
-  port: ttyUSB0
+  port: /dev/ttyUSB0
   baud: 115200
 mqtt:
-  ip: 192.168.44.10
+  ip: localhost
   port: 1883
 network:
   wifi:

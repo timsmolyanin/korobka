@@ -1,3 +1,5 @@
+#!/root/wk/py310/bin/python
+
 import serial_port
 import mqtt_communication
 import paho.mqtt.client as mqtt
@@ -5,13 +7,14 @@ import yaml
 
 
 def main():
-    with open("config.yaml") as f:
+    with open("/root/wk/korobka_app/korobka/config.yaml") as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
     serial_com_port_name = config["serial"]["port"]
     serial_com_port_speed = config["serial"]["baud"]
     mqtt_broker_address = config["mqtt"]["ip"]
     mqtt_broker_port = config["mqtt"]["port"]
-    
+    print(mqtt_broker_address)
+
     sp = serial_port.serial_connect(serial_com_port_name, serial_com_port_speed)
     if sp[0]:
         client = mqtt.Client()

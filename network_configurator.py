@@ -43,7 +43,7 @@ def config_eth_settings() -> None:
     eth_mode = None
     print("Начато конфигурирование wb-eth0 адаптера")
     print("Открытие файла конфигурации")
-    with open("config.yaml") as f:
+    with open("/root/wk/korobka_app/korobka/config.yaml") as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
     eth_configs = config["network"]["eth0"]
 
@@ -89,15 +89,15 @@ def config_wifi_settings() -> None:
     wifi_password = None
     print("Начато конфигурирование Wi-Fi адаптера")
     print("Открытие файла конфигурации")
-    with open("config.yaml") as f:
+    with open("/root/wk/korobka_app/korobka/config.yaml") as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
 
     wifi_configs = config["network"]["wifi"]
     wifi_state = wifi_configs["state"]
-    if not wifi_state:
+    if wifi_state == "off":
         print("Выключить Wi-Fi адаптер")
         nmcli.radio.wifi_off()
-    else:
+    elif wifi_state == "on":
         print("Включить Wi-Fi адаптер")
         nmcli.radio.wifi_on()
         wifi_ssid = str(wifi_configs["ssid"])
