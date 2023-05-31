@@ -22,7 +22,7 @@ class NextionReader(Thread):
             serial_read(self.comport_status, self.comport, self.cb)
 
     def cb(self, data):
-        tmp = data.split(".")
+        tmp = data.split("/")
         match tmp[0]:
             case "electric":
                 wb_dev = "outletcontrol_34"
@@ -162,7 +162,6 @@ def serial_write(sp, cmd):
     """
 
     eof = struct.pack('B', 0xff)
-    escape = '\xff'
     try:
         sp.write(cmd.encode())
         sp.write(eof)

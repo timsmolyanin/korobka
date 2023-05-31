@@ -1,10 +1,18 @@
 import serial_port
 import mqtt_communication
 import paho.mqtt.client as mqtt
+import yaml
 
 
 def main():
-    sp = serial_port.serial_connect("COM3", 115200)
+    with open("config.yaml") as f:
+        config = yaml.load(f, Loader=yaml.FullLoader)
+    serial_com_port_name = config["serial"]["port"]
+    serial_com_port_speed = config["serial"]["baud"]
+    mqtt_broker_address = config["mqtt"]["ip"]
+    mqtt_broker_port = config["mqtt"]["port"]
+    
+    sp = serial_port.serial_connect(serial_com_port_name, serial_com_port_speed)
     if sp[0]:
         client = mqtt.Client()
         mqtt_subscribe_topics = [("/devices/outletcontrol_34/controls/OutletGroup1", 0),
@@ -31,7 +39,7 @@ def main():
                                  ("/devices/0x84fd27fffe6d74bb/controls/battery_low", 0)
                                  ]
 
-        mqtt_test = mqtt_communication.MQTTSubscriberThread(client, "192.168.44.10", 1883, mqtt_subscribe_topics, sp[1])
+        mqtt_test = mqtt_communication.MQTTSubscriberThread(client, mqtt_broker_address, mqtt_broker_port, mqtt_subscribe_topics, sp[1])
         mqtt_test.start()
 
         nex_reader = serial_port.NextionReader(sp[0], sp[1])

@@ -1,3 +1,9 @@
+serial:
+  port: ttyUSB0
+  baud: 115200
+mqtt:
+  ip: 192.168.44.10
+  port: 1883
 network:
   wifi:
     state: 'on'
