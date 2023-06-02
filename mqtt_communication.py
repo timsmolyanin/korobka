@@ -291,9 +291,15 @@ def wb_mqtt_switch(mqtt_dev_id: str, mqtt_control: str, val: int):
 def mqtt_set_heating_setpoint(mqtt_dev_id: str, val: int):
     try:
         # /devices/0x84fd27fffe6d74bb/controls/current_heating_setpoin
+        # mqtt_host = "localhost"
+        # publish.single(topic, val, hostname=mqtt_host)
+
+        # topic = f"/devices/{mqtt_dev_id}/controls/current_heating_setpoint"
+        topic = f"zigbee2mqtt/{mqtt_dev_id}/set"
+        cmd = {"current_heating_setpoint": val}
+        cmd_str = json.dumps(cmd)
         mqtt_host = "localhost"
-        topic = f"/devices/{mqtt_dev_id}/controls/current_heating_setpoint"
-        publish.single(topic, val, hostname=mqtt_host)
+        publish.single(topic, cmd_str, hostname=mqtt_host)
     except Exception as exc:
         print("mqtt_set_heating_setpoint", exc)
 
