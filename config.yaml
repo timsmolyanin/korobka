@@ -7,8 +7,8 @@ mqtt:
 network:
   wifi:
     state: 'on'
-    ssid: redmi
-    password: password
+    ssid: rp-link
+    password: meowkissme
   eth0:
     mode: static
     ip: jjjjjjj

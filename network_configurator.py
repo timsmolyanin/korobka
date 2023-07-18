@@ -89,7 +89,8 @@ def config_wifi_settings() -> None:
     wifi_password = None
     print("Начато конфигурирование Wi-Fi адаптера")
     print("Открытие файла конфигурации")
-    with open("/root/wk/korobka_app/korobka/config.yaml") as f:
+    # with open("/root/wk/korobka_app/korobka/config.yaml") as f:
+    with open("/root/wk/test/config.yaml") as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
 
     wifi_configs = config["network"]["wifi"]
@@ -98,6 +99,8 @@ def config_wifi_settings() -> None:
         print("Выключить Wi-Fi адаптер")
         nmcli.radio.wifi_off()
     elif wifi_state == "on":
+        print('Удалить старые wifi подключения')
+        delete_wifi_conn()
         print("Включить Wi-Fi адаптер")
         nmcli.radio.wifi_on()
         wifi_ssid = str(wifi_configs["ssid"])
@@ -109,10 +112,23 @@ def config_wifi_settings() -> None:
         except Exception as exc:
             print(exc)
 
+def delete_wifi_conn() -> None:
+    wifi_con_to_del = None
+    connections = nmcli.connection()
+    for conn in connections:
+        if conn.conn_type == 'wifi':
+            wifi_con_to_del = conn.name
+    
+        if wifi_con_to_del is not None:
+            try:
+                nmcli.connection.delete(name=wifi_con_to_del)
+            except Exception as exc:
+                print(exc)
 
 # for testing
 if __name__ == "__main__":
     # print(nmcli.device.wifi())
     # nmcli.connection.delete('wb=wlan0')
-    # config_wifi_settings()
-    config_eth_settings()
+    config_wifi_settings()
+    # config_eth_settings()
+
