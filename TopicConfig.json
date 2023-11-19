@@ -1,0 +1,154 @@
+{
+	"outletcontrol_34": {
+		"OutletGroup1": {
+			"Condition": "True",
+			"0": ["electric_ctrl.b0.picc=35", "electric_ctrl.b0.picc2=36"],
+			"1": ["electric_ctrl.b0.picc=37", "electric_ctrl.b0.picc2=38"]
+		},
+		"OutletGroup2": {
+			"Condition": "True",
+			"0": ["electric_ctrl.b1.picc=39", "electric_ctrl.b1.picc2=40"],
+			"1": ["electric_ctrl.b1.picc=41", "electric_ctrl.b1.picc2=42"]
+		},
+		"OutletGroup3": {
+			"Condition": "True",
+			"0": ["electric_ctrl.b2.picc=43", "electric_ctrl.b2.picc2=44"],
+			"1": ["electric_ctrl.b2.picc=45", "electric_ctrl.b2.picc2=46"]
+		}
+	},
+	"lightcontrol_145": {
+		"LightGroup1": {
+			"Condition": "True",
+			"0": ["light_ctrl.b1.picc=39", "light_ctrl.b1.picc2=40"],
+			"1": ["light_ctrl.b1.picc=41", "light_ctrl.b1.picc2=42"]
+		},
+		"LightGroup2": {
+			"Condition": "True",
+			"0": ["light_ctrl.b1.picc=39", "light_ctrl.b1.picc2=40"],
+			"1": ["light_ctrl.b1.picc=41", "light_ctrl.b1.picc2=42"]
+		},
+		"LightGroup3": {
+			"Condition": "True",
+			"0": ["light_ctrl.b2.picc=43", "light_ctrl.b2.picc2=44"],
+			"1": ["light_ctrl.b2.picc=45", "light_ctrl.b2.picc2=46"]
+		},
+		"LightGroup4": {
+			"Condition": "True",
+			"0": ["light_ctrl.b3.picc=47", "light_ctrl.b3.picc2=48"],
+			"1": ["light_ctrl.b3.picc=49", "light_ctrl.b3.picc2=50"]
+		},
+		"LightGroup5": {
+			"Condition": "True",
+			"0": ["light_ctrl.b4.picc=51", "light_ctrl.b4.picc2=52"],
+			"1": ["light_ctrl.b4.picc=53", "light_ctrl.b4.picc2=54"]
+		}
+	},
+	"0xa4c1387ec9c1d434": {
+		"water_leak": {
+			"Condition": "True",
+			"false": ["water_ctrl.q0.picc=65", "water_ctrl.q6.picc=207", "water_ctrl.q7.picc=201", 
+			"water_ctrl.q8.picc=208", "water_ctrl.q9.picc=204", "main.b4.picc=25", "main.b4.picc2=26"],
+			"true": ["water_ctrl.q0.picc=71", "water_ctrl.q6.picc=210", "water_ctrl.q7.picc=202", 
+			"water_ctrl.q8.picc=209", "water_ctrl.q9.picc=203", "main.b4.picc=27", "main.b4.picc2=28"]
+		}
+	},
+	"0xa4c1386c14f32cb1": {
+		"water_leak": {
+			"Condition": "True",
+			"false": ["water_ctrl.q1.picc=66", "water_ctrl.q6.picc=207", "water_ctrl.q7.picc=201", 
+			"water_ctrl.q8.picc=208", "water_ctrl.q9.picc=204", "main.b4.picc=25", "main.b4.picc2=26"],
+			"true": ["water_ctrl.q1.picc=72", "water_ctrl.q6.picc=210", "water_ctrl.q7.picc=202", 
+			"water_ctrl.q8.picc=209", "water_ctrl.q9.picc=203", "main.b4.picc=27", "main.b4.picc2=28"]
+		}
+	},
+	"network": {
+		"Ethernet IP": {
+			"Condition": "False",
+			"Cmd": "network_conf.t5.txt="
+		},
+		"Wi-Fi IP": {
+			"Condition": "False",
+			"Cmd": "network_conf.t6.txt="
+		},
+		"Wi-Fi IP Online Status": {
+			"Condition": "True",
+			"0": ["main.b0.picc=0", "main.b0.picc2=87"],
+			"1": ["main.b0.picc=1", "main.b0.picc2=2"]
+		}
+	},
+	"0x00158d00091c5b60": {
+		"battery": {
+			"Condition": "False",
+			"Cmd": "temp_ctrl.t20.txt="
+		},
+		"temperature": {
+			"Condition": "False",
+			"Cmd": "temp_ctrl.t21.txt="
+		}
+	},
+	"0x00158d00091c5aea": {
+		"battery": {
+			"Condition": "False",
+			"Cmd": "temp_ctrl.t25.txt="
+		},
+		"temperature": {
+			"Condition": "False",
+			"Cmd": "temp_ctrl.t24.txt="
+		}
+	},
+	"0x84fd27fffe0e709f": {
+		"battery_low": {
+			"Condition": "True",
+			"false": ["temp_ctrl.q8.picc=141", "temp_ctrl.q16.picc2=165"],
+			"true": ["temp_ctrl.q8.picc=142", "temp_ctrl.q16.picc2=164"]
+		},
+		"current_heating_setpoint": {
+			"Condition": "False",
+			"Cmd": "temp_ctrl.t26.txt="
+		}
+	},
+	"0x84fd27fffe6d74bb": {
+		"battery_low": {
+			"Condition": "True",
+			"false": ["temp_ctrl.q9.picc=144", "temp_ctrl.q17.picc2=167"],
+			"true": ["temp_ctrl.q9.picc=145", "temp_ctrl.q17.picc2=166"]
+		},
+		"current_heating_setpoint": {
+			"Condition": "False",
+			"Cmd": "temp_ctrl.t29.txt="
+		}
+	},
+	"wb-led_127": {
+		"RGB Strip": {
+			"Condition": "True",
+			"0": ["light_ctrl.b0.picc=35", "light_ctrl.b0.picc2=36"],
+			"1": ["light_ctrl.b0.picc=37", "light_ctrl.b0.picc2=38"]
+		}
+	},
+	"WaterConsuming": {
+		"Hot Last Day Consuming": {
+			"Condition": "False",
+			"Cmd": "water_ctrl.t4.txt="
+		},
+		"Hot Last Month Consuming": {
+			"Condition": "False",
+			"Cmd": "water_ctrl.t5.txt="
+		},
+		"Hot Total Consuming": {
+			"Condition": "False",
+			"Cmd": "water_ctrl.t3.txt="
+		},
+		"Cold Last Day Consuming": {
+			"Condition": "False",
+			"Cmd": "water_ctrl.t1.txt="
+		},
+		"Cold Last Month Consuming": {
+			"Condition": "False",
+			"Cmd": "water_ctrl.t2.txt="
+		},
+		"Cold Total Consuming": {
+			"Condition": "False",
+			"Cmd": "water_ctrl.t0.txt="
+		}
+	}
+}

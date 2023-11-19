@@ -89,8 +89,7 @@ def config_wifi_settings() -> None:
     wifi_password = None
     print("Начато конфигурирование Wi-Fi адаптера")
     print("Открытие файла конфигурации")
-    # with open("/root/wk/korobka_app/korobka/config.yaml") as f:
-    with open("/root/wk/test/config.yaml") as f:
+    with open("/root/wk/korobka_app/korobka/config.yaml") as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
 
     wifi_configs = config["network"]["wifi"]
