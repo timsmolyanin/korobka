@@ -2,45 +2,30 @@
 	"outletcontrol_34": {
 		"OutletGroup1": {
 			"Condition": "True",
-			"0": ["electric_ctrl.b0.picc=35", "electric_ctrl.b0.picc2=36"],
-			"1": ["electric_ctrl.b0.picc=37", "electric_ctrl.b0.picc2=38"]
+			"0": ["electric_ctrl.BTN_OUTLET1.picc=35", "electric_ctrl.BTN_OUTLET1.picc2=36"],
+			"1": ["electric_ctrl.BTN_OUTLET1.picc=37", "electric_ctrl.BTN_OUTLET1.picc2=38"]
 		},
 		"OutletGroup2": {
 			"Condition": "True",
-			"0": ["electric_ctrl.b1.picc=39", "electric_ctrl.b1.picc2=40"],
-			"1": ["electric_ctrl.b1.picc=41", "electric_ctrl.b1.picc2=42"]
-		},
-		"OutletGroup3": {
-			"Condition": "True",
-			"0": ["electric_ctrl.b2.picc=43", "electric_ctrl.b2.picc2=44"],
-			"1": ["electric_ctrl.b2.picc=45", "electric_ctrl.b2.picc2=46"]
+			"0": ["electric_ctrl.BTN_OUTLET2.picc=39", "electric_ctrl.BTN_OUTLET2.picc2=40"],
+			"1": ["electric_ctrl.BTN_OUTLET2.picc=41", "electric_ctrl.BTN_OUTLET2.picc2=42"]
 		}
 	},
 	"lightcontrol_145": {
-		"LightGroup1": {
-			"Condition": "True",
-			"0": ["light_ctrl.b1.picc=39", "light_ctrl.b1.picc2=40"],
-			"1": ["light_ctrl.b1.picc=41", "light_ctrl.b1.picc2=42"]
-		},
-		"LightGroup2": {
-			"Condition": "True",
-			"0": ["light_ctrl.b1.picc=39", "light_ctrl.b1.picc2=40"],
-			"1": ["light_ctrl.b1.picc=41", "light_ctrl.b1.picc2=42"]
-		},
 		"LightGroup3": {
 			"Condition": "True",
-			"0": ["light_ctrl.b2.picc=43", "light_ctrl.b2.picc2=44"],
-			"1": ["light_ctrl.b2.picc=45", "light_ctrl.b2.picc2=46"]
+			"0": ["light_ctrl.BTN_LIGHT3.picc=47", "light_ctrl.BTN_LIGHT3.picc2=48"],
+			"1": ["light_ctrl.BTN_LIGHT3.picc=49", "light_ctrl.BTN_LIGHT3.picc2=50"]
 		},
 		"LightGroup4": {
 			"Condition": "True",
-			"0": ["light_ctrl.b3.picc=47", "light_ctrl.b3.picc2=48"],
-			"1": ["light_ctrl.b3.picc=49", "light_ctrl.b3.picc2=50"]
+			"0": ["light_ctrl.BTN_LIGHT4.picc=51", "light_ctrl.BTN_LIGHT4.picc2=52"],
+			"1": ["light_ctrl.BTN_LIGHT4.picc=53", "light_ctrl.BTN_LIGHT4.picc2=54"]
 		},
 		"LightGroup5": {
 			"Condition": "True",
-			"0": ["light_ctrl.b4.picc=51", "light_ctrl.b4.picc2=52"],
-			"1": ["light_ctrl.b4.picc=53", "light_ctrl.b4.picc2=54"]
+			"0": ["light_ctrl.BTN_LIGHT5.picc=55", "light_ctrl.BTN_LIGHT5.picc2=56"],
+			"1": ["light_ctrl.BTN_LIGHT5.picc=57", "light_ctrl.BTN_LIGHT5.picc2=58"]
 		}
 	},
 	"0xa4c1387ec9c1d434": {
@@ -119,10 +104,23 @@
 		}
 	},
 	"wb-led_127": {
-		"RGB Strip": {
+		"Channels 1_2": {
 			"Condition": "True",
-			"0": ["light_ctrl.b0.picc=35", "light_ctrl.b0.picc2=36"],
-			"1": ["light_ctrl.b0.picc=37", "light_ctrl.b0.picc2=38"]
+			"0": ["light_ctrl.BTN_DIM_CH1.picc=35", "light_ctrl.BTN_DIM_CH1.picc2=36"],
+			"1": ["light_ctrl.BTN_DIM_CH1.picc=37", "light_ctrl.BTN_DIM_CH1.picc2=38"]
+		},
+		"Channels 3_4": {
+			"Condition": "True",
+			"0": ["light_ctrl.BTN_DIM_CH2.picc=39", "light_ctrl.BTN_DIM_CH2.picc2=40"],
+			"1": ["light_ctrl.BTN_DIM_CH2.picc=41", "light_ctrl.BTN_DIM_CH2.picc2=42"]
+		},
+		"Channels 1_2 Brightness": {
+			"Condition": "False",
+			"Cmd": "light_ctrl.DIM_ACT_TXT1.txt="
+		},
+		"Channels 3_4 Brightness": {
+			"Condition": "False",
+			"Cmd": "light_ctrl.DIM_ACT_TXT2.txt="
 		}
 	},
 	"WaterConsuming": {

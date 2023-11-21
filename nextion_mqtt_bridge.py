@@ -25,7 +25,7 @@ class NextionMqttBridge(Thread):
         self.baudrate = comport_baudrate
         self.broker = mqtt_broker
         self.port = mqtt_port
-        self.client_id = f"dialtek-mqtt-{random.randint(0, 100)}"
+        self.client_id = f"korobka-mqtt-{random.randint(0, 100)}"
         self.comport_open_timeout = 10
 
         self.__port_is_open = False
@@ -64,7 +64,7 @@ class NextionMqttBridge(Thread):
                 self.__port_is_open = serial_port_obj.isOpen()
                 self.__serial_port_obj = serial_port_obj
                 logger.debug(f"Connection is succesfull! {self.__port_is_open}")
-                # self.send_welcome_msg()
+                self.send_welcome_msg()
             except serial.serialutil.SerialException as exc:
                 logger.debug(f"Connection failed {self.__port_is_open}, {exc}")
                 self.__port_is_open = False
@@ -94,8 +94,8 @@ class NextionMqttBridge(Thread):
                         response = ""
             except Exception as exc:
                 logger.debug(f"Exception while serial_read method. {exc}")
-                self.__port_is_open = False
-                self.error_handler()
+                # self.__port_is_open = False
+                # self.error_handler()
 
 
     def serial_write(self, cmd):
@@ -157,12 +157,9 @@ class NextionMqttBridge(Thread):
             print(e)
     
 
-    # def send_welcome_msg(self):
-        # next_page_cmd = "page mesurments"
-        # for cmd in general_functions.welcome_cmds:
-        #     self.serial_write(cmd)
-        # time.sleep(2)
-        # self.serial_write(next_page_cmd)
+    def send_welcome_msg(self):
+        cmd = "main.q0.picc=86"
+        self.serial_write(cmd)
 
 
     def on_message(self, client, userdata, msg):
@@ -204,7 +201,7 @@ class NextionMqttBridge(Thread):
     
 
 def test():
-    comport = "COM10"
+    comport = "COM3"
     baudrate = 115200
     broker = "192.168.44.10"
     # broker = "127.0.0.1"

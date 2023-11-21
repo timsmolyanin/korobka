@@ -3,6 +3,8 @@ import paho.mqtt.client as mqtt
 import paho.mqtt.publish as publish
 import random
 import time
+import datetime
+import nmcli
 from loguru import logger
 
 # Теперь у нас будет один файл со всеми списками топиков, которые нам нужны            <---NEW--->
@@ -23,16 +25,122 @@ class ControlLogic(Thread):
         self.client = ""
         self.client_id = f"korobka-mqtt-{random.randint(0, 100)}"
         self.topic_list = topic_list
+
+        self.sens1_last_seen_value = 0
+        self.sens2_last_seen_value = 0
+        self.ms_since_epoch = 0
+
+
+        self.wifi_state = 0
+        
+        self.wifi_client_ssid = None
+        self.wifi_client_password = None
+        
+        self.eth_mode = None
+        self.eth_ip = None
+        self.eth_mask = None
+        self.eth_gateway = None
     
 
     def run(self):
         #Логгер
         logger.debug(f"Control logic {self.name} is started")
-
-        
         while True:
             time.sleep(1)
-            print(round(time.time() * 1000))
+            date= datetime.datetime.utcnow() - datetime.datetime(1970, 1, 1)
+            seconds =(date.total_seconds())
+            self.ms_since_epoch = round(seconds*1000)
+            test1 = self.ms_since_epoch - self.sens1_last_seen_value
+            test2 = self.ms_since_epoch - self.sens2_last_seen_value
+            # print(f"Sens1 last seen {test1} ms ago" )
+            # print(f"Sens2 last seen {test2} ms ago" )
+
+    def set_eth_mode(self, mode):
+        if mode == "static":
+            self.eth_mode = self.eth_static_mode
+            
+        if mode == "dhcp":
+            self.eth_mode = self.eth_dhcp_mode
+            
+        self.eth_mode()
+    
+    def set_eth_ip(self, value):
+        self.eth_ip = str(value)
+    
+    def set_eth_mask(self, value):
+        self.eth_mask = str(value)
+    
+    def set_eth_gateway(self, value):
+        self.eth_gateway = str(value)
+    
+    def delete_wifi_conn(self):
+        for conn in nmcli.connection():
+            if conn.conn_type == 'wifi':
+                try:
+                    nmcli.connection.delete(name=conn.name)
+                except Exception as exc:
+                    print(exc)
+                
+    def eth_static_mode(self):
+        if self.eth_gateway == "None":
+            logger.debug("Выполняется настройка статического IP адреса без шлюза")
+            nmcli.connection.modify("wb-eth0", {
+                "ipv4.addresses": f"{self.eth_ip}/{self.eth_mask}",
+                "ipv4.method": "manual"
+            })
+        else:
+            logger.debug("Выполняется настройка статического IP адреса с указанием шлюза")
+            nmcli.connection.modify("wb-eth0", {
+                "ipv4.addresses": f"{self.eth_ip}/{self.eth_mask}",
+                "ipv4.gateway": f"{self.eth_gateway}",
+                "ipv4.method": "manual"
+            })
+    
+    def eth_dhcp_mode(self):
+        logger.debug("Выполняется получение IP адреса от сервера DHCP")
+        nmcli.connection.modify('wb-eth0', {
+            "ipv4.method": "auto"
+        })
+    
+    def wifi_client_mode(self):
+        try:
+            logger.debug(f'Подключение к Wi-Fi сети "{self.wifi_client_ssid}", используя пароль "{self.wifi_client_password}"')
+            nmcli.device.wifi_connect(ssid=self.wifi_client_ssid, password=self.wifi_client_password)
+            logger.debug(f'Успешное подключение')
+        except Exception as exception:
+            logger.debug("Ошибка при подключении к сети:")
+            logger.debug(f"{exception}")
+
+
+    def set_wifi_client_ssid(self, value):
+        self.wifi_client_ssid = str(value)
+        
+    def set_wifi_client_password(self, value):
+        self.wifi_client_password = str(value)
+
+    def wifi_adapter_off(self):
+        nmcli.radio.wifi_off()
+        logger.debug(f"{self.name}: Wifi adapter is OFF")
+        
+    def wifi_adapter_on(self):
+        nmcli.radio.wifi_on()
+        self.delete_wifi_conn()
+        logger.debug(f"{self.name}: Wifi adapter is ON")
+
+    def set_wifi_state(self, value):
+        self.wifi_state = int(value)
+        if self.wifi_state == 0:
+            self.wifi_adapter_off()
+            return
+        if self.wifi_state == 1:
+            self.wifi_adapter_on()
+            pass
+
+    def sens2_last_seen(self, value):
+        self.sens2_last_seen_value = int(value)
+
+    def sens1_last_seen(self, value):
+        self.sens1_last_seen_value = int(value)
 
     
     def set_water_valves(self, value):
@@ -91,6 +199,15 @@ class ControlLogic(Thread):
             self.topic_list["input_cold_water_leak"] : self.set_water_valves,
             self.topic_list["input_hot_water_counter"] : self.calculate_hot_water_consuming,
             self.topic_list["input_cold_water_counter"] : self.calculate_cold_water_consuming,
+            self.topic_list["input_sens1_last_seen"] : self.sens1_last_seen,
+            self.topic_list["input_sens2_last_seen"] : self.sens2_last_seen,
+            self.topic_list["input_wifi_state"] : self.set_wifi_state,
+            self.topic_list["input_wifi_ssid"] : self.set_wifi_client_ssid,
+            self.topic_list["input_wifi_passw"] : self.set_wifi_client_password,
+            self.topic_list["input_eth0_mode"] : self.set_eth_mode,
+            self.topic_list["input_eth0_ip"] : self.set_eth_ip,
+            self.topic_list["input_eth0_mask"] : self.set_eth_mask,
+            self.topic_list["input_eth0_gateway"] : self.set_eth_gateway,
         }
         
         topic_name = msg.topic 
@@ -100,7 +217,6 @@ class ControlLogic(Thread):
             
                 
     def mqtt_start(self):
-        
         self.client = self.connect_mqtt(self.name)
         self.subscribe(self.client)
         self.client.loop_start()

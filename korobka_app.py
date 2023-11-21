@@ -7,7 +7,7 @@ import list_of_mqtt_topics
 
 
 def main():
-    comport = "COM5"
+    comport = "COM3"
     baudrate = 115200
     broker = "192.168.44.10"
     # broker = "127.0.0.1"
