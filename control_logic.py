@@ -6,8 +6,9 @@ import time
 import datetime
 import nmcli
 from loguru import logger
-from git import Repo
-from git.exc import GitCommandError
+import git
+from subprocess import call
+
 
 # Теперь у нас будет один файл со всеми списками топиков, которые нам нужны            <---NEW--->
 from list_of_mqtt_topics import mqtt_topics_control_logic
@@ -60,25 +61,29 @@ class ControlLogic(Thread):
             # print(f"Sens2 last seen {test2} ms ago" )
 
     def update_software(self, value):
-        print("update", value)
-        Repo.git.reset('--hard')
         try:
-            return self.git.pull(self.url)
-        except GitCommandError:
-            return self._update_in_clear_dir()
-    
-    def _update_in_clear_dir(self):
-        self._delete_files_or_dirs()
-        return self.git.pull(self.url)
+            logger.debug("Start to update")
+            g = git.cmd.Git("/root/wk/abc/korobka")
+            repo = git.Repo("/root/wk/abc/korobka")
+            logger.debug("Try to reset --hard")
+            repo.git.reset('--hard')
+            logger.debug("reset hard is finished, try to pull")
+            g.pull()
+            logger.debug("Pull finished")
+
+            logger.debug("try to restart service")
+            call(["systemctl", "restart", "korobka_app.service"])
+        except Exception as e:
+            logger.debug("update failed", e)
 
     def set_eth_mode(self, mode):
-        if mode == "static":
-            self.eth_mode = self.eth_static_mode
-            
-        if mode == "dhcp":
-            self.eth_mode = self.eth_dhcp_mode
-            
-        self.eth_mode()
+        if mode == "":
+            pass
+        else:
+            if mode == "static":
+                self.eth_mode = self.eth_static_mode
+            if mode == "dhcp":
+                self.eth_mode = self.eth_dhcp_mode
     
     def set_eth_ip(self, value):
         self.eth_ip = str(value)
@@ -105,7 +110,7 @@ class ControlLogic(Thread):
                 "ipv4.method": "manual"
             })
         else:
-            # logger.debug("Выполняется настройка статического IP адреса с указанием шлюза")
+            logger.debug("Выполняется настройка статического IP адреса с указанием шлюза")
             nmcli.connection.modify("wb-eth0", {
                 "ipv4.addresses": f"{self.eth_ip}/{self.eth_mask}",
                 "ipv4.gateway": f"{self.eth_gateway}",
@@ -113,7 +118,7 @@ class ControlLogic(Thread):
             })
     
     def eth_dhcp_mode(self):
-        # logger.debug("Выполняется получение IP адреса от сервера DHCP")
+        logger.debug("Выполняется получение IP адреса от сервера DHCP")
         nmcli.connection.modify('wb-eth0', {
             "ipv4.method": "auto"
         })
@@ -156,12 +161,13 @@ class ControlLogic(Thread):
 
     def set_wifi_state(self, value):
         self.wifi_state = int(value)
+        if self.wifi_state == 2:
+            return
         if self.wifi_state == 0:
             self.wifi_adapter_off()
             return
         if self.wifi_state == 1:
             self.wifi_adapter_on()
-            pass
 
     def sens2_last_seen(self, value):
         self.sens2_last_seen_value = int(value)
@@ -261,6 +267,16 @@ def test():
     pid_test = ControlLogic(broker, port, topic_list=mqtt_topics_control_logic, mqtt_user=None, mqtt_passw=None)
     pid_test.mqtt_start()
     pid_test.start()
+
+def test2():
+    print("Start to update")
+    g = git.cmd.Git("/root/wk/abc/korobka")
+    repo = git.Repo("/root/wk/abc/korobka")
+    print("Try to reset --hard")
+    repo.git.reset('--hard')
+    print("reset hard is finished, try to pull")
+    g.pull()
+    print("Pull finished")
         
 
 if __name__ == "__main__":
