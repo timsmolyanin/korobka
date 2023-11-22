@@ -31,7 +31,7 @@ class NextionMqttBridge(Thread):
         self.__port_is_open = False
         self.__serial_port_obj = None
 
-        config_file_path = "TopicConfig.json"
+        config_file_path = "/root/wk/korobka_app/korobka/TopicConfig.json"
         config_file = open(config_file_path)
         config = json.loads(config_file.read())
 

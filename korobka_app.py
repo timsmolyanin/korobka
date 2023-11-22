@@ -7,7 +7,7 @@ import list_of_mqtt_topics
 
 
 def main():
-    comport = "dev/ttyUSB0"
+    comport = "/dev/ttyUSB0"
     baudrate = 115200
     broker = "127.0.0.1"
     # broker = "127.0.0.1"

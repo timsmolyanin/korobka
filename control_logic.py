@@ -144,7 +144,6 @@ class ControlLogic(Thread):
         logger.debug(f"{self.name}: Wifi adapter is OFF")
         
     def wifi_adapter_on(self):
-        self.delete_wifi_conn()
         nmcli.radio.wifi_on()
         logger.debug(f"{self.name}: Wifi adapter is ON")
     
@@ -152,12 +151,10 @@ class ControlLogic(Thread):
         if int(value) == 0:
             return
         if int(value) == 1:
-            self.set_wifi_state(0)
+            self.delete_wifi_conn()
             self.set_wifi_state(1)
             time.sleep(5)
             self.wifi_client_mode()
-
-
 
     def set_wifi_state(self, value):
         self.wifi_state = int(value)
@@ -165,7 +162,6 @@ class ControlLogic(Thread):
             return
         if self.wifi_state == 0:
             self.wifi_adapter_off()
-            return
         if self.wifi_state == 1:
             self.wifi_adapter_on()
 
@@ -199,6 +195,11 @@ class ControlLogic(Thread):
         self.mqtt_publish_topic("/devices/WaterConsuming/controls/Cold Last Day Consuming/on", total_consuming)
         self.mqtt_publish_topic("/devices/WaterConsuming/controls/Cold Last Month Consuming/on", total_consuming)
         self.mqtt_publish_topic("/devices/WaterConsuming/controls/Cold Total Consuming/on", total_consuming)
+
+
+    def system_reboot(self, value):
+        logger.debug("try to restart service")
+        call(["reboot", ])
 
     
     def connect_mqtt(self, whois: str) -> mqtt:
@@ -242,6 +243,7 @@ class ControlLogic(Thread):
             self.topic_list["input_eth0_gateway"] : self.set_eth_gateway,
             self.topic_list["input_update_state"] : self.update_software,
             self.topic_list["input_wifi_accept"] : self.wifi_accept,
+            self.topic_list["input_system_reboot"] : self.system_reboot,
         }
         
         topic_name = msg.topic 

@@ -31,6 +31,7 @@ list_of_mqtt_topics = [("/devices/outletcontrol_34/controls/OutletGroup1", 0),
                         ("/devices/0x84fd27fffe6d74bb/controls/last_seen", 0),
                         ("/devices/SystemModule/controls/Update State", 0),
                         ("/devices/SystemModule/controls/WiFi Accept", 0),
+                        ("/devices/SystemModule/controls/Reboot", 0),
                         ]
 
 mqtt_topics_control_logic = {
@@ -49,4 +50,5 @@ mqtt_topics_control_logic = {
     "input_eth0_gateway": "/devices/SystemModule/controls/Eth0 Gateway IP",
     "input_update_state": "/devices/SystemModule/controls/Update State",
     "input_wifi_accept": "/devices/SystemModule/controls/WiFi Accept",
+    "input_system_reboot": "/devices/SystemModule/controls/Reboot",
 }
