@@ -28,7 +28,9 @@ list_of_mqtt_topics = [("/devices/outletcontrol_34/controls/OutletGroup1", 0),
                         ("/devices/WaterConsuming/controls/Cold Last Month Consuming", 0),
                         ("/devices/WaterConsuming/controls/Cold Total Consuming", 0),
                         ("/devices/0x00158d00091c5aea/controls/last_seen", 0),
-                        ("/devices/0x84fd27fffe6d74bb/controls/last_seen", 0)
+                        ("/devices/0x84fd27fffe6d74bb/controls/last_seen", 0),
+                        ("/devices/SystemModule/controls/Update State", 0),
+                        ("/devices/SystemModule/controls/WiFi Accept", 0),
                         ]
 
 mqtt_topics_control_logic = {
@@ -42,7 +44,9 @@ mqtt_topics_control_logic = {
     "input_wifi_ssid": "/devices/SystemModule/controls/WiFi SSID",
     "input_wifi_passw": "/devices/SystemModule/controls/WiFi Password",
     "input_eth0_mode": "/devices/SystemModule/controls/Eth0 Mode",
-    "input_eth0_ip": "/devices/SystemModule/controls/Eth0 IP 	",
+    "input_eth0_ip": "/devices/SystemModule/controls/Eth0 IP",
     "input_eth0_mask": "/devices/SystemModule/controls/Eth0 Mask",
     "input_eth0_gateway": "/devices/SystemModule/controls/Eth0 Gateway IP",
+    "input_update_state": "/devices/SystemModule/controls/Update State",
+    "input_wifi_accept": "/devices/SystemModule/controls/WiFi Accept",
 }

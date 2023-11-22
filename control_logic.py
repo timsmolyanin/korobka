@@ -6,6 +6,8 @@ import time
 import datetime
 import nmcli
 from loguru import logger
+from git import Repo
+from git.exc import GitCommandError
 
 # Теперь у нас будет один файл со всеми списками топиков, которые нам нужны            <---NEW--->
 from list_of_mqtt_topics import mqtt_topics_control_logic
@@ -40,6 +42,8 @@ class ControlLogic(Thread):
         self.eth_ip = None
         self.eth_mask = None
         self.eth_gateway = None
+
+        self.url = "https://github.com/timsmolyanin/korobka"
     
 
     def run(self):
@@ -54,6 +58,18 @@ class ControlLogic(Thread):
             test2 = self.ms_since_epoch - self.sens2_last_seen_value
             # print(f"Sens1 last seen {test1} ms ago" )
             # print(f"Sens2 last seen {test2} ms ago" )
+
+    def update_software(self, value):
+        print("update", value)
+        Repo.git.reset('--hard')
+        try:
+            return self.git.pull(self.url)
+        except GitCommandError:
+            return self._update_in_clear_dir()
+    
+    def _update_in_clear_dir(self):
+        self._delete_files_or_dirs()
+        return self.git.pull(self.url)
 
     def set_eth_mode(self, mode):
         if mode == "static":
@@ -89,7 +105,7 @@ class ControlLogic(Thread):
                 "ipv4.method": "manual"
             })
         else:
-            logger.debug("Выполняется настройка статического IP адреса с указанием шлюза")
+            # logger.debug("Выполняется настройка статического IP адреса с указанием шлюза")
             nmcli.connection.modify("wb-eth0", {
                 "ipv4.addresses": f"{self.eth_ip}/{self.eth_mask}",
                 "ipv4.gateway": f"{self.eth_gateway}",
@@ -97,7 +113,7 @@ class ControlLogic(Thread):
             })
     
     def eth_dhcp_mode(self):
-        logger.debug("Выполняется получение IP адреса от сервера DHCP")
+        # logger.debug("Выполняется получение IP адреса от сервера DHCP")
         nmcli.connection.modify('wb-eth0', {
             "ipv4.method": "auto"
         })
@@ -123,9 +139,20 @@ class ControlLogic(Thread):
         logger.debug(f"{self.name}: Wifi adapter is OFF")
         
     def wifi_adapter_on(self):
-        nmcli.radio.wifi_on()
         self.delete_wifi_conn()
+        nmcli.radio.wifi_on()
         logger.debug(f"{self.name}: Wifi adapter is ON")
+    
+    def wifi_accept(self, value):
+        if int(value) == 0:
+            return
+        if int(value) == 1:
+            self.set_wifi_state(0)
+            self.set_wifi_state(1)
+            time.sleep(5)
+            self.wifi_client_mode()
+
+
 
     def set_wifi_state(self, value):
         self.wifi_state = int(value)
@@ -193,7 +220,6 @@ class ControlLogic(Thread):
         client.on_message = self.on_message
     
     def on_message(self, client, userdata, msg):
-        
         config = {
             self.topic_list["input_hot_water_leak"] : self.set_water_valves,
             self.topic_list["input_cold_water_leak"] : self.set_water_valves,
@@ -208,6 +234,8 @@ class ControlLogic(Thread):
             self.topic_list["input_eth0_ip"] : self.set_eth_ip,
             self.topic_list["input_eth0_mask"] : self.set_eth_mask,
             self.topic_list["input_eth0_gateway"] : self.set_eth_gateway,
+            self.topic_list["input_update_state"] : self.update_software,
+            self.topic_list["input_wifi_accept"] : self.wifi_accept,
         }
         
         topic_name = msg.topic 
