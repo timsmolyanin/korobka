@@ -199,7 +199,7 @@ class ControlLogic(Thread):
 
     def system_reboot(self, value):
         logger.debug("try to restart service")
-        call(["reboot", ])
+        # call(["reboot", ])
 
     
     def connect_mqtt(self, whois: str) -> mqtt:
