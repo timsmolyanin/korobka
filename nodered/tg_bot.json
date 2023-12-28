@@ -1,0 +1,5646 @@
+[
+    {
+        "id": "1035a1c23e7e66bc",
+        "type": "tab",
+        "label": "Поток 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "7dce4cf18b4cf3d6",
+        "type": "telegram receiver",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "saveDataDir": "",
+        "filterCommands": false,
+        "x": 130,
+        "y": 40,
+        "wires": [
+            [
+                "9cccf669baca6ead"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "9cccf669baca6ead",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "Save chatid",
+        "func": "flow.set(\"chatId\", msg.payload.chatId)",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bfa0fbd75d4df482",
+        "type": "telegram command",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "command": "/помощь",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "794ffbdb30eee77f",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 440,
+        "y": 120,
+        "wires": [
+            [
+                "8d128b04e6092d56"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "8d128b04e6092d56",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 1",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Список команд:' + '\\r\\n' +\n        '/температура' + '\\r\\n' +\n        '/влажность' + '\\r\\n' +\n        '/давление' + '\\r\\n' +\n        '/батарея' + '\\r\\n' +\n        '/вода' + '\\r\\n' +\n        '/помощь' + '\\r\\n' + '\\r\\n' +\n        '/светN.вкл (где N от 1 до 6)' + '\\r\\n' +\n        '/светN.выкл (где N от 1 до 6)' + '\\r\\n' +\n        '/розеткиN.вкл (где N от 1 до 3)' + '\\r\\n' +\n        '/розеткиN.выкл (где N от 1 до 3)'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 120,
+        "wires": [
+            [
+                "3b79cc35886d6e17"
+            ]
+        ]
+    },
+    {
+        "id": "3b79cc35886d6e17",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 790,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "94cd4fb5ceda35e8",
+        "type": "telegram command",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "command": "/температура",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "794ffbdb30eee77f",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 110,
+        "y": 240,
+        "wires": [
+            [
+                "88e1141e9d9d9f60",
+                "52f4bce7707c4342"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "88e1141e9d9d9f60",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/0x00158d00091c5b60/controls/temperature"
+        ],
+        "x": 380,
+        "y": 240,
+        "wires": [
+            [
+                "4ff7adc6059a1efd"
+            ]
+        ]
+    },
+    {
+        "id": "4ff7adc6059a1efd",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 2",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Климатический датчик 1. Температура: ' + msg.payload + ' *C'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 240,
+        "wires": [
+            [
+                "c0faa4586ac442e7"
+            ]
+        ]
+    },
+    {
+        "id": "c0faa4586ac442e7",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 790,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "52f4bce7707c4342",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/0x00158d00091c5aea/controls/temperature"
+        ],
+        "x": 380,
+        "y": 300,
+        "wires": [
+            [
+                "31926f05bfdb8667"
+            ]
+        ]
+    },
+    {
+        "id": "31926f05bfdb8667",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 3",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Климатический датчик 2. Температура: ' + msg.payload + ' *C'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 300,
+        "wires": [
+            [
+                "42ac936efa0da2c5"
+            ]
+        ]
+    },
+    {
+        "id": "42ac936efa0da2c5",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 790,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2eae3e3c56f48e85",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/0xa4c1386c14f32cb1/controls/water_leak"
+        ],
+        "x": 360,
+        "y": 3420,
+        "wires": [
+            [
+                "891bda352e1abc89",
+                "1d3f7d918fcdb9b5"
+            ]
+        ]
+    },
+    {
+        "id": "0c2d66fb26a1871b",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 4",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Комната 2 протечка!'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 3520,
+        "wires": [
+            [
+                "b4c0c3334199541d"
+            ]
+        ]
+    },
+    {
+        "id": "b4c0c3334199541d",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 930,
+        "y": 3520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "891bda352e1abc89",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "true",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 590,
+        "y": 3420,
+        "wires": [
+            [
+                "eee816c4b1f81f18"
+            ]
+        ]
+    },
+    {
+        "id": "d4a5839b56081779",
+        "type": "inject",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "props": [],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "2",
+        "topic": "",
+        "x": 130,
+        "y": 3420,
+        "wires": [
+            [
+                "2eae3e3c56f48e85"
+            ]
+        ]
+    },
+    {
+        "id": "eee816c4b1f81f18",
+        "type": "trigger",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "num",
+        "op2type": "str",
+        "duration": "0",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "0",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 760,
+        "y": 3420,
+        "wires": [
+            [
+                "0c2d66fb26a1871b",
+                "d944e14079a69026"
+            ]
+        ]
+    },
+    {
+        "id": "c860fd3cb8df83a7",
+        "type": "inject",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 590,
+        "y": 3480,
+        "wires": [
+            [
+                "eee816c4b1f81f18"
+            ]
+        ]
+    },
+    {
+        "id": "675cca326be0bf37",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/0xa4c1387ec9c1d434/controls/water_leak"
+        ],
+        "x": 360,
+        "y": 3720,
+        "wires": [
+            [
+                "8a54f9f6566e46ad",
+                "551ab8050a04ba2f"
+            ]
+        ]
+    },
+    {
+        "id": "469de3646722f921",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 5",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Комната 1 протечка!'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 3780,
+        "wires": [
+            [
+                "e8056e280fa909d6"
+            ]
+        ]
+    },
+    {
+        "id": "e8056e280fa909d6",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 930,
+        "y": 3780,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8a54f9f6566e46ad",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "true",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 590,
+        "y": 3720,
+        "wires": [
+            [
+                "9b905fd774d00b04"
+            ]
+        ]
+    },
+    {
+        "id": "ba4e28f8e36da361",
+        "type": "inject",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "props": [],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "2",
+        "topic": "",
+        "x": 130,
+        "y": 3720,
+        "wires": [
+            [
+                "675cca326be0bf37"
+            ]
+        ]
+    },
+    {
+        "id": "9b905fd774d00b04",
+        "type": "trigger",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "num",
+        "op2type": "str",
+        "duration": "0",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "0",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 760,
+        "y": 3720,
+        "wires": [
+            [
+                "469de3646722f921",
+                "ef867e54148dcc59"
+            ]
+        ]
+    },
+    {
+        "id": "2b311743c9790b5b",
+        "type": "inject",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 590,
+        "y": 3780,
+        "wires": [
+            [
+                "9b905fd774d00b04"
+            ]
+        ]
+    },
+    {
+        "id": "551ab8050a04ba2f",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "false",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 570,
+        "y": 3840,
+        "wires": [
+            [
+                "ef867e54148dcc59"
+            ]
+        ]
+    },
+    {
+        "id": "ef867e54148dcc59",
+        "type": "trigger",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "str",
+        "op2type": "str",
+        "duration": "0",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "1",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 780,
+        "y": 3840,
+        "wires": [
+            [
+                "b7ac60b8ad07e754"
+            ]
+        ]
+    },
+    {
+        "id": "b7ac60b8ad07e754",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 6",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Комната 1 протечка отсутствует!'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 3920,
+        "wires": [
+            [
+                "ce2c8fcd93f9975f"
+            ]
+        ]
+    },
+    {
+        "id": "ce2c8fcd93f9975f",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 870,
+        "y": 3920,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1d3f7d918fcdb9b5",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "false",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 570,
+        "y": 3600,
+        "wires": [
+            [
+                "d944e14079a69026"
+            ]
+        ]
+    },
+    {
+        "id": "d944e14079a69026",
+        "type": "trigger",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "str",
+        "op2type": "str",
+        "duration": "0",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "1",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 760,
+        "y": 3580,
+        "wires": [
+            [
+                "dc1895341efe82a0"
+            ]
+        ]
+    },
+    {
+        "id": "dc1895341efe82a0",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 7",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Комната 2 протечка отсутствует!'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 3660,
+        "wires": [
+            [
+                "0621c2f8f0846c94"
+            ]
+        ]
+    },
+    {
+        "id": "0621c2f8f0846c94",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 930,
+        "y": 3660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0a491c15482de4fc",
+        "type": "telegram command",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "command": "/влажность",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "794ffbdb30eee77f",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 110,
+        "y": 380,
+        "wires": [
+            [
+                "1657685bd36f87a0",
+                "74174587caa37d32"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "1657685bd36f87a0",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/0x00158d00091c5b60/controls/humidity"
+        ],
+        "x": 370,
+        "y": 380,
+        "wires": [
+            [
+                "4a7c249067b2e5d7"
+            ]
+        ]
+    },
+    {
+        "id": "4a7c249067b2e5d7",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 8",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Климатический датчик 1. Влажность: ' + msg.payload + '%'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 380,
+        "wires": [
+            [
+                "53c1ee024060f572"
+            ]
+        ]
+    },
+    {
+        "id": "53c1ee024060f572",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 790,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "74174587caa37d32",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/0x00158d00091c5aea/controls/humidity"
+        ],
+        "x": 370,
+        "y": 440,
+        "wires": [
+            [
+                "6a0faac22b74e2ba"
+            ]
+        ]
+    },
+    {
+        "id": "6a0faac22b74e2ba",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 9",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Климатический датчик 2. Влажность: ' + msg.payload + '%'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 440,
+        "wires": [
+            [
+                "3a86cab2f5644cac"
+            ]
+        ]
+    },
+    {
+        "id": "3a86cab2f5644cac",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 790,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fa1589495afd840e",
+        "type": "telegram command",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "command": "/давление",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "794ffbdb30eee77f",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 100,
+        "y": 520,
+        "wires": [
+            [
+                "227c971a76acbb59",
+                "a494499ca499e947"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "227c971a76acbb59",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/0x00158d00091c5b60/controls/pressure"
+        ],
+        "x": 370,
+        "y": 520,
+        "wires": [
+            [
+                "910c1bcdc67f5326"
+            ]
+        ]
+    },
+    {
+        "id": "910c1bcdc67f5326",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 10",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Климатический датчик 1. Давление: ' + msg.payload + ' мбар'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 520,
+        "wires": [
+            [
+                "951db934813a634f"
+            ]
+        ]
+    },
+    {
+        "id": "951db934813a634f",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 790,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a494499ca499e947",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/0x00158d00091c5aea/controls/pressure"
+        ],
+        "x": 370,
+        "y": 580,
+        "wires": [
+            [
+                "8260d996848d5971"
+            ]
+        ]
+    },
+    {
+        "id": "8260d996848d5971",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 11",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Климатический датчик 2. Давление: ' + msg.payload + ' мбар'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 580,
+        "wires": [
+            [
+                "230804644c436d63"
+            ]
+        ]
+    },
+    {
+        "id": "230804644c436d63",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 790,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ae89182331e9a00e",
+        "type": "telegram command",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "command": "/батарея",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "794ffbdb30eee77f",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 100,
+        "y": 640,
+        "wires": [
+            [
+                "9285d751c90551a3",
+                "8bb8803df24fb33f",
+                "ee472dfc0c7d5af7",
+                "0c89d7197d5d2946",
+                "931d1e7068bd1343"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "9285d751c90551a3",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/0x00158d00091c5b60/controls/battery"
+        ],
+        "x": 370,
+        "y": 640,
+        "wires": [
+            [
+                "658108067c919048"
+            ]
+        ]
+    },
+    {
+        "id": "658108067c919048",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 12",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Климатический датчик 1. Батарея: ' + msg.payload + '%'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 640,
+        "wires": [
+            [
+                "164c4a276aaf844d"
+            ]
+        ]
+    },
+    {
+        "id": "164c4a276aaf844d",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 790,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8bb8803df24fb33f",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/0x00158d00091c5aea/controls/battery"
+        ],
+        "x": 370,
+        "y": 700,
+        "wires": [
+            [
+                "c0b10cf5d72bcd2f"
+            ]
+        ]
+    },
+    {
+        "id": "c0b10cf5d72bcd2f",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 13",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Климатический датчик 2. Батарея: ' + msg.payload + '%'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 700,
+        "wires": [
+            [
+                "94e01a44be56cf79"
+            ]
+        ]
+    },
+    {
+        "id": "94e01a44be56cf79",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 790,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ee472dfc0c7d5af7",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/0xa4c1387ec9c1d434/controls/battery"
+        ],
+        "x": 370,
+        "y": 760,
+        "wires": [
+            [
+                "9d2ab03138a12085"
+            ]
+        ]
+    },
+    {
+        "id": "9d2ab03138a12085",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 14",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Датчик протечки, комн. 1. Батарея: ' + msg.payload + '%'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 760,
+        "wires": [
+            [
+                "45d910870130965b"
+            ]
+        ]
+    },
+    {
+        "id": "45d910870130965b",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 790,
+        "y": 760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0c89d7197d5d2946",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/0xa4c1386c14f32cb1/controls/battery"
+        ],
+        "x": 360,
+        "y": 820,
+        "wires": [
+            [
+                "0584081c0d466b0b"
+            ]
+        ]
+    },
+    {
+        "id": "0584081c0d466b0b",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 15",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Датчик протечки, комн. 2. Батарея: ' + msg.payload + '%'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 820,
+        "wires": [
+            [
+                "24ea52244c8a1d80"
+            ]
+        ]
+    },
+    {
+        "id": "24ea52244c8a1d80",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 790,
+        "y": 820,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "931d1e7068bd1343",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/battery/controls/Percentage"
+        ],
+        "x": 330,
+        "y": 880,
+        "wires": [
+            [
+                "85e1d574c2ced293"
+            ]
+        ]
+    },
+    {
+        "id": "85e1d574c2ced293",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 16",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Контроллер. Батарея: ' + msg.payload + '%'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 880,
+        "wires": [
+            [
+                "ef4385e605d6b5df"
+            ]
+        ]
+    },
+    {
+        "id": "ef4385e605d6b5df",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 790,
+        "y": 880,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "44379c9dbb7d513a",
+        "type": "inject",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "props": [],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 130,
+        "y": 3320,
+        "wires": [
+            [
+                "5e8e539246e7fac2"
+            ]
+        ]
+    },
+    {
+        "id": "5e8e539246e7fac2",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/0xa4c13844020516ee/controls/state"
+        ],
+        "x": 360,
+        "y": 3320,
+        "wires": [
+            [
+                "b30eaaa24d708a70",
+                "4866dc0ab1bb799b"
+            ]
+        ]
+    },
+    {
+        "id": "b30eaaa24d708a70",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "ON",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 570,
+        "y": 3300,
+        "wires": [
+            [
+                "f3a8e40e5d3fb108"
+            ]
+        ]
+    },
+    {
+        "id": "4866dc0ab1bb799b",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "OFF",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 570,
+        "y": 3340,
+        "wires": [
+            [
+                "c1036e8b92a25843"
+            ]
+        ]
+    },
+    {
+        "id": "f3a8e40e5d3fb108",
+        "type": "trigger",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "num",
+        "op2type": "str",
+        "duration": "0",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "1",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 760,
+        "y": 3300,
+        "wires": [
+            [
+                "c1036e8b92a25843",
+                "cc262d60490a919f"
+            ]
+        ]
+    },
+    {
+        "id": "c1036e8b92a25843",
+        "type": "trigger",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "num",
+        "op2type": "str",
+        "duration": "0",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "1",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 760,
+        "y": 3340,
+        "wires": [
+            [
+                "f3a8e40e5d3fb108",
+                "682ffc2648521a54"
+            ]
+        ]
+    },
+    {
+        "id": "cc262d60490a919f",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 17",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Кран открыт!'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 3260,
+        "wires": [
+            [
+                "14ae4f04d1803bd6"
+            ]
+        ]
+    },
+    {
+        "id": "682ffc2648521a54",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 18",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Кран закрыт!'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 3380,
+        "wires": [
+            [
+                "eeebbdce3343e57c"
+            ]
+        ]
+    },
+    {
+        "id": "14ae4f04d1803bd6",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 990,
+        "y": 3300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "eeebbdce3343e57c",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 990,
+        "y": 3340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2a98e0700404f818",
+        "type": "telegram command",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "command": "/свет",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "794ffbdb30eee77f",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 70,
+        "y": 980,
+        "wires": [
+            [
+                "f3ba29337b1cb9e9",
+                "4079f2bcb0569e62",
+                "e0cd5181d7551b81",
+                "e3bf4cd1b479ccb8",
+                "ff6b8091c4237656",
+                "2d3a3479cd54a508"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "f3ba29337b1cb9e9",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/lightcontrol_145/controls/LightGroup1"
+        ],
+        "x": 340,
+        "y": 980,
+        "wires": [
+            [
+                "131c13dc79f3255a",
+                "945f1bb4746db003"
+            ]
+        ]
+    },
+    {
+        "id": "96f428a96585398f",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 19",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Свет. Группа 1 - Включено'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 960,
+        "wires": [
+            [
+                "303081acb6354e8a"
+            ]
+        ]
+    },
+    {
+        "id": "303081acb6354e8a",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 950,
+        "y": 960,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4079f2bcb0569e62",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/lightcontrol_145/controls/LightGroup2"
+        ],
+        "x": 340,
+        "y": 1080,
+        "wires": [
+            [
+                "eefd2ba941846ab1",
+                "6759ad926b0058db"
+            ]
+        ]
+    },
+    {
+        "id": "e0cd5181d7551b81",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/lightcontrol_145/controls/LightGroup3"
+        ],
+        "x": 340,
+        "y": 1180,
+        "wires": [
+            [
+                "400665c55b501806",
+                "6c31862054ae793f"
+            ]
+        ]
+    },
+    {
+        "id": "e3bf4cd1b479ccb8",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/lightcontrol_145/controls/LightGroup4"
+        ],
+        "x": 340,
+        "y": 1280,
+        "wires": [
+            [
+                "1aa504fbd25184f7",
+                "0d45e6282292b901"
+            ]
+        ]
+    },
+    {
+        "id": "ff6b8091c4237656",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/lightcontrol_145/controls/LightGroup5"
+        ],
+        "x": 340,
+        "y": 1380,
+        "wires": [
+            [
+                "54a07de5e73fc032",
+                "dc977d1f8867facd"
+            ]
+        ]
+    },
+    {
+        "id": "2d3a3479cd54a508",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/lightcontrol_145/controls/LightGroup6"
+        ],
+        "x": 340,
+        "y": 1480,
+        "wires": [
+            [
+                "ddc36b95b22ed5bd",
+                "107ebbfe7935826f"
+            ]
+        ]
+    },
+    {
+        "id": "131c13dc79f3255a",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 570,
+        "y": 960,
+        "wires": [
+            [
+                "96f428a96585398f"
+            ]
+        ]
+    },
+    {
+        "id": "8cb4a27adb98a326",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 24",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Свет. Группа 1 - Выключено'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 1000,
+        "wires": [
+            [
+                "9479bfd9dbd7d473"
+            ]
+        ]
+    },
+    {
+        "id": "9479bfd9dbd7d473",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 950,
+        "y": 1000,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "945f1bb4746db003",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 570,
+        "y": 1000,
+        "wires": [
+            [
+                "8cb4a27adb98a326"
+            ]
+        ]
+    },
+    {
+        "id": "3d7836ad0d165a4d",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 25",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Свет. Группа 2 - Включено'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 1060,
+        "wires": [
+            [
+                "97f40211a60245c1"
+            ]
+        ]
+    },
+    {
+        "id": "97f40211a60245c1",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 950,
+        "y": 1060,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "eefd2ba941846ab1",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 570,
+        "y": 1060,
+        "wires": [
+            [
+                "3d7836ad0d165a4d"
+            ]
+        ]
+    },
+    {
+        "id": "83ce1fad9f521e6a",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 26",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Свет. Группа 2 - Выключено'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 1100,
+        "wires": [
+            [
+                "67db77565ba8c693"
+            ]
+        ]
+    },
+    {
+        "id": "67db77565ba8c693",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 950,
+        "y": 1100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6759ad926b0058db",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 570,
+        "y": 1100,
+        "wires": [
+            [
+                "83ce1fad9f521e6a"
+            ]
+        ]
+    },
+    {
+        "id": "65451c2b9714a683",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 27",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Свет. Группа 3 - Включено'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 1160,
+        "wires": [
+            [
+                "6947bfa93c2db267"
+            ]
+        ]
+    },
+    {
+        "id": "6947bfa93c2db267",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 950,
+        "y": 1160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "400665c55b501806",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 570,
+        "y": 1160,
+        "wires": [
+            [
+                "65451c2b9714a683"
+            ]
+        ]
+    },
+    {
+        "id": "1e5c3922cf3b5352",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 28",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Свет. Группа 3 - Выключено'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 1200,
+        "wires": [
+            [
+                "5c449997a339d8e1"
+            ]
+        ]
+    },
+    {
+        "id": "5c449997a339d8e1",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 950,
+        "y": 1200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6c31862054ae793f",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 570,
+        "y": 1200,
+        "wires": [
+            [
+                "1e5c3922cf3b5352"
+            ]
+        ]
+    },
+    {
+        "id": "a7f11de67dbc39c9",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 29",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Свет. Группа 4 - Включено'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 1260,
+        "wires": [
+            [
+                "1abbc46fc79b1b80"
+            ]
+        ]
+    },
+    {
+        "id": "1abbc46fc79b1b80",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 950,
+        "y": 1260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1aa504fbd25184f7",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 570,
+        "y": 1260,
+        "wires": [
+            [
+                "a7f11de67dbc39c9"
+            ]
+        ]
+    },
+    {
+        "id": "3560eace748be1e8",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 30",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Свет. Группа 4 - Выключено'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 1300,
+        "wires": [
+            [
+                "047f12b017dc7e9f"
+            ]
+        ]
+    },
+    {
+        "id": "047f12b017dc7e9f",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 950,
+        "y": 1300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0d45e6282292b901",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 570,
+        "y": 1300,
+        "wires": [
+            [
+                "3560eace748be1e8"
+            ]
+        ]
+    },
+    {
+        "id": "6f29cc5ba83037e6",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 31",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Свет. Группа 5 - Включено'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 1360,
+        "wires": [
+            [
+                "5d3e57d0eb453ff2"
+            ]
+        ]
+    },
+    {
+        "id": "5d3e57d0eb453ff2",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 950,
+        "y": 1360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dc977d1f8867facd",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 570,
+        "y": 1360,
+        "wires": [
+            [
+                "6f29cc5ba83037e6"
+            ]
+        ]
+    },
+    {
+        "id": "de241ff22337347b",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 32",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Свет. Группа 5 - Выключено'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 1400,
+        "wires": [
+            [
+                "21865a5115ccb3c2"
+            ]
+        ]
+    },
+    {
+        "id": "21865a5115ccb3c2",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 950,
+        "y": 1400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "54a07de5e73fc032",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 570,
+        "y": 1400,
+        "wires": [
+            [
+                "de241ff22337347b"
+            ]
+        ]
+    },
+    {
+        "id": "941e6b6f8422b580",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 33",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Свет. Группа 6 - Включено'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 1460,
+        "wires": [
+            [
+                "7c75ec76d7d4da37"
+            ]
+        ]
+    },
+    {
+        "id": "7c75ec76d7d4da37",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 950,
+        "y": 1460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ddc36b95b22ed5bd",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 570,
+        "y": 1460,
+        "wires": [
+            [
+                "941e6b6f8422b580"
+            ]
+        ]
+    },
+    {
+        "id": "823b77a7c4bc0e0d",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 34",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Свет. Группа 6 - Выключено'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 1500,
+        "wires": [
+            [
+                "2748c10833b893b1"
+            ]
+        ]
+    },
+    {
+        "id": "2748c10833b893b1",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 950,
+        "y": 1500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "107ebbfe7935826f",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 570,
+        "y": 1500,
+        "wires": [
+            [
+                "823b77a7c4bc0e0d"
+            ]
+        ]
+    },
+    {
+        "id": "71f1eb3012d8a107",
+        "type": "telegram command",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "command": "/свет1.вкл",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "794ffbdb30eee77f",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 1160,
+        "y": 940,
+        "wires": [
+            [
+                "f9df57e95770d3fa"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "f9df57e95770d3fa",
+        "type": "wirenboard-out",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/lightcontrol_145/controls/LightGroup1"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "1",
+        "payloadType": "num",
+        "rbe": false,
+        "x": 1400,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "ceedafd26f3c1ee9",
+        "type": "telegram command",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "command": "/свет1.выкл",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "794ffbdb30eee77f",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 1170,
+        "y": 1000,
+        "wires": [
+            [
+                "40808fae6c51db59"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "40808fae6c51db59",
+        "type": "wirenboard-out",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/lightcontrol_145/controls/LightGroup1"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "0",
+        "payloadType": "num",
+        "rbe": false,
+        "x": 1400,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "7f474ada13d8400d",
+        "type": "telegram command",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "command": "/свет2.вкл",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "794ffbdb30eee77f",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 1160,
+        "y": 1060,
+        "wires": [
+            [
+                "179d3b84dc9212da"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "179d3b84dc9212da",
+        "type": "wirenboard-out",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/lightcontrol_145/controls/LightGroup2"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "1",
+        "payloadType": "num",
+        "rbe": false,
+        "x": 1400,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "b1a7d995ebbac073",
+        "type": "telegram command",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "command": "/свет2.выкл",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "794ffbdb30eee77f",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 1170,
+        "y": 1120,
+        "wires": [
+            [
+                "0a26159a00d188a3"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "0a26159a00d188a3",
+        "type": "wirenboard-out",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/lightcontrol_145/controls/LightGroup2"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "0",
+        "payloadType": "num",
+        "rbe": false,
+        "x": 1400,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "de5b843297e49368",
+        "type": "telegram command",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "command": "/свет3.вкл",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "794ffbdb30eee77f",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 1160,
+        "y": 1180,
+        "wires": [
+            [
+                "b8800edeab1e9d55"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "b8800edeab1e9d55",
+        "type": "wirenboard-out",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/lightcontrol_145/controls/LightGroup3"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "1",
+        "payloadType": "num",
+        "rbe": false,
+        "x": 1400,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "30035ffc075b1a42",
+        "type": "telegram command",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "command": "/свет3.выкл",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "794ffbdb30eee77f",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 1170,
+        "y": 1240,
+        "wires": [
+            [
+                "4ab2956832c08af2"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "4ab2956832c08af2",
+        "type": "wirenboard-out",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/lightcontrol_145/controls/LightGroup3"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "0",
+        "payloadType": "num",
+        "rbe": false,
+        "x": 1400,
+        "y": 1240,
+        "wires": []
+    },
+    {
+        "id": "451dfb86999a2954",
+        "type": "telegram command",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "command": "/свет4.вкл",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "794ffbdb30eee77f",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 1160,
+        "y": 1300,
+        "wires": [
+            [
+                "378c38133e8b6bcd"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "378c38133e8b6bcd",
+        "type": "wirenboard-out",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/lightcontrol_145/controls/LightGroup4"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "1",
+        "payloadType": "num",
+        "rbe": false,
+        "x": 1400,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "8af5d025663cac2a",
+        "type": "telegram command",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "command": "/свет4.выкл",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "794ffbdb30eee77f",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 1170,
+        "y": 1360,
+        "wires": [
+            [
+                "cd32b441577d33f9"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "cd32b441577d33f9",
+        "type": "wirenboard-out",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/lightcontrol_145/controls/LightGroup4"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "0",
+        "payloadType": "num",
+        "rbe": false,
+        "x": 1400,
+        "y": 1360,
+        "wires": []
+    },
+    {
+        "id": "cba50a9f4ec4616d",
+        "type": "telegram command",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "command": "/свет5.вкл",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "794ffbdb30eee77f",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 1160,
+        "y": 1420,
+        "wires": [
+            [
+                "95aa1c1f96b1dde8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "95aa1c1f96b1dde8",
+        "type": "wirenboard-out",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/lightcontrol_145/controls/LightGroup5"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "1",
+        "payloadType": "num",
+        "rbe": false,
+        "x": 1400,
+        "y": 1420,
+        "wires": []
+    },
+    {
+        "id": "acd97bdad36719b7",
+        "type": "telegram command",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "command": "/свет5.выкл",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "794ffbdb30eee77f",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 1170,
+        "y": 1480,
+        "wires": [
+            [
+                "26da616d3a757943"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "26da616d3a757943",
+        "type": "wirenboard-out",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/lightcontrol_145/controls/LightGroup5"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "0",
+        "payloadType": "num",
+        "rbe": false,
+        "x": 1400,
+        "y": 1480,
+        "wires": []
+    },
+    {
+        "id": "656d7c98a89e0d55",
+        "type": "telegram command",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "command": "/свет6.вкл",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "794ffbdb30eee77f",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 1160,
+        "y": 1540,
+        "wires": [
+            [
+                "a77181815a120db7"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "a77181815a120db7",
+        "type": "wirenboard-out",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/lightcontrol_145/controls/LightGroup6"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "1",
+        "payloadType": "num",
+        "rbe": false,
+        "x": 1400,
+        "y": 1540,
+        "wires": []
+    },
+    {
+        "id": "d7f098c2d95214e3",
+        "type": "telegram command",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "command": "/свет6.выкл",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "794ffbdb30eee77f",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 1170,
+        "y": 1600,
+        "wires": [
+            [
+                "a0d746e6f91a6ca3"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "a0d746e6f91a6ca3",
+        "type": "wirenboard-out",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/lightcontrol_145/controls/LightGroup6"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "0",
+        "payloadType": "num",
+        "rbe": false,
+        "x": 1400,
+        "y": 1600,
+        "wires": []
+    },
+    {
+        "id": "07e8b57f6b2a9c83",
+        "type": "telegram command",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "command": "/розетки",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "794ffbdb30eee77f",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 140,
+        "y": 1780,
+        "wires": [
+            [
+                "149449d54b5fb37c",
+                "c409746f960512d3",
+                "fc4fc7075e42a9b7"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "149449d54b5fb37c",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/outletcontrol_34/controls/OutletGroup1"
+        ],
+        "x": 410,
+        "y": 1780,
+        "wires": [
+            [
+                "c5748d1c9e4ef0ae",
+                "6f99061576045bd3"
+            ]
+        ]
+    },
+    {
+        "id": "a8d92fc95540b6da",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 35",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Розетки. Группа 1 - Включено'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 1760,
+        "wires": [
+            [
+                "3034f2bc80d3a52b"
+            ]
+        ]
+    },
+    {
+        "id": "3034f2bc80d3a52b",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1010,
+        "y": 1760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c5748d1c9e4ef0ae",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 1760,
+        "wires": [
+            [
+                "a8d92fc95540b6da"
+            ]
+        ]
+    },
+    {
+        "id": "1332edbd5307354f",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 36",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Розетки. Группа 1 - Выключено'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 1800,
+        "wires": [
+            [
+                "0583972ff7bb637d"
+            ]
+        ]
+    },
+    {
+        "id": "0583972ff7bb637d",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1010,
+        "y": 1800,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6f99061576045bd3",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 1800,
+        "wires": [
+            [
+                "1332edbd5307354f"
+            ]
+        ]
+    },
+    {
+        "id": "d0fa94aab1b4b55e",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 37",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Розетки. Группа 2 - Включено'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 1860,
+        "wires": [
+            [
+                "1b56ef6417a379c8"
+            ]
+        ]
+    },
+    {
+        "id": "1b56ef6417a379c8",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1010,
+        "y": 1860,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "59c742aa20145092",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 1860,
+        "wires": [
+            [
+                "d0fa94aab1b4b55e"
+            ]
+        ]
+    },
+    {
+        "id": "89e9b896e312df5e",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 38",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Розетки. Группа 2 - Выключено'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 1900,
+        "wires": [
+            [
+                "0ea3ce5ac178cc29"
+            ]
+        ]
+    },
+    {
+        "id": "0ea3ce5ac178cc29",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1010,
+        "y": 1900,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ca5a6538504644cd",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 1900,
+        "wires": [
+            [
+                "89e9b896e312df5e"
+            ]
+        ]
+    },
+    {
+        "id": "3d828671403d2226",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 39",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Розетки. Группа 3 - Включено'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 1960,
+        "wires": [
+            [
+                "f0429b0423ba2da5"
+            ]
+        ]
+    },
+    {
+        "id": "f0429b0423ba2da5",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1010,
+        "y": 1960,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d166e39585504c86",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 1960,
+        "wires": [
+            [
+                "3d828671403d2226"
+            ]
+        ]
+    },
+    {
+        "id": "83f3a9f28b93d560",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 40",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Розетки. Группа 3 - Выключено'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 2000,
+        "wires": [
+            [
+                "e6e2c98a48206f7c"
+            ]
+        ]
+    },
+    {
+        "id": "e6e2c98a48206f7c",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1010,
+        "y": 2000,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "412ef7592dcefc03",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 2000,
+        "wires": [
+            [
+                "83f3a9f28b93d560"
+            ]
+        ]
+    },
+    {
+        "id": "c409746f960512d3",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/outletcontrol_34/controls/OutletGroup2"
+        ],
+        "x": 410,
+        "y": 1880,
+        "wires": [
+            [
+                "59c742aa20145092",
+                "ca5a6538504644cd"
+            ]
+        ]
+    },
+    {
+        "id": "fc4fc7075e42a9b7",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/outletcontrol_34/controls/OutletGroup3"
+        ],
+        "x": 410,
+        "y": 1980,
+        "wires": [
+            [
+                "d166e39585504c86",
+                "412ef7592dcefc03"
+            ]
+        ]
+    },
+    {
+        "id": "fabe47c6105d27ed",
+        "type": "telegram command",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "command": "/розетки1.вкл",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "794ffbdb30eee77f",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 1210,
+        "y": 1740,
+        "wires": [
+            [
+                "37989759dc795e3d"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "37989759dc795e3d",
+        "type": "wirenboard-out",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/outletcontrol_34/controls/OutletGroup1"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "1",
+        "payloadType": "num",
+        "rbe": false,
+        "x": 1450,
+        "y": 1740,
+        "wires": []
+    },
+    {
+        "id": "3915e522e63985c0",
+        "type": "telegram command",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "command": "/розетки1.выкл",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "794ffbdb30eee77f",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 1220,
+        "y": 1800,
+        "wires": [
+            [
+                "ee0a1f4b386ac3a6"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "ee0a1f4b386ac3a6",
+        "type": "wirenboard-out",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/outletcontrol_34/controls/OutletGroup1"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "0",
+        "payloadType": "num",
+        "rbe": false,
+        "x": 1450,
+        "y": 1800,
+        "wires": []
+    },
+    {
+        "id": "e08c9f4bc7c7984b",
+        "type": "wirenboard-out",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/outletcontrol_34/controls/OutletGroup2"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "1",
+        "payloadType": "num",
+        "rbe": false,
+        "x": 1450,
+        "y": 1860,
+        "wires": []
+    },
+    {
+        "id": "2864b9d248d9a013",
+        "type": "wirenboard-out",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/outletcontrol_34/controls/OutletGroup2"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "0",
+        "payloadType": "num",
+        "rbe": false,
+        "x": 1450,
+        "y": 1920,
+        "wires": []
+    },
+    {
+        "id": "8c743b525ef01a2f",
+        "type": "wirenboard-out",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/outletcontrol_34/controls/OutletGroup3"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "1",
+        "payloadType": "num",
+        "rbe": false,
+        "x": 1450,
+        "y": 1980,
+        "wires": []
+    },
+    {
+        "id": "9faf85c157049426",
+        "type": "wirenboard-out",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/outletcontrol_34/controls/OutletGroup3"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "0",
+        "payloadType": "num",
+        "rbe": false,
+        "x": 1450,
+        "y": 2040,
+        "wires": []
+    },
+    {
+        "id": "096b9c34edcb7baa",
+        "type": "telegram command",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "command": "/розетки2.вкл",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "794ffbdb30eee77f",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 1210,
+        "y": 1860,
+        "wires": [
+            [
+                "e08c9f4bc7c7984b"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "d5311d7b0195fd46",
+        "type": "telegram command",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "command": "/розетки2.выкл",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "794ffbdb30eee77f",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 1220,
+        "y": 1920,
+        "wires": [
+            [
+                "2864b9d248d9a013"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "67f8f38c40d64416",
+        "type": "telegram command",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "command": "/розетки3.вкл",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "794ffbdb30eee77f",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 1210,
+        "y": 1980,
+        "wires": [
+            [
+                "8c743b525ef01a2f"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "0a1e6ee4f7dcd33d",
+        "type": "telegram command",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "command": "/розетки3.выкл",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "794ffbdb30eee77f",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 1220,
+        "y": 2040,
+        "wires": [
+            [
+                "9faf85c157049426"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "9ff02c3f965be997",
+        "type": "telegram command",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "command": "/start",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "794ffbdb30eee77f",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 550,
+        "y": 60,
+        "wires": [
+            [
+                "dab295d2dac19412"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "d9f76b163732691b",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 910,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "884ba1c975fec081",
+        "type": "telegram command",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "command": "/вода",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "794ffbdb30eee77f",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 130,
+        "y": 2420,
+        "wires": [
+            [
+                "62b5a5a76b79fac9",
+                "aa11f8b3371d553c",
+                "5d0538e7745de6a9",
+                "87ac3c8f92346d5c",
+                "b91a6312e48d1c7f",
+                "356ed1300612324c",
+                "bbce3ed2165bca59",
+                "d7df73454cb44df4",
+                "ba26c6663f167f16",
+                "0150eed83cc2d51f",
+                "75b463205fd551d8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "62b5a5a76b79fac9",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/watercontrol_79/controls/LeakSensor1"
+        ],
+        "x": 390,
+        "y": 2100,
+        "wires": [
+            [
+                "2f42667205de51a1",
+                "283219ec8dffdb47"
+            ]
+        ]
+    },
+    {
+        "id": "61e86c4179da5103",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 42",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Вода. Датчик протечки 1 - Протечка!'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 2080,
+        "wires": [
+            [
+                "50301ce2d0ed2949"
+            ]
+        ]
+    },
+    {
+        "id": "50301ce2d0ed2949",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1010,
+        "y": 2080,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2f42667205de51a1",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 2080,
+        "wires": [
+            [
+                "61e86c4179da5103"
+            ]
+        ]
+    },
+    {
+        "id": "c7e6642de6364d56",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 43",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Вода. Датчик протечки 1 - Протечка отсутствует'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 2120,
+        "wires": [
+            [
+                "1068db1ad2d6bbd6"
+            ]
+        ]
+    },
+    {
+        "id": "1068db1ad2d6bbd6",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1010,
+        "y": 2120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "283219ec8dffdb47",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 2120,
+        "wires": [
+            [
+                "c7e6642de6364d56"
+            ]
+        ]
+    },
+    {
+        "id": "aa11f8b3371d553c",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/watercontrol_79/controls/LeakSensor2"
+        ],
+        "x": 390,
+        "y": 2180,
+        "wires": [
+            [
+                "c75076122ff81c5b",
+                "8d4d984f3d8c42b6"
+            ]
+        ]
+    },
+    {
+        "id": "9647f51d73f10769",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 44",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Вода. Датчик протечки 2 - Протечка!'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 2160,
+        "wires": [
+            [
+                "4e2ce749ea84df5e"
+            ]
+        ]
+    },
+    {
+        "id": "4e2ce749ea84df5e",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1010,
+        "y": 2160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c75076122ff81c5b",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 2160,
+        "wires": [
+            [
+                "9647f51d73f10769"
+            ]
+        ]
+    },
+    {
+        "id": "1f59f9bbc03dea0f",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 45",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Вода. Датчик протечки 2 - Протечка отсутствует'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 2200,
+        "wires": [
+            [
+                "2a713874e41e865e"
+            ]
+        ]
+    },
+    {
+        "id": "2a713874e41e865e",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1010,
+        "y": 2200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8d4d984f3d8c42b6",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 2200,
+        "wires": [
+            [
+                "1f59f9bbc03dea0f"
+            ]
+        ]
+    },
+    {
+        "id": "5d0538e7745de6a9",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/watercontrol_79/controls/LeakSensor3"
+        ],
+        "x": 390,
+        "y": 2260,
+        "wires": [
+            [
+                "702a93b30c167f4c",
+                "f1504af44f1f8fb0"
+            ]
+        ]
+    },
+    {
+        "id": "1b2dc3425b10eed9",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 46",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Вода. Датчик протечки 3 - Протечка!'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 2240,
+        "wires": [
+            [
+                "f44b49e063ae7a76"
+            ]
+        ]
+    },
+    {
+        "id": "f44b49e063ae7a76",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1010,
+        "y": 2240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "702a93b30c167f4c",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 2240,
+        "wires": [
+            [
+                "1b2dc3425b10eed9"
+            ]
+        ]
+    },
+    {
+        "id": "f464d24c9e21b52a",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 47",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Вода. Датчик протечки 3 - Протечка отсутствует'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 2280,
+        "wires": [
+            [
+                "b6c01907372308aa"
+            ]
+        ]
+    },
+    {
+        "id": "b6c01907372308aa",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1010,
+        "y": 2280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f1504af44f1f8fb0",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 2280,
+        "wires": [
+            [
+                "f464d24c9e21b52a"
+            ]
+        ]
+    },
+    {
+        "id": "87ac3c8f92346d5c",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/watercontrol_79/controls/LeakSensor4"
+        ],
+        "x": 390,
+        "y": 2340,
+        "wires": [
+            [
+                "6c7a3dd09be795e1",
+                "c248fa52a4cd8183"
+            ]
+        ]
+    },
+    {
+        "id": "3aa0e7523bc6f9cd",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 48",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Вода. Датчик протечки 4 - Протечка!'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 2320,
+        "wires": [
+            [
+                "d7970bd3562aefd9"
+            ]
+        ]
+    },
+    {
+        "id": "d7970bd3562aefd9",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1010,
+        "y": 2320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6c7a3dd09be795e1",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 2320,
+        "wires": [
+            [
+                "3aa0e7523bc6f9cd"
+            ]
+        ]
+    },
+    {
+        "id": "796acd9fdf3bbcec",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 49",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Вода. Датчик протечки 4 - Протечка отсутствует'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 2360,
+        "wires": [
+            [
+                "a8eac9d7a376ba95"
+            ]
+        ]
+    },
+    {
+        "id": "a8eac9d7a376ba95",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1010,
+        "y": 2360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c248fa52a4cd8183",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 2360,
+        "wires": [
+            [
+                "796acd9fdf3bbcec"
+            ]
+        ]
+    },
+    {
+        "id": "b91a6312e48d1c7f",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/watercontrol_79/controls/LeakSensor5"
+        ],
+        "x": 390,
+        "y": 2420,
+        "wires": [
+            [
+                "3c2b5c552d15ab03",
+                "975b69e1348736e5"
+            ]
+        ]
+    },
+    {
+        "id": "e5f67350618dc349",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 50",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Вода. Датчик протечки 5 - Протечка!'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 2400,
+        "wires": [
+            [
+                "a9b3226c398a4f36"
+            ]
+        ]
+    },
+    {
+        "id": "a9b3226c398a4f36",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1010,
+        "y": 2400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3c2b5c552d15ab03",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 2400,
+        "wires": [
+            [
+                "e5f67350618dc349"
+            ]
+        ]
+    },
+    {
+        "id": "e3bccecacf2a51e6",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 51",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Вода. Датчик протечки 5 - Протечка отсутствует'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 2440,
+        "wires": [
+            [
+                "033c16feaf0e1f99"
+            ]
+        ]
+    },
+    {
+        "id": "033c16feaf0e1f99",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1010,
+        "y": 2440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "975b69e1348736e5",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 2440,
+        "wires": [
+            [
+                "e3bccecacf2a51e6"
+            ]
+        ]
+    },
+    {
+        "id": "356ed1300612324c",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/watercontrol_79/controls/LeakSensor6"
+        ],
+        "x": 390,
+        "y": 2500,
+        "wires": [
+            [
+                "a8968f74cd7c4ceb",
+                "ebf7e180a75f23b4"
+            ]
+        ]
+    },
+    {
+        "id": "9c672508ea1e4c8e",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 52",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Вода. Датчик протечки 6 - Протечка!'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 2480,
+        "wires": [
+            [
+                "ce65faa2fcd9c838"
+            ]
+        ]
+    },
+    {
+        "id": "ce65faa2fcd9c838",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1010,
+        "y": 2480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a8968f74cd7c4ceb",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 2480,
+        "wires": [
+            [
+                "9c672508ea1e4c8e"
+            ]
+        ]
+    },
+    {
+        "id": "0ea84afc540d7852",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 53",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Вода. Датчик протечки 6 - Протечка отсутствует'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 2520,
+        "wires": [
+            [
+                "dafc9cd14637e1b3"
+            ]
+        ]
+    },
+    {
+        "id": "dafc9cd14637e1b3",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1010,
+        "y": 2520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ebf7e180a75f23b4",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 2520,
+        "wires": [
+            [
+                "0ea84afc540d7852"
+            ]
+        ]
+    },
+    {
+        "id": "bbce3ed2165bca59",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/watercontrol_79/controls/Valve1"
+        ],
+        "x": 370,
+        "y": 2740,
+        "wires": [
+            [
+                "02aa234ebcfb28c9",
+                "45c6866371ebee55"
+            ]
+        ]
+    },
+    {
+        "id": "a53ba50ce420dbae",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 54",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Вода. Кран 1 - Открыт'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 2720,
+        "wires": [
+            [
+                "d57e47ef16a3f6b4"
+            ]
+        ]
+    },
+    {
+        "id": "d57e47ef16a3f6b4",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1010,
+        "y": 2720,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "02aa234ebcfb28c9",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 2720,
+        "wires": [
+            [
+                "a53ba50ce420dbae"
+            ]
+        ]
+    },
+    {
+        "id": "4d9de1a01209a5a4",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 55",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Вода. Кран 1 - Закрыт'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 2760,
+        "wires": [
+            [
+                "1538b651515ef822"
+            ]
+        ]
+    },
+    {
+        "id": "1538b651515ef822",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1010,
+        "y": 2760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "45c6866371ebee55",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 2760,
+        "wires": [
+            [
+                "4d9de1a01209a5a4"
+            ]
+        ]
+    },
+    {
+        "id": "d7df73454cb44df4",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/watercontrol_79/controls/Valve2"
+        ],
+        "x": 370,
+        "y": 2820,
+        "wires": [
+            [
+                "803c39581b602c6b",
+                "80d4cc3e04906de3"
+            ]
+        ]
+    },
+    {
+        "id": "591fbb2f3c393cc9",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 56",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Вода. Кран 2 - Открыт'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 2800,
+        "wires": [
+            [
+                "385b307166f890c4"
+            ]
+        ]
+    },
+    {
+        "id": "385b307166f890c4",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1010,
+        "y": 2800,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "803c39581b602c6b",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 2800,
+        "wires": [
+            [
+                "591fbb2f3c393cc9"
+            ]
+        ]
+    },
+    {
+        "id": "7ab3d389b88d9f65",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 57",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Вода. Кран 2 - Закрыт'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 2840,
+        "wires": [
+            [
+                "54ef23c26a3a9448"
+            ]
+        ]
+    },
+    {
+        "id": "54ef23c26a3a9448",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1010,
+        "y": 2840,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "80d4cc3e04906de3",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 2840,
+        "wires": [
+            [
+                "7ab3d389b88d9f65"
+            ]
+        ]
+    },
+    {
+        "id": "75b463205fd551d8",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/0xa4c13844020516ee/controls/state"
+        ],
+        "x": 380,
+        "y": 2900,
+        "wires": [
+            [
+                "d43326f30e914a26",
+                "03579992834c777f"
+            ]
+        ]
+    },
+    {
+        "id": "9216dce9f513056c",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 58",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Вода. Кран 3 (Zigbee) - Открыт'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 2880,
+        "wires": [
+            [
+                "489c6bd21afbb76a"
+            ]
+        ]
+    },
+    {
+        "id": "489c6bd21afbb76a",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1010,
+        "y": 2880,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d43326f30e914a26",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "ON",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 2880,
+        "wires": [
+            [
+                "9216dce9f513056c"
+            ]
+        ]
+    },
+    {
+        "id": "737acdbd79ff9c6e",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 59",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Вода. Кран 3 (Zigbee) - Закрыт'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 2920,
+        "wires": [
+            [
+                "6669fe0fe77f22a7"
+            ]
+        ]
+    },
+    {
+        "id": "6669fe0fe77f22a7",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1010,
+        "y": 2920,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "03579992834c777f",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "OFF",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 2920,
+        "wires": [
+            [
+                "737acdbd79ff9c6e"
+            ]
+        ]
+    },
+    {
+        "id": "ba26c6663f167f16",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/0xa4c1386c14f32cb1/controls/water_leak"
+        ],
+        "x": 400,
+        "y": 2580,
+        "wires": [
+            [
+                "647e26b51eeb0d25",
+                "150c9fa2b4191e5c"
+            ]
+        ]
+    },
+    {
+        "id": "6a067a2f10f5f297",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 60",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Вода. Датчик протечки (Комн. 2) - Протечка!'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 2560,
+        "wires": [
+            [
+                "00995003ace28382"
+            ]
+        ]
+    },
+    {
+        "id": "00995003ace28382",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1010,
+        "y": 2560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "647e26b51eeb0d25",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "true",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 2560,
+        "wires": [
+            [
+                "6a067a2f10f5f297"
+            ]
+        ]
+    },
+    {
+        "id": "eff16e81c6a631b1",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 61",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Вода. Датчик протечки (Комн. 2) - Протечка отсутствует'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 2600,
+        "wires": [
+            [
+                "ee164f24b408c4db"
+            ]
+        ]
+    },
+    {
+        "id": "ee164f24b408c4db",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1010,
+        "y": 2600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "150c9fa2b4191e5c",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "false",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 2600,
+        "wires": [
+            [
+                "eff16e81c6a631b1"
+            ]
+        ]
+    },
+    {
+        "id": "0150eed83cc2d51f",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/0xa4c1387ec9c1d434/controls/water_leak"
+        ],
+        "x": 400,
+        "y": 2660,
+        "wires": [
+            [
+                "ef18974753e4b59d",
+                "46ed8050a9e92512"
+            ]
+        ]
+    },
+    {
+        "id": "f98e4a42d8b0bea9",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 62",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Вода. Датчик протечки (Комн. 1) - Протечка!'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 2640,
+        "wires": [
+            [
+                "5f1d044fecdf80e2"
+            ]
+        ]
+    },
+    {
+        "id": "5f1d044fecdf80e2",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1010,
+        "y": 2640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ef18974753e4b59d",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "true",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 2640,
+        "wires": [
+            [
+                "f98e4a42d8b0bea9"
+            ]
+        ]
+    },
+    {
+        "id": "6e2abad7cd313907",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 63",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Вода. Датчик протечки (Комн. 1) - Протечка отсутствует'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 2680,
+        "wires": [
+            [
+                "eccbc2f7872a587d"
+            ]
+        ]
+    },
+    {
+        "id": "eccbc2f7872a587d",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1010,
+        "y": 2680,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "46ed8050a9e92512",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "false",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 2680,
+        "wires": [
+            [
+                "6e2abad7cd313907"
+            ]
+        ]
+    },
+    {
+        "id": "dab295d2dac19412",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 64",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Список команд:' + '\\r\\n' +\n        '/температура' + '\\r\\n' +\n        '/влажность' + '\\r\\n' +\n        '/давление' + '\\r\\n' +\n        '/батарея' + '\\r\\n' +\n        '/вода' + '\\r\\n' +\n        '/помощь' + '\\r\\n' + '\\r\\n' +\n        '/светN.вкл (где N от 1 до 6)' + '\\r\\n' +\n        '/светN.выкл (где N от 1 до 6)' + '\\r\\n' +\n        '/розеткиN.вкл (где N от 1 до 3)' + '\\r\\n' +\n        '/розеткиN.выкл (где N от 1 до 3)'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 60,
+        "wires": [
+            [
+                "d9f76b163732691b"
+            ]
+        ]
+    },
+    {
+        "id": "585570e5658c48dc",
+        "type": "inject",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "props": [],
+        "repeat": "600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "2",
+        "topic": "",
+        "x": 110,
+        "y": 4020,
+        "wires": [
+            [
+                "8ffdc0c4dc17dd1c"
+            ]
+        ]
+    },
+    {
+        "id": "8ffdc0c4dc17dd1c",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/0x00158d00091c5aea/controls/battery"
+        ],
+        "x": 330,
+        "y": 4020,
+        "wires": [
+            [
+                "4e6f74b9a3f7896e"
+            ]
+        ]
+    },
+    {
+        "id": "4e6f74b9a3f7896e",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "5",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 550,
+        "y": 4020,
+        "wires": [
+            [
+                "a31d8c8f29a80912"
+            ]
+        ]
+    },
+    {
+        "id": "a31d8c8f29a80912",
+        "type": "trigger",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "num",
+        "op2type": "str",
+        "duration": "0",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "0",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 720,
+        "y": 4020,
+        "wires": [
+            [
+                "aa5c8d6c96d31cc7"
+            ]
+        ]
+    },
+    {
+        "id": "aa5c8d6c96d31cc7",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 65",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Комната 2. Климатический датчик. Требуется замена батареи!'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 4080,
+        "wires": [
+            [
+                "eb01fdd6c18ab024"
+            ]
+        ]
+    },
+    {
+        "id": "eb01fdd6c18ab024",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 890,
+        "y": 4060,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bdc17e619e6710a0",
+        "type": "inject",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "3600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 530,
+        "y": 4080,
+        "wires": [
+            [
+                "a31d8c8f29a80912"
+            ]
+        ]
+    },
+    {
+        "id": "66d1c7a1dc61b560",
+        "type": "inject",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "props": [],
+        "repeat": "600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "2",
+        "topic": "",
+        "x": 110,
+        "y": 4140,
+        "wires": [
+            [
+                "eadb5d3b6e59383f"
+            ]
+        ]
+    },
+    {
+        "id": "eadb5d3b6e59383f",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/0x00158d00091c5b60/controls/battery"
+        ],
+        "x": 330,
+        "y": 4140,
+        "wires": [
+            [
+                "8b642036ea5bf208"
+            ]
+        ]
+    },
+    {
+        "id": "8b642036ea5bf208",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "5",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 550,
+        "y": 4140,
+        "wires": [
+            [
+                "f58daebac1f1e5e2"
+            ]
+        ]
+    },
+    {
+        "id": "f58daebac1f1e5e2",
+        "type": "trigger",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "num",
+        "op2type": "str",
+        "duration": "0",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "0",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 720,
+        "y": 4140,
+        "wires": [
+            [
+                "5956327715f3c6e0"
+            ]
+        ]
+    },
+    {
+        "id": "5956327715f3c6e0",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 66",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Комната 1. Климатический датчик. Требуется замена батареи!'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 4200,
+        "wires": [
+            [
+                "b8bad1cc16e74a38"
+            ]
+        ]
+    },
+    {
+        "id": "b8bad1cc16e74a38",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 890,
+        "y": 4180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ab75fd8454e6ad4b",
+        "type": "inject",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "3600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 530,
+        "y": 4200,
+        "wires": [
+            [
+                "f58daebac1f1e5e2"
+            ]
+        ]
+    },
+    {
+        "id": "c8ed109a61a1be7f",
+        "type": "inject",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "props": [],
+        "repeat": "600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "2",
+        "topic": "",
+        "x": 110,
+        "y": 4260,
+        "wires": [
+            [
+                "f072a7a68e569fda"
+            ]
+        ]
+    },
+    {
+        "id": "9a359a040f1980d6",
+        "type": "comment",
+        "z": "1035a1c23e7e66bc",
+        "name": "Событие для батареек",
+        "info": "",
+        "x": 140,
+        "y": 3960,
+        "wires": []
+    },
+    {
+        "id": "f072a7a68e569fda",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/0xa4c1387ec9c1d434/controls/battery"
+        ],
+        "x": 330,
+        "y": 4260,
+        "wires": [
+            [
+                "46f1a42c03d802d5"
+            ]
+        ]
+    },
+    {
+        "id": "46f1a42c03d802d5",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "5",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 550,
+        "y": 4260,
+        "wires": [
+            [
+                "71e0575ef9752159"
+            ]
+        ]
+    },
+    {
+        "id": "71e0575ef9752159",
+        "type": "trigger",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "num",
+        "op2type": "str",
+        "duration": "0",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "0",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 720,
+        "y": 4260,
+        "wires": [
+            [
+                "accb736f199af828"
+            ]
+        ]
+    },
+    {
+        "id": "accb736f199af828",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 67",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Комната 1. Датчик протечки. Требуется замена батареи!'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 4320,
+        "wires": [
+            [
+                "a83488b108bff0aa"
+            ]
+        ]
+    },
+    {
+        "id": "a83488b108bff0aa",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 890,
+        "y": 4300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f9b164863eb2eb4a",
+        "type": "inject",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "3600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 530,
+        "y": 4320,
+        "wires": [
+            [
+                "71e0575ef9752159"
+            ]
+        ]
+    },
+    {
+        "id": "4d1487c26079c4c9",
+        "type": "inject",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "props": [],
+        "repeat": "600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "2",
+        "topic": "",
+        "x": 110,
+        "y": 4380,
+        "wires": [
+            [
+                "6ec2a15cdeb70096"
+            ]
+        ]
+    },
+    {
+        "id": "6ec2a15cdeb70096",
+        "type": "wirenboard-get",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/0xa4c1386c14f32cb1/controls/battery"
+        ],
+        "x": 320,
+        "y": 4380,
+        "wires": [
+            [
+                "faa53e4c2231edbe"
+            ]
+        ]
+    },
+    {
+        "id": "faa53e4c2231edbe",
+        "type": "switch",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "5",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 550,
+        "y": 4380,
+        "wires": [
+            [
+                "7c119748a7f05480"
+            ]
+        ]
+    },
+    {
+        "id": "7c119748a7f05480",
+        "type": "trigger",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "num",
+        "op2type": "str",
+        "duration": "0",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "0",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 720,
+        "y": 4380,
+        "wires": [
+            [
+                "49e19d6811e8cd86"
+            ]
+        ]
+    },
+    {
+        "id": "49e19d6811e8cd86",
+        "type": "function",
+        "z": "1035a1c23e7e66bc",
+        "name": "function 68",
+        "func": "msg.payload = {\n    chatId: flow.get(\"chatId\"),\n    type: 'message',\n    content: 'Комната 2. Датчик протечки. Требуется замена батареи!'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 4440,
+        "wires": [
+            [
+                "3f557b0994631f2d"
+            ]
+        ]
+    },
+    {
+        "id": "3f557b0994631f2d",
+        "type": "telegram sender",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "bot": "794ffbdb30eee77f",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 890,
+        "y": 4420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cebc1792c66a4e66",
+        "type": "inject",
+        "z": "1035a1c23e7e66bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "3600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 530,
+        "y": 4440,
+        "wires": [
+            [
+                "7c119748a7f05480"
+            ]
+        ]
+    },
+    {
+        "id": "794ffbdb30eee77f",
+        "type": "telegram bot",
+        "botname": "Korobka-Bot",
+        "usernames": "",
+        "chatids": "",
+        "baseapiurl": "",
+        "updatemode": "polling",
+        "pollinterval": "1000",
+        "usesocks": false,
+        "sockshost": "",
+        "socksprotocol": "socks5",
+        "socksport": "6667",
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "botpath": "",
+        "localbotport": "8443",
+        "publicbotport": "8443",
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    },
+    {
+        "id": "e0ede3cc625c8b33",
+        "type": "wirenboard-server",
+        "name": "WB-MQTT-Broker",
+        "host": "localhost",
+        "mqtt_port": "1883",
+        "mqtt_username": "",
+        "mqtt_password": ""
+    }
+]
