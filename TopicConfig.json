@@ -44,5 +44,95 @@
 			"Condition": "Integer",
 			"Cmd": ["light_ctrl.SL_DIM_CH3.val="]
 		}
+	},
+	"0x00158d00091c5add": {
+		"temperature": {
+			"Condition": "False",
+			"Cmd": ["temp_ctrl.t21.txt="]
+		},
+		"battery": {
+			"Condition": "False",
+			"Cmd": ["temp_ctrl.t20.txt="]
+		}
+	},
+	"0x00158d0009753163": {
+		"temperature": {
+			"Condition": "False",
+			"Cmd": ["temp_ctrl.t27.txt="]
+		},
+		"battery": {
+			"Condition": "False",
+			"Cmd": ["temp_ctrl.t28.txt="]
+		}
+	},
+	"network": {
+		"Ethernet IP": {
+			"Condition": "False",
+			"Cmd": ["network_conf.t5.txt="]
+		},
+		"Wi-Fi IP": {
+			"Condition": "False",
+			"Cmd": ["network_conf.t6.txt="]
+		},
+		"Wi-Fi IP Online Status": {
+			"Condition": "True",
+			"0": ["main.b0.picc=0", "main.b0.picc2=85", "network_conf.bt0.val=0"],
+			"1": ["main.b0.picc=1", "main.b0.picc2=2", "network_conf.bt0.val=1"]
+		}
+	},
+	"DataAnalyzeModule": {
+		"LightGlobalState": {
+			"Condition": "True",
+			"0": ["main.b2.picc=11", "main.b2.picc2=12"],
+			"1": ["main.b2.picc=13", "main.b2.picc2=14"]
+		},
+		"OutletsGlobalState": {
+			"Condition": "True",
+			"0": ["main.b1.picc=5", "main.b1.picc2=6"],
+			"1": ["main.b1.picc=7", "main.b1.picc2=8"]
+		},
+		"LeakSensorTimeError": {
+			"Condition": "True",
+			"0": ["water_ctrl.q0.picc=63", "main.b4.picc=25", "main.b1.picc2=26"],
+			"1": ["water_ctrl.q0.picc=210", "main.b4.picc=23", "main.b4.picc2=24"]
+		},
+		"Temp1SensorTimeError": {
+			"Condition": "True",
+			"0": ["temp_ctrl.q24.picc=170", "temp_ctrl.t20.pco=23243", "temp_ctrl.t21.pco=23243",
+			"temp_ctrl.t22.pco=23243", "main.b3.picc=19", "main.b3.picc2=20", "temp_ctrl.q28.picc=178"],
+			"1": ["temp_ctrl.q24.picc=166", "temp_ctrl.t20.pco=23896", "temp_ctrl.t21.pco=23896",
+			"temp_ctrl.t22.pco=23896", "main.b3.picc=21", "main.b3.picc2=22", "temp_ctrl.q28.picc=174"]
+		},
+		"Temp2SensorTimeError": {
+			"Condition": "True",
+			"0": ["temp_ctrl.q26.picc=172", "temp_ctrl.t28.pco=23243", "temp_ctrl.t27.pco=23243",
+			"temp_ctrl.t26.pco=23243", "main.b3.picc=19", "main.b3.picc2=20", "temp_ctrl.q30.picc=180"],
+			"1": ["temp_ctrl.q26.picc=168", "temp_ctrl.t28.pco=23896", "temp_ctrl.t27.pco=23896",
+			"temp_ctrl.t26.pco=23896", "main.b3.picc=21", "main.b3.picc2=22", "temp_ctrl.q30.picc=176"]
+		},
+		"TempRegulator1Status": {
+			"Condition": "True",
+			"0": ["temp_ctrl.t21.pco=23243"],
+			"1": ["temp_ctrl.t21.pco=23896"],
+			"2": ["temp_ctrl.t21.pco=64133"]
+		},
+		"TempRegulator3Status": {
+			"Condition": "True",
+			"0": ["temp_ctrl.t27.pco=23243"],
+			"1": ["temp_ctrl.t27.pco=23896"],
+			"2": ["temp_ctrl.t27.pco=64133"]
+		}
+	},
+	"0x50325ffffe033772": {
+		"current_heating_setpoint": {
+			"Condition": "False",
+			"Cmd": ["temp_ctrl.t26.txt="]
+		}
+	},
+	"ElectrolHeaterModule": {
+		"Heater1 Setpoint": {
+			"Condition": "False",
+			"Cmd": ["temp_ctrl.t22.txt="]
+		}
 	}
 }
