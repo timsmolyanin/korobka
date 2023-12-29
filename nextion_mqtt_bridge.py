@@ -159,7 +159,7 @@ class NextionMqttBridge(Thread):
     
 
     def send_welcome_msg(self):
-        cmd = "main.q0.picc=86"
+        cmd = "main.q0.picc=84"
         self.serial_write(cmd)
 
 

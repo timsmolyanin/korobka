@@ -94,7 +94,7 @@
 		"LeakSensorTimeError": {
 			"Condition": "True",
 			"0": ["water_ctrl.q0.picc=63", "main.b4.picc=25", "main.b1.picc2=26"],
-			"1": ["water_ctrl.q0.picc=210", "main.b4.picc=23", "main.b4.picc2=24"]
+			"1": ["water_ctrl.q0.picc=219", "main.b4.picc=23", "main.b4.picc2=24"]
 		},
 		"Temp1SensorTimeError": {
 			"Condition": "True",
@@ -109,6 +109,11 @@
 			"temp_ctrl.t26.pco=23243", "main.b3.picc=19", "main.b3.picc2=20", "temp_ctrl.q30.picc=180"],
 			"1": ["temp_ctrl.q26.picc=168", "temp_ctrl.t28.pco=23896", "temp_ctrl.t27.pco=23896",
 			"temp_ctrl.t26.pco=23896", "main.b3.picc=21", "main.b3.picc2=22", "temp_ctrl.q30.picc=176"]
+		},
+		"ThermoHeaterTimeError": {
+			"Condition": "True",
+			"0": ["temp_ctrl.q8.picc=127", "main.b3.picc=19", "main.b3.picc=20"],
+			"1": ["temp_ctrl.q8.picc=128", "main.b3.picc=21", "main.b3.picc2=22"]
 		},
 		"TempRegulator1Status": {
 			"Condition": "True",
@@ -127,12 +132,38 @@
 		"current_heating_setpoint": {
 			"Condition": "False",
 			"Cmd": ["temp_ctrl.t26.txt="]
+		},
+		"battery_low": {
+			"Condition": "True",
+			"false": ["temp_ctrl.q8.picc=141", "temp_ctrl.q16.picc2=165"],
+			"true": ["temp_ctrl.q8.picc=142", "temp_ctrl.q16.picc2=164"]
 		}
 	},
 	"ElectrolHeaterModule": {
 		"Heater1 Setpoint": {
 			"Condition": "False",
 			"Cmd": ["temp_ctrl.t22.txt="]
+		}
+	},
+	"0xa4c138da7c2d6d15": {
+		"water_leak": {
+			"Condition": "True",
+			"false": ["water_ctrl.q0.picc=63", "water_ctrl.q7.picc=187", 
+			"water_ctrl.q9.picc=190", "main.b4.picc=25", "main.b4.picc2=26"],
+			"true": ["water_ctrl.q0.picc=69", "water_ctrl.q7.picc=188", 
+			"water_ctrl.q9.picc=189", "main.b4.picc=27", "main.b4.picc2=28"]
+		}
+	},
+	"wb-mwac_123": {
+		"K1": {
+			"Condition": "True",
+			"0": ["water_ctrl.q6.picc=193"],
+			"1": ["water_ctrl.q6.picc=196"]
+		},
+		"K2": {
+			"Condition": "True",
+			"0": ["water_ctrl.q8.picc=194"],
+			"1": ["water_ctrl.q8.picc=195"]
 		}
 	}
 }

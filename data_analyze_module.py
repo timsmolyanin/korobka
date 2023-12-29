@@ -29,6 +29,7 @@ class DataAnalyzeModule(Thread):
         self.water_leak_sensor_last_seen_value = 0
         self.temp1_sensor_last_seen_value = 0
         self.temp2_sensor_last_seen_value = 0
+        self.thermo_heater_last_seen_value = 0
         
         self.outlet_group1_state_value = False
         self.outlet_group2_state_value = False
@@ -49,15 +50,17 @@ class DataAnalyzeModule(Thread):
         self.temp2_sensor_error_flag = False
         self.water_leak_sensor_error_flag = False
 
-        self.publish_temp1_sensor_status = True
+        self.water_leak_sensor_state = False
 
         self.water_leak_sensor_norm_time = 2880
         self.temp_sensor_norm_time = 60
+        self.thermo_heater_norm_time = 60
 
         self.on_message_config = {
             self.topic_list["input_water_leak_last_seen"] : self.set_water_leak_last_seen,
             self.topic_list["input_temp_sens1_last_seen"] : self.set_temp_sens1_last_seen,
             self.topic_list["input_temp_sens2_last_seen"] : self.set_temp_sens2_last_seen,
+            self.topic_list["input_thermo_heater_last_seen"] : self.set_thermo_heater_last_seen,
             self.topic_list["input_outlet_group1_state"] : self.set_outlet_group1,
             self.topic_list["input_outlet_group2_state"] : self.set_outlet_group2,
             self.topic_list["input_outlet_group3_state"] : self.set_outlet_group3,
@@ -68,7 +71,8 @@ class DataAnalyzeModule(Thread):
             self.topic_list["input_temp_sens1_value"] : self.set_temp_sens1_value,
             self.topic_list["input_temp_sens2_value"] : self.set_temp_sens2_value,
             self.topic_list["input_electro_heater1_setpoint_value"] : self.set_electro_heater1_setpoint,
-            self.topic_list["input_water_heater1_setpoint_value"] : self.set_water_heater1_setpoint
+            self.topic_list["input_water_heater1_setpoint_value"] : self.set_water_heater1_setpoint,
+            self.topic_list["input_water_leak"] : self.water_leak_event,
         }
 
         self.mqtt = mqtt_communication_module.Mqtt(mqtt_broker, mqtt_port, mqtt_user, mqtt_password, self.name, self.on_message_config, self.topic_list)
@@ -80,31 +84,19 @@ class DataAnalyzeModule(Thread):
         logger.debug(f"Control logic {self.name} is started")
         while True:
             time.sleep(1)
-            current_time = self.get_current_unixms_time()
+            self.current_time = self.get_current_unixms_time()
 
             # Считаем кол-во минут с последнего сеанса связи с датчиками
-            water_leak_time_min = int((current_time - self.water_leak_sensor_last_seen_value) / 1000 / 60)
-            temp1_sensor_time_min = int((current_time - self.temp1_sensor_last_seen_value) / 1000 / 60)
-            temp2_sensor_time_min = int((current_time - self.temp2_sensor_last_seen_value) / 1000 / 60)
+            water_leak_time_min = int((self.current_time - self.water_leak_sensor_last_seen_value) / 1000 / 60)
+            temp1_sensor_time_min = int((self.current_time - self.temp1_sensor_last_seen_value) / 1000 / 60)
+            temp2_sensor_time_min = int((self.current_time - self.temp2_sensor_last_seen_value) / 1000 / 60)
+            thermo_heater_time_min = int((self.current_time - self.thermo_heater_last_seen_value) / 1000 / 60)
 
             self.mqtt.publish_topic(self.topic_list["output_leak_sens_last_time"], water_leak_time_min)
             self.mqtt.publish_topic(self.topic_list["output_temp1_sens_last_time"], temp1_sensor_time_min)
             self.mqtt.publish_topic(self.topic_list["output_temp2_sens_last_time"], temp2_sensor_time_min)
+            self.mqtt.publish_topic(self.topic_list["output_thermo_heater_last_time"], thermo_heater_time_min)
 
-            # Проверяем насколько давно выходили датчики на связь
-            if temp1_sensor_time_min > self.temp_sensor_norm_time:
-                self.mqtt.publish_topic(self.topic_list["output_temp_sens1_time_error"], 1)
-            elif temp1_sensor_time_min <= self.temp_sensor_norm_time:
-                self.mqtt.publish_topic(self.topic_list["output_temp_sens1_time_error"], 0)
-            if temp2_sensor_time_min > self.temp_sensor_norm_time:
-                self.mqtt.publish_topic(self.topic_list["output_temp_sens2_time_error"], 1)
-            elif temp2_sensor_time_min <= self.temp_sensor_norm_time:
-                self.mqtt.publish_topic(self.topic_list["output_temp_sens2_time_error"], 0)
-            if water_leak_time_min > self.water_leak_sensor_norm_time:
-                self.mqtt.publish_topic(self.topic_list["output_water_leak_time_error"], 1)
-            elif water_leak_time_min <= self.water_leak_sensor_norm_time:
-                self.mqtt.publish_topic(self.topic_list["output_water_leak_time_error"], 0)
-            
             # Проверяем кол-во включенных розеток. Если хоть одна включена - True, в противном случае - False
             if self.outlet_group1_state_value or self.outlet_group2_state_value or self.outlet_group3_state_value:
                 self.mqtt.publish_topic(self.topic_list["output_outlets_global_state"], 1)
@@ -116,25 +108,25 @@ class DataAnalyzeModule(Thread):
                 self.mqtt.publish_topic(self.topic_list["output_light_global_state"], 1)
             else:
                 self.mqtt.publish_topic(self.topic_list["output_light_global_state"], 0)
+    
+    def water_leak_event(self, value):
+        try:
+            if value == "false":
+                self.water_leak_sensor_state = False
+                self.mqtt.publish_topic(self.topic_list["output_water_tape1_state"], "0")
+                self.mqtt.publish_topic(self.topic_list["output_water_tape2_state"], "0")
+                self.mqtt.publish_topic(self.topic_list["output_water_alarm"], "0")
+            elif value == "true":
+                self.water_leak_sensor_state = True
+                self.mqtt.publish_topic(self.topic_list["output_water_tape1_state"], "1")
+                self.mqtt.publish_topic(self.topic_list["output_water_tape2_state"], "1")
+                self.mqtt.publish_topic(self.topic_list["output_water_alarm"], "1")
+        except Exception as e:
+            logger.debug(f"Ошибка при переводе str->int. {e}")
             
-            # Проверяем соответствует ли температуры уставке
-            if int(self.temp_sens1_value) < self.electrol_heater1_setpoint_value:   # Low
-                self.mqtt.publish_topic(self.topic_list["output_temp_regulator1_status"], 1)
-            elif int(self.temp_sens1_value) > self.electrol_heater1_setpoint_value: # High
-                self.mqtt.publish_topic(self.topic_list["output_temp_regulator1_status"], 2)
-            else:   # Fine
-                self.mqtt.publish_topic(self.topic_list["output_temp_regulator1_status"], 0)
-            
-            if int(self.temp_sens2_value) < self.water_heater1_setpoint_value:   # Low
-                self.mqtt.publish_topic(self.topic_list["output_temp_regulator3_status"], 1)
-            elif int(self.temp_sens2_value) > self.water_heater1_setpoint_value: # High
-                self.mqtt.publish_topic(self.topic_list["output_temp_regulator3_status"], 2)
-            else:   # Fine
-                self.mqtt.publish_topic(self.topic_list["output_temp_regulator3_status"], 0)
-
     def set_water_heater1_setpoint(self, value):
         try:
-            int_value = int(value)
+            int_value = int(float(value))
             self.water_heater1_setpoint_value = int_value
         except Exception as e:
             logger.debug(f"Ошибка при переводе str->int. {e}")
@@ -150,6 +142,14 @@ class DataAnalyzeModule(Thread):
         try:
             float_value = float(value)
             self.temp_sens2_value = float_value
+            # Проверяем соответствует ли температуры уставке
+            if not self.temp2_sensor_error_flag:
+                if int(self.temp_sens2_value) < self.water_heater1_setpoint_value:   # Low
+                    self.mqtt.publish_topic(self.topic_list["output_temp_regulator3_status"], 1)
+                elif int(self.temp_sens2_value) > self.water_heater1_setpoint_value: # High
+                    self.mqtt.publish_topic(self.topic_list["output_temp_regulator3_status"], 2)
+                else:   # Fine
+                    self.mqtt.publish_topic(self.topic_list["output_temp_regulator3_status"], 0)
         except Exception as e:
             logger.debug(f"Ошибка при переводе str->float. {e}")
     
@@ -157,6 +157,14 @@ class DataAnalyzeModule(Thread):
         try:
             float_value = float(value)
             self.temp_sens1_value = float_value
+            # Проверяем соответствует ли температуры уставке
+            if not self.temp1_sensor_error_flag:
+                if int(self.temp_sens1_value) < self.electrol_heater1_setpoint_value:   # Low
+                    self.mqtt.publish_topic(self.topic_list["output_temp_regulator1_status"], 1)
+                elif int(self.temp_sens1_value) > self.electrol_heater1_setpoint_value: # High
+                    self.mqtt.publish_topic(self.topic_list["output_temp_regulator1_status"], 2)
+                else:   # Fine
+                    self.mqtt.publish_topic(self.topic_list["output_temp_regulator1_status"], 0)
         except Exception as e:
             logger.debug(f"Ошибка при переводе str->float. {e}")
     
@@ -211,22 +219,58 @@ class DataAnalyzeModule(Thread):
 
     def set_water_leak_last_seen(self, value):
         try:
+            if not self.water_leak_sensor_state:
+                int_value = int(value)
+                self.current_time = self.get_current_unixms_time()
+                self.water_leak_sensor_last_seen_value = int_value
+                water_leak_time_min = int((self.current_time - self.water_leak_sensor_last_seen_value) / 1000 / 60)
+                if water_leak_time_min > self.water_leak_sensor_norm_time:
+                    self.mqtt.publish_topic(self.topic_list["output_water_leak_time_error"], 1)
+                elif water_leak_time_min <= self.water_leak_sensor_norm_time:
+                    self.mqtt.publish_topic(self.topic_list["output_water_leak_time_error"], 0)
+        except Exception as e:
+            logger.debug(f"Ошибка при переводе str->int. {e}")
+
+    def set_thermo_heater_last_seen(self, value):
+        try:
             int_value = int(value)
-            self.water_leak_sensor_last_seen_value = int_value
+            self.current_time = self.get_current_unixms_time()
+            self.thermo_heater_last_seen_value = int_value
+            thermo_heater_time_min = int((self.current_time - self.thermo_heater_last_seen_value) / 1000 / 60)
+            if thermo_heater_time_min > self.thermo_heater_norm_time:
+                self.mqtt.publish_topic(self.topic_list["output_thermo_heater_time_error"], 1)
+            elif thermo_heater_time_min <= self.thermo_heater_norm_time:
+                self.mqtt.publish_topic(self.topic_list["output_thermo_heater_time_error"], 0)
         except Exception as e:
             logger.debug(f"Ошибка при переводе str->int. {e}")
 
     def set_temp_sens1_last_seen(self, value):
         try:
             int_value = int(value)
+            self.current_time = self.get_current_unixms_time()
             self.temp1_sensor_last_seen_value = int_value
+            temp1_sensor_time_min = int((self.current_time - self.temp1_sensor_last_seen_value) / 1000 / 60)
+            if temp1_sensor_time_min > self.temp_sensor_norm_time:
+                self.temp1_sensor_error_flag = True
+                self.mqtt.publish_topic(self.topic_list["output_temp_sens1_time_error"], 1)
+            elif temp1_sensor_time_min <= self.temp_sensor_norm_time:
+                self.temp1_sensor_error_flag = False
+                self.mqtt.publish_topic(self.topic_list["output_temp_sens1_time_error"], 0)
         except Exception as e:
             logger.debug(f"Ошибка при переводе str->int. {e}")
 
     def set_temp_sens2_last_seen(self, value):
         try:
             int_value = int(value)
+            self.current_time = self.get_current_unixms_time()
             self.temp2_sensor_last_seen_value = int_value
+            temp2_sensor_time_min = int((self.current_time - self.temp1_sensor_last_seen_value) / 1000 / 60)
+            if temp2_sensor_time_min > self.temp_sensor_norm_time:
+                self.temp2_sensor_error_flag = True
+                self.mqtt.publish_topic(self.topic_list["output_temp_sens2_time_error"], 1)
+            elif temp2_sensor_time_min <= self.temp_sensor_norm_time:
+                self.temp2_sensor_error_flag = False
+                self.mqtt.publish_topic(self.topic_list["output_temp_sens2_time_error"], 0)
         except Exception as e:
             logger.debug(f"Ошибка при переводе str->int. {e}")         
                 

@@ -8,7 +8,7 @@ import list_of_mqtt_topics
 
 def main():
     # comport = "/dev/ttyUSB0"
-    comport = "COM3"
+    comport = "COM4"
     baudrate = 115200
     broker = "192.168.4.3"
     # broker = "127.0.0.1"
@@ -24,7 +24,6 @@ def main():
 
     data_analyze_mod = data_analyze_module.DataAnalyzeModule(broker, port, topic_list=mqtt_topics_data_analyze_module, mqtt_user=None, mqtt_password=None)
     data_analyze_mod.start()
-
 
 
 if __name__ == "__main__":
