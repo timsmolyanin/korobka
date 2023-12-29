@@ -1,51 +1,37 @@
 {
-	"wb-mr3_147": {
-		"K1": {
+	"outletcontrol_34": {
+		"OutletGroup1": {
 			"Condition": "True",
 			"0": ["electric_ctrl.BTN_OUTLET1.picc=35", "electric_ctrl.BTN_OUTLET1.picc2=36"],
 			"1": ["electric_ctrl.BTN_OUTLET1.picc=37", "electric_ctrl.BTN_OUTLET1.picc2=38"]
 		},
-		"K2": {
+		"OutletGroup2": {
 			"Condition": "True",
 			"0": ["electric_ctrl.BTN_OUTLET2.picc=39", "electric_ctrl.BTN_OUTLET2.picc2=40"],
 			"1": ["electric_ctrl.BTN_OUTLET2.picc=41", "electric_ctrl.BTN_OUTLET2.picc2=42"]
-		},
-		"K3": {
-			"Condition": "True",
-			"0": ["electric_ctrl.BTN_OUTLET3.picc=43", "electric_ctrl.BTN_OUTLET3.picc2=44"],
-			"1": ["electric_ctrl.BTN_OUTLET3.picc=45", "electric_ctrl.BTN_OUTLET3.picc2=46"]
 		}
 	},
-	"wb-led_66": {
-		"Channel 1": {
+	"wb-led_127": {
+		"Channel 1_2": {
 			"Condition": "True",
 			"0": ["light_ctrl.BTN_DIM_CH1.picc=35", "light_ctrl.BTN_DIM_CH1.picc2=36"],
 			"1": ["light_ctrl.BTN_DIM_CH1.picc=37", "light_ctrl.BTN_DIM_CH1.picc2=38"]
 		},
-		"Channel 2": {
+		"Channel 3_4": {
 			"Condition": "True",
 			"0": ["light_ctrl.BTN_DIM_CH2.picc=39", "light_ctrl.BTN_DIM_CH2.picc2=40"],
 			"1": ["light_ctrl.BTN_DIM_CH2.picc=41", "light_ctrl.BTN_DIM_CH2.picc2=42"]
 		},
-		"Channel 3": {
-			"Condition": "True",
-			"0": ["light_ctrl.BTN_DIM_CH3.picc=43", "light_ctrl.BTN_DIM_CH3.picc2=44"],
-			"1": ["light_ctrl.BTN_DIM_CH3.picc=45", "light_ctrl.BTN_DIM_CH3.picc2=46"]
-		},
-		"Channel 1 Brightness": {
+		"Channel 1_2 Brightness": {
 			"Condition": "Integer",
 			"Cmd": ["light_ctrl.SL_DIM_CH1.val="]
 		},
-		"Channel 2 Brightness": {
+		"Channel 3_4 Brightness": {
 			"Condition": "Integer",
 			"Cmd": ["light_ctrl.SL_DIM_CH2.val="]
-		},
-		"Channel 3 Brightness": {
-			"Condition": "Integer",
-			"Cmd": ["light_ctrl.SL_DIM_CH3.val="]
 		}
 	},
-	"0x00158d00091c5add": {
+	"0x00158d00091c5aea": {
 		"temperature": {
 			"Condition": "False",
 			"Cmd": ["temp_ctrl.t21.txt="]
@@ -55,7 +41,7 @@
 			"Cmd": ["temp_ctrl.t20.txt="]
 		}
 	},
-	"0x00158d0009753163": {
+	"0x00158d00091c5b60": {
 		"temperature": {
 			"Condition": "False",
 			"Cmd": ["temp_ctrl.t27.txt="]
@@ -128,7 +114,7 @@
 			"2": ["temp_ctrl.t27.pco=64133"]
 		}
 	},
-	"0x50325ffffe033772": {
+	"0x84fd27fffe0e709f": {
 		"current_heating_setpoint": {
 			"Condition": "False",
 			"Cmd": ["temp_ctrl.t26.txt="]
@@ -145,7 +131,7 @@
 			"Cmd": ["temp_ctrl.t22.txt="]
 		}
 	},
-	"0xa4c138da7c2d6d15": {
+	"0xa4c1386c14f32cb1": {
 		"water_leak": {
 			"Condition": "True",
 			"false": ["water_ctrl.q0.picc=63", "water_ctrl.q7.picc=187", 
@@ -154,7 +140,7 @@
 			"water_ctrl.q9.picc=189", "main.b4.picc=27", "main.b4.picc2=28"]
 		}
 	},
-	"wb-mwac_123": {
+	"watercontrol_79": {
 		"K1": {
 			"Condition": "True",
 			"0": ["water_ctrl.q6.picc=193"],
