@@ -7,11 +7,11 @@ import list_of_mqtt_topics
 
 
 def main():
-    # comport = "/dev/ttyUSB0"
-    comport = "COM4"
+    comport = "/dev/ttyUSB0"
+    # comport = "COM4"
     baudrate = 115200
-    broker = "192.168.4.3"
-    # broker = "127.0.0.1"
+    # broker = "192.168.4.3"
+    broker = "127.0.0.1"
     port = 1883
 
     mqtt_topics_data_analyze_module = list_of_mqtt_topics.mqtt_topics_data_analyze_module
