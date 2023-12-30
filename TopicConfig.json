@@ -11,6 +11,23 @@
 			"1": ["electric_ctrl.BTN_OUTLET2.picc=41", "electric_ctrl.BTN_OUTLET2.picc2=42"]
 		}
 	},
+	"lightcontrol_145": {
+		"LightGroup1": {
+			"Condition": "True",
+			"0": ["light_ctrl.BTN_LGHT3.picc=47", "light_ctrl.BTN_LGHT3.picc2=48"],
+			"1": ["light_ctrl.BTN_LGHT3.picc=49", "light_ctrl.BTN_LGHT3.picc2=50"]
+		},
+		"LightGroup2": {
+			"Condition": "True",
+			"0": ["light_ctrl.BTN_LGHT4.picc=51", "light_ctrl.BTN_LGHT4.picc2=52"],
+			"1": ["light_ctrl.BTN_LGHT4.picc=53", "light_ctrl.BTN_LGHT4.picc2=54"]
+		},
+		"LightGroup3": {
+			"Condition": "True",
+			"0": ["light_ctrl.BTN_LGHT5.picc=55", "light_ctrl.BTN_LGHT5.picc2=56"],
+			"1": ["light_ctrl.BTN_LGHT5.picc=57", "light_ctrl.BTN_LGHT5.picc2=58"]
+		}
+	},
 	"wb-led_127": {
 		"Channel 1_2": {
 			"Condition": "True",
@@ -98,7 +115,7 @@
 		},
 		"ThermoHeaterTimeError": {
 			"Condition": "True",
-			"0": ["temp_ctrl.q8.picc=127", "main.b3.picc=19", "main.b3.picc=20"],
+			"0": ["temp_ctrl.q8.picc=127", "main.b3.picc=19", "main.b3.picc2=20"],
 			"1": ["temp_ctrl.q8.picc=128", "main.b3.picc=21", "main.b3.picc2=22"]
 		},
 		"TempRegulator1Status": {
