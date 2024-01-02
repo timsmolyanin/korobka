@@ -117,7 +117,7 @@ class NextionMqttBridge(Thread):
     def nextion_callback(self, data):
         data_list = data.split("/")
         if data_list[0] == "0x84fd27fffe0e709f":
-            self.set_mqtt_topic_value(f"/devices/{data_list[0]}/controls/{data_list[1]}/", data_list[-1])
+            self.set_mqtt_topic_value(f"/devices/{data_list[0]}/controls/{data_list[1]}", data_list[-1])
         else:
             self.set_mqtt_topic_value(f"/devices/{data_list[0]}/controls/{data_list[1]}/on", data_list[-1])
     

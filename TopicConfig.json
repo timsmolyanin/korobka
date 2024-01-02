@@ -144,8 +144,8 @@
 		},
 		"ThermoHeaterBatteryStatus": {
 			"Condition": "True",
-			"0": ["temp_ctrl.q20.picc=159"],
-			"1": ["temp_ctrl.q20.picc=158"]
+			"0": ["temp_ctrl.q16.picc=151"],
+			"1": ["temp_ctrl.q16.picc=150"]
 		}
 	},
 	"0x84fd27fffe0e709f": {
