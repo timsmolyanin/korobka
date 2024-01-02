@@ -90,7 +90,7 @@ class DataAnalyzeModule(Thread):
 
     def run(self):
         #Логгер
-        logger.debug(f"Control logic {self.name} is started")
+        logger.debug(f"Data analyze module {self.name} is started")
         while True:
             time.sleep(1)
             self.current_time = self.get_current_unixms_time()
