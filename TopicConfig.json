@@ -116,6 +116,11 @@
 			"2": ["temp_ctrl.q26.picc=172", "temp_ctrl.t28.pco=23243", "temp_ctrl.t27.pco=23896", "temp_ctrl.t26.pco=23243"],
 			"3": ["temp_ctrl.q26.picc=172", "temp_ctrl.t28.pco=23243", "temp_ctrl.t27.pco=64133", "temp_ctrl.t26.pco=23243"]
 		},
+		"ThermoHeaterStatus": {
+			"Condition": "True",
+			"0": ["temp_ctrl.q8.picc=127"],
+			"1": ["temp_ctrl.q8.picc=126"]
+		},
 		"TemperatureGlobaErrorlFlag": {
 			"Condition": "True",
 			"0": ["main.b3.picc=19", "main.b3.picc2=20"],

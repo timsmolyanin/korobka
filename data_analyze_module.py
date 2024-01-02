@@ -46,6 +46,11 @@ class DataAnalyzeModule(Thread):
         self.temp_global_error_flag = False
         self.water_global_error_flag = False
 
+        self.temp1_battery_value = 0
+        self.temp2_battery_value = 0
+        self.water_battery_value = 0
+        self.heater_battery_value = ""
+
         self.temp_sens1_value = 0
         self.temp_sens2_value = 0
 
@@ -122,8 +127,15 @@ class DataAnalyzeModule(Thread):
             
             if thermo_heater_time_min > self.thermo_heater_norm_time:
                 self.temp_heater_status = 1
+                self.mqtt.publish_topic(self.topic_list["output_thermo_heater_status"], 1)
             elif thermo_heater_time_min <= self.thermo_heater_norm_time:
                 self.temp_heater_status = 0
+                self.mqtt.publish_topic(self.topic_list["output_thermo_heater_status"], 1)
+                                
+                if self.heater_battery_value == "false":
+                    self.mqtt.publish_topic(self.topic_list["output_thermo_heater_battery_status"], 0)
+                if self.heater_battery_value == "true":
+                    self.mqtt.publish_topic(self.topic_list["output_thermo_heater_battery_status"], 1)
             
             if self.temp1_local_status == 1 or self.temp2_local_status == 1 or self.temp_heater_status == 1:
                 self.temp_global_error_flag = True
@@ -132,7 +144,6 @@ class DataAnalyzeModule(Thread):
                 self.temp_global_error_flag = False
                 self.mqtt.publish_topic(self.topic_list["output_temp_global_error"], 0)
             
-                        
             if water_leak_time_min > self.water_leak_sensor_norm_time:
                 self.water_leak_status = 1
                 self.mqtt.publish_topic(self.topic_list["output_water_leak_status"], 1)
@@ -154,6 +165,11 @@ class DataAnalyzeModule(Thread):
                     self.mqtt.publish_topic(self.topic_list["output_temp1_status"], 3)  # High
                 else:
                     self.mqtt.publish_topic(self.topic_list["output_temp1_status"], 0)  # Fine
+                
+                if self.temp1_battery_value > 10:
+                    self.mqtt.publish_topic(self.topic_list["output_temp1_battery_status"], 0)
+                elif self.temp1_battery_value < 10:
+                    self.mqtt.publish_topic(self.topic_list["output_temp1_battery_status"], 1)
 
             if not self.temp2_local_status == 1:
                 if int(self.temp_sens2_value) < self.electrol_heater1_setpoint_value:   
@@ -162,6 +178,11 @@ class DataAnalyzeModule(Thread):
                     self.mqtt.publish_topic(self.topic_list["output_temp2_status"], 3)  # High
                 else:   
                     self.mqtt.publish_topic(self.topic_list["output_temp2_status"], 0)  # Fine
+                
+                if self.temp2_battery_value > 10:
+                    self.mqtt.publish_topic(self.topic_list["output_temp2_battery_status"], 0)
+                elif self.temp2_battery_value < 10:
+                    self.mqtt.publish_topic(self.topic_list["output_temp2_battery_status"], 1)
 
             # Проверяем кол-во включенных розеток. Если хоть одна включена - True, в противном случае - False
             if self.outlet_group1_state_value or self.outlet_group2_state_value:
@@ -176,26 +197,21 @@ class DataAnalyzeModule(Thread):
                 self.mqtt.publish_topic(self.topic_list["output_light_global_state"], 0)
     
     def thermo_heater_battery(self, value):
-        if not self.temp_heater_status == 1:
-            if value == "false":
-                self.mqtt.publish_topic(self.topic_list["output_thermo_heater_battery_status"], 0)
-            if value == "true":
-                self.mqtt.publish_topic(self.topic_list["output_thermo_heater_battery_status"], 1)
+        self.heater_battery_value = value
             
-
     def set_temp2_battery(self, value):
-        if not self.temp2_local_status == 1:
-            if int(value) > 10:
-                self.mqtt.publish_topic(self.topic_list["output_temp2_battery_status"], 0)
-            elif int(value) < 10:
-                self.mqtt.publish_topic(self.topic_list["output_temp2_battery_status"], 1)
+        try:
+            int_value = int(value)
+            self.temp2_battery_value = int_value
+        except Exception as e:
+            logger.debug(f"Ошибка при переводе str->int. {e}")
 
     def set_temp1_battery(self, value):
-        if not self.temp1_local_status == 1:
-            if int(value) > 10:
-                self.mqtt.publish_topic(self.topic_list["output_temp1_battery_status"], 0)
-            elif int(value) < 10:
-                self.mqtt.publish_topic(self.topic_list["output_temp1_battery_status"], 1)
+        try:
+            int_value = int(value)
+            self.temp1_battery_value = int_value
+        except Exception as e:
+            logger.debug(f"Ошибка при переводе str->int. {e}")
 
     def set_water_leak_battery(self, value):
         if not self.water_leak_status == 1:
@@ -322,9 +338,8 @@ class DataAnalyzeModule(Thread):
 
     def set_water_leak_last_seen(self, value):
         try:
-            if not self.water_leak_sensor_state:
-                int_value = int(value)
-                self.water_leak_sensor_last_seen_value = int_value
+            int_value = int(value)
+            self.water_leak_sensor_last_seen_value = int_value
         except Exception as e:
             logger.debug(f"Ошибка при переводе str->int. {e}")
 
