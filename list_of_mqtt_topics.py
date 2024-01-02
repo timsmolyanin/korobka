@@ -43,7 +43,7 @@ mqtt_topics_data_analyze_module = {
     "input_outlet_group1_state": "/devices/outletcontrol_34/controls/OutletGroup1",
     "input_outlet_group2_state": "/devices/outletcontrol_34/controls/OutletGroup2",
     "input_dim1_state": "/devices/wb-led_127/controls/Channel 1_2",
-    "input_dimt2_state": "/devices/wb-led_127/controls/Channel 3_4",
+    "input_dim2_state": "/devices/wb-led_127/controls/Channel 3_4",
     "input_light1_state": "/devices/lightcontrol_145/controls/LightGroup1",
     "input_light2_state": "/devices/lightcontrol_145/controls/LightGroup2",
     "input_light3_state": "/devices/lightcontrol_145/controls/LightGroup3",
