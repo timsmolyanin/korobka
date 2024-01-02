@@ -125,8 +125,28 @@
 			"Condition": "True",
 			"0": ["main.b3.picc=25", "main.b3.picc2=26"],
 			"1": ["main.b3.picc=27", "main.b3.picc2=28"]
+		},
+		"LeakSensorStatus": {
+			"Condition": "True",
+			"0": ["water_ctrl.q0.picc=63", "water_ctrl.q7.picc=187", "water_ctrl.q9.picc=190"],
+			"1": ["water_ctrl.q0.picc=210"],
+			"2": ["water_ctrl.q0.picc=69", "water_ctrl.q7.picc=188", "water_ctrl.q9.picc=189"]
+		},
+		"Temp1BatteryStatus": {
+			"Condition": "True",
+			"0": ["temp_ctrl.q28.picc=178"],
+			"1": ["temp_ctrl.q28.picc=182"]
+		},
+		"Temp2BatteryStatus": {
+			"Condition": "True",
+			"0": ["temp_ctrl.q30.picc=180"],
+			"1": ["temp_ctrl.q30.picc=184"]
+		},
+		"ThermoHeaterBatteryStatus": {
+			"Condition": "True",
+			"0": ["temp_ctrl.q20.picc=159"],
+			"1": ["temp_ctrl.q20.picc=158"]
 		}
-
 	},
 	"0x84fd27fffe0e709f": {
 		"current_heating_setpoint": {

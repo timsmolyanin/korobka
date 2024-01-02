@@ -125,19 +125,26 @@ class DataAnalyzeModule(Thread):
             elif thermo_heater_time_min <= self.thermo_heater_norm_time:
                 self.temp_heater_status = 0
             
-            if water_leak_time_min > self.water_leak_sensor_norm_time:
-                self.water_leak_status = 1
-                self.mqtt.publish_topic(self.topic_list["output_water_leak_status"], 1)
-            elif water_leak_time_min <= self.water_leak_sensor_norm_time:
-                self.water_leak_status = 0
-                self.mqtt.publish_topic(self.topic_list["output_water_leak_status"], 0)
-            
             if self.temp1_local_status == 1 or self.temp2_local_status == 1 or self.temp_heater_status == 1:
                 self.temp_global_error_flag = True
                 self.mqtt.publish_topic(self.topic_list["output_temp_global_error"], 1)
             else:
                 self.temp_global_error_flag = False
                 self.mqtt.publish_topic(self.topic_list["output_temp_global_error"], 0)
+            
+                        
+            if water_leak_time_min > self.water_leak_sensor_norm_time:
+                self.water_leak_status = 1
+                self.mqtt.publish_topic(self.topic_list["output_water_leak_status"], 1)
+            else:
+                self.water_leak_status = 0
+            
+            if self.water_leak_status == 1:
+                self.water_global_error_flag = True
+                self.mqtt.publish_topic(self.topic_list["output_water_global_error"], 1)
+            else:
+                self.water_global_error_flag = False
+                self.mqtt.publish_topic(self.topic_list["output_water_global_error"], 0)
             
              # Проверяем соответствует ли температуры уставке
             if not self.temp1_local_status == 1:
@@ -220,16 +227,19 @@ class DataAnalyzeModule(Thread):
 
     def water_leak_event(self, value):
         try:
-            if value == "false":
-                self.water_leak_sensor_state = False
-                self.mqtt.publish_topic(self.topic_list["output_water_tape1_state"], "0")
-                self.mqtt.publish_topic(self.topic_list["output_water_tape2_state"], "0")
-                self.mqtt.publish_topic(self.topic_list["output_water_alarm"], "0")
-            elif value == "true":
-                self.water_leak_sensor_state = True
-                self.mqtt.publish_topic(self.topic_list["output_water_tape1_state"], "1")
-                self.mqtt.publish_topic(self.topic_list["output_water_tape2_state"], "1")
-                self.mqtt.publish_topic(self.topic_list["output_water_alarm"], "1")
+            if not self.water_leak_status == 1:
+                if value == "false":
+                    self.water_leak_sensor_state = False
+                    self.mqtt.publish_topic(self.topic_list["output_water_tape1_state"], "0")
+                    self.mqtt.publish_topic(self.topic_list["output_water_tape2_state"], "0")
+                    self.mqtt.publish_topic(self.topic_list["output_water_alarm"], "0")
+                    self.mqtt.publish_topic(self.topic_list["output_water_leak_status"], 0)
+                elif value == "true":
+                    self.water_leak_sensor_state = True
+                    self.mqtt.publish_topic(self.topic_list["output_water_tape1_state"], "1")
+                    self.mqtt.publish_topic(self.topic_list["output_water_tape2_state"], "1")
+                    self.mqtt.publish_topic(self.topic_list["output_water_alarm"], "1")
+                    self.mqtt.publish_topic(self.topic_list["output_water_leak_status"], 2)
         except Exception as e:
             logger.debug(f"Ошибка при переводе str->int. {e}")
             
