@@ -14,18 +14,18 @@
 	"lightcontrol_145": {
 		"LightGroup1": {
 			"Condition": "True",
-			"0": ["light_ctrl.BTN_LGHT3.picc=47", "light_ctrl.BTN_LGHT3.picc2=48"],
-			"1": ["light_ctrl.BTN_LGHT3.picc=49", "light_ctrl.BTN_LGHT3.picc2=50"]
+			"0": ["light_ctrl.BTN_LIGHT3.picc=47", "light_ctrl.BTN_LIGHT3.picc2=48"],
+			"1": ["light_ctrl.BTN_LIGHT3.picc=49", "light_ctrl.BTN_LIGHT3.picc2=50"]
 		},
 		"LightGroup2": {
 			"Condition": "True",
-			"0": ["light_ctrl.BTN_LGHT4.picc=51", "light_ctrl.BTN_LGHT4.picc2=52"],
-			"1": ["light_ctrl.BTN_LGHT4.picc=53", "light_ctrl.BTN_LGHT4.picc2=54"]
+			"0": ["light_ctrl.BTN_LIGHT4.picc=51", "light_ctrl.BTN_LIGHT4.picc2=52"],
+			"1": ["light_ctrl.BTN_LIGHT4.picc=53", "light_ctrl.BTN_LIGHT4.picc2=54"]
 		},
 		"LightGroup3": {
 			"Condition": "True",
-			"0": ["light_ctrl.BTN_LGHT5.picc=55", "light_ctrl.BTN_LGHT5.picc2=56"],
-			"1": ["light_ctrl.BTN_LGHT5.picc=57", "light_ctrl.BTN_LGHT5.picc2=58"]
+			"0": ["light_ctrl.BTN_LIGHT5.picc=55", "light_ctrl.BTN_LIGHT5.picc2=56"],
+			"1": ["light_ctrl.BTN_LIGHT5.picc=57", "light_ctrl.BTN_LIGHT5.picc2=58"]
 		}
 	},
 	"wb-led_127": {

@@ -105,7 +105,6 @@ class DataAnalyzeModule(Thread):
             temp1_sensor_time_min = int((self.current_time - self.temp1_sensor_last_seen_value) / 1000 / 60)
             temp2_sensor_time_min = int((self.current_time - self.temp2_sensor_last_seen_value) / 1000 / 60)
             thermo_heater_time_min = int((self.current_time - self.thermo_heater_last_seen_value) / 1000 / 60)
-            print(water_leak_time_min, temp1_sensor_time_min, temp2_sensor_time_min, thermo_heater_time_min)
 
             self.mqtt.publish_topic(self.topic_list["output_leak_sens_last_time"], water_leak_time_min)
             self.mqtt.publish_topic(self.topic_list["output_temp1_sens_last_time"], temp1_sensor_time_min)
@@ -130,7 +129,7 @@ class DataAnalyzeModule(Thread):
                 self.mqtt.publish_topic(self.topic_list["output_thermo_heater_status"], 1)
             elif thermo_heater_time_min <= self.thermo_heater_norm_time:
                 self.temp_heater_status = 0
-                self.mqtt.publish_topic(self.topic_list["output_thermo_heater_status"], 1)
+                self.mqtt.publish_topic(self.topic_list["output_thermo_heater_status"], 0)
                                 
                 if self.heater_battery_value == "false":
                     self.mqtt.publish_topic(self.topic_list["output_thermo_heater_battery_status"], 0)

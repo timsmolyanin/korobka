@@ -26,7 +26,10 @@ list_of_mqtt_topics = [("/devices/wb-led_127/controls/Channels 1_2", 0),
                         ("/devices/0x84fd27fffe0e709f/controls/current_heating_setpoint", 0),
                         ("/devices/ElectrolHeaterModule/controls/Heater1 Setpoint", 0),
                         ("/devices/watercontrol_79/controls/K1", 0),
-                        ("/devices/watercontrol_79/controls/K2", 0)
+                        ("/devices/watercontrol_79/controls/K2", 0),
+                        ("/devices/DataAnalyzeModule/controls/Temp1BatteryStatus", 0),
+                        ("/devices/DataAnalyzeModule/controls/Temp2BatteryStatus", 0),
+                        ("/devices/DataAnalyzeModule/controls/ThermoHeaterBatteryStatus", 0),
                         ]
 
 mqtt_topics_data_analyze_module = {

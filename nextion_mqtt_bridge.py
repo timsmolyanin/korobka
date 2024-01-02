@@ -116,7 +116,10 @@ class NextionMqttBridge(Thread):
 
     def nextion_callback(self, data):
         data_list = data.split("/")
-        self.set_mqtt_topic_value(f"/devices/{data_list[0]}/controls/{data_list[1]}/on", data_list[-1])
+        if data_list[0] == "0x84fd27fffe0e709f":
+            self.set_mqtt_topic_value(f"/devices/{data_list[0]}/controls/{data_list[1]}/", data_list[-1])
+        else:
+            self.set_mqtt_topic_value(f"/devices/{data_list[0]}/controls/{data_list[1]}/on", data_list[-1])
     
 
     def error_handler(self):
@@ -212,6 +215,17 @@ def test():
     nextion_mqtt_bridge.start()
     nextion_mqtt_bridge.mqtt_start()
 
+def mqtt_set_heating_setpoint(mqtt_dev_id: str, val: int):
+    try:
+        # /devices/0x84fd27fffe6d74bb/controls/current_heating_setpoin
+        mqtt_host = "192.168.4.3"
+        # /devices/0x50325ffffe033772/controls/current_heating_setpoint
+        topic = f"/devices/{mqtt_dev_id}/controls/current_heating_setpoint"
+        publish.single(topic, val, hostname=mqtt_host)
+    except Exception as exc:
+        print("mqtt_set_heating_setpoint", exc)
+
 
 if __name__ == "__main__":
+    # mqtt_set_heating_setpoint("0x50325ffffe033772", 18)
     test()
