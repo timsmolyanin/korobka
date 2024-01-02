@@ -132,11 +132,6 @@
 		"current_heating_setpoint": {
 			"Condition": "False",
 			"Cmd": ["temp_ctrl.t26.txt="]
-		},
-		"battery_low": {
-			"Condition": "True",
-			"false": ["temp_ctrl.q8.picc=141", "temp_ctrl.q16.picc2=165"],
-			"true": ["temp_ctrl.q8.picc=142", "temp_ctrl.q16.picc2=164"]
 		}
 	},
 	"ElectrolHeaterModule": {
