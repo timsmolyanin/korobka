@@ -356,7 +356,7 @@ class DataAnalyzeModule(Thread):
 
 
 def test():
-    broker = "192.168.4.3"
+    broker = "127.0.0.1"
     port = 1883
 
     pid_test = DataAnalyzeModule(broker, port, topic_list=mqtt_topics_data_analyze_module, mqtt_user=None, mqtt_password=None)

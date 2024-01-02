@@ -29,21 +29,21 @@
 		}
 	},
 	"wb-led_127": {
-		"Channel 1_2": {
+		"Channels 1_2": {
 			"Condition": "True",
 			"0": ["light_ctrl.BTN_DIM_CH1.picc=35", "light_ctrl.BTN_DIM_CH1.picc2=36"],
 			"1": ["light_ctrl.BTN_DIM_CH1.picc=37", "light_ctrl.BTN_DIM_CH1.picc2=38"]
 		},
-		"Channel 3_4": {
+		"Channels 3_4": {
 			"Condition": "True",
 			"0": ["light_ctrl.BTN_DIM_CH2.picc=39", "light_ctrl.BTN_DIM_CH2.picc2=40"],
 			"1": ["light_ctrl.BTN_DIM_CH2.picc=41", "light_ctrl.BTN_DIM_CH2.picc2=42"]
 		},
-		"Channel 1_2 Brightness": {
+		"Channels 1_2 Brightness": {
 			"Condition": "Integer",
 			"Cmd": ["light_ctrl.SL_DIM_CH1.val="]
 		},
-		"Channel 3_4 Brightness": {
+		"Channels 3_4 Brightness": {
 			"Condition": "Integer",
 			"Cmd": ["light_ctrl.SL_DIM_CH2.val="]
 		}
@@ -101,30 +101,25 @@
 		},
 		"Temp1Status": {
 			"Condition": "True",
-			"0": ["temp_ctrl.q24.picc=170", "temp_ctrl.t21.pco=23243", "temp_ctrl.t22.pco=23243"],
+			"0": ["temp_ctrl.q24.picc=170", "temp_ctrl.t20.pco=23243", "temp_ctrl.t21.pco=23243", "temp_ctrl.t22.pco=23243"],
 			"1": ["temp_ctrl.q24.picc=166", "temp_ctrl.t20.pco=23896", "temp_ctrl.t21.pco=23896", "temp_ctrl.t22.pco=23896",
 			"temp_ctrl.q28.picc=174"],
 
-			"2": ["temp_ctrl.t21.pco=23896"],
-			"3": ["temp_ctrl.t21.pco=64133"]
+			"2": ["temp_ctrl.q24.picc=170", "temp_ctrl.t20.pco=23243", "temp_ctrl.t21.pco=23896", "temp_ctrl.t22.pco=23243"],
+			"3": ["temp_ctrl.q24.picc=170", "temp_ctrl.t20.pco=23243", "temp_ctrl.t21.pco=64133", "temp_ctrl.t22.pco=23243"]
 		},
 		"Temp2Status": {
 			"Condition": "True",
-			"0": ["temp_ctrl.q26.picc=172", "temp_ctrl.t27.pco=23243", "temp_ctrl.t26.pco=23243"],
+			"0": ["temp_ctrl.q26.picc=172", "temp_ctrl.t28.pco=23243", "temp_ctrl.t27.pco=23243", "temp_ctrl.t26.pco=23243"],
 			"1": ["temp_ctrl.q26.picc=168", "temp_ctrl.t28.pco=23896", "temp_ctrl.t27.pco=23896", "temp_ctrl.t26.pco=23896",
 			"temp_ctrl.q30.picc=176"],
-			"2": ["temp_ctrl.t27.pco=23896"],
-			"3": ["temp_ctrl.t27.pco=64133"]
+			"2": ["temp_ctrl.q26.picc=172", "temp_ctrl.t28.pco=23243", "temp_ctrl.t27.pco=23896", "temp_ctrl.t26.pco=23243"],
+			"3": ["temp_ctrl.q26.picc=172", "temp_ctrl.t28.pco=23243", "temp_ctrl.t27.pco=64133", "temp_ctrl.t26.pco=23243"]
 		},
 		"TemperatureGlobaErrorlFlag": {
 			"Condition": "True",
 			"0": ["main.b3.picc=19", "main.b3.picc2=20"],
 			"1": ["main.b3.picc=21", "main.b3.picc2=22"]
-		},
-		"WaterGlobaErrorlFlag": {
-			"Condition": "True",
-			"0": ["main.b3.picc=25", "main.b3.picc2=26"],
-			"1": ["main.b3.picc=27", "main.b3.picc2=28"]
 		},
 		"LeakSensorStatus": {
 			"Condition": "True",
