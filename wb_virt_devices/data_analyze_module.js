@@ -1,23 +1,23 @@
 defineVirtualDevice("DataAnalyzeModule", {
   title: "DataAnalyzeModule",
   cells: {
-    "LeakSensorTimeError": {
-    type: "switch",
+    "Temp1Status": {
+    type: "value",
     value: false,
     readonly: false
     },
-    "Temp1SensorTimeError": {
-    type: "switch",
+    "Temp2Status": {
+    type: "value",
     value: false,
     readonly: false
     },
-    "Temp2SensorTimeError": {
-    type: "switch",
+    "ThermoHeaterStatus": {
+    type: "value",
     value: false,
     readonly: false
     },
-    "ThermoHeaterTimeError": {
-    type: "switch",
+    "LeakSensorStatus": {
+    type: "value",
     value: false,
     readonly: false
     },
@@ -66,25 +66,36 @@ defineVirtualDevice("DataAnalyzeModule", {
     value: 0,
     readonly: false
     },
-    "TempRegulator1Status": {
-    type: "value",
-    value: 0,
+    "TemperatureGlobaErrorlFlag": {
+    type: "switch",
+    value: false,
     readonly: false
     },
-    "TempRegulator2Status": {
-    type: "value",
-    value: 0,
+    "WaterGlobaErrorlFlag": {
+    type: "switch",
+    value: false,
     readonly: false
     },
-    "TempRegulator3Status": {
-    type: "value",
-    value: 0,
+    "Temp1BatteryStatus": {
+    type: "switch",
+    value: false,
     readonly: false
     },
-    "TempRegulator4Status": {
-    type: "value",
-    value: 0,
+    "Temp2BatteryStatus": {
+    type: "switch",
+    value: false,
     readonly: false
     },
+    "ThermoHeaterBatteryStatus": {
+    type: "switch",
+    value: false,
+    readonly: false
+    },
+    "WaterBatteryStatus": {
+    type: "switch",
+    value: false,
+    readonly: false
+    },
+    
   }
 });

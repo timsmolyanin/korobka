@@ -99,37 +99,34 @@
 			"0": ["water_ctrl.q0.picc=63", "main.b4.picc=25", "main.b1.picc2=26"],
 			"1": ["water_ctrl.q0.picc=219", "main.b4.picc=23", "main.b4.picc2=24"]
 		},
-		"Temp1SensorTimeError": {
+		"Temp1Status": {
 			"Condition": "True",
-			"0": ["temp_ctrl.q24.picc=170", "temp_ctrl.t20.pco=23243", "temp_ctrl.t21.pco=23243",
-			"temp_ctrl.t22.pco=23243", "main.b3.picc=19", "main.b3.picc2=20", "temp_ctrl.q28.picc=178"],
-			"1": ["temp_ctrl.q24.picc=166", "temp_ctrl.t20.pco=23896", "temp_ctrl.t21.pco=23896",
-			"temp_ctrl.t22.pco=23896", "main.b3.picc=21", "main.b3.picc2=22", "temp_ctrl.q28.picc=174"]
+			"0": ["temp_ctrl.q24.picc=170", "temp_ctrl.t21.pco=23243", "temp_ctrl.t22.pco=23243"],
+			"1": ["temp_ctrl.q24.picc=166", "temp_ctrl.t20.pco=23896", "temp_ctrl.t21.pco=23896", "temp_ctrl.t22.pco=23896",
+			"temp_ctrl.q28.picc=174"],
+
+			"2": ["temp_ctrl.t21.pco=23896"],
+			"3": ["temp_ctrl.t21.pco=64133"]
 		},
-		"Temp2SensorTimeError": {
+		"Temp2Status": {
 			"Condition": "True",
-			"0": ["temp_ctrl.q26.picc=172", "temp_ctrl.t28.pco=23243", "temp_ctrl.t27.pco=23243",
-			"temp_ctrl.t26.pco=23243", "main.b3.picc=19", "main.b3.picc2=20", "temp_ctrl.q30.picc=180"],
-			"1": ["temp_ctrl.q26.picc=168", "temp_ctrl.t28.pco=23896", "temp_ctrl.t27.pco=23896",
-			"temp_ctrl.t26.pco=23896", "main.b3.picc=21", "main.b3.picc2=22", "temp_ctrl.q30.picc=176"]
+			"0": ["temp_ctrl.q26.picc=172", "temp_ctrl.t27.pco=23243", "temp_ctrl.t26.pco=23243"],
+			"1": ["temp_ctrl.q26.picc=168", "temp_ctrl.t28.pco=23896", "temp_ctrl.t27.pco=23896", "temp_ctrl.t26.pco=23896",
+			"temp_ctrl.q30.picc=176"],
+			"2": ["temp_ctrl.t27.pco=23896"],
+			"3": ["temp_ctrl.t27.pco=64133"]
 		},
-		"ThermoHeaterTimeError": {
+		"TemperatureGlobaErrorlFlag": {
 			"Condition": "True",
-			"0": ["temp_ctrl.q8.picc=127", "main.b3.picc=19", "main.b3.picc2=20"],
-			"1": ["temp_ctrl.q8.picc=128", "main.b3.picc=21", "main.b3.picc2=22"]
+			"0": ["main.b3.picc=19", "main.b3.picc2=20"],
+			"1": ["main.b3.picc=21", "main.b3.picc2=22"]
 		},
-		"TempRegulator1Status": {
+		"WaterGlobaErrorlFlag": {
 			"Condition": "True",
-			"0": ["temp_ctrl.t21.pco=23243"],
-			"1": ["temp_ctrl.t21.pco=23896"],
-			"2": ["temp_ctrl.t21.pco=64133"]
-		},
-		"TempRegulator3Status": {
-			"Condition": "True",
-			"0": ["temp_ctrl.t27.pco=23243"],
-			"1": ["temp_ctrl.t27.pco=23896"],
-			"2": ["temp_ctrl.t27.pco=64133"]
+			"0": ["main.b3.picc=25", "main.b3.picc2=26"],
+			"1": ["main.b3.picc=27", "main.b3.picc2=28"]
 		}
+
 	},
 	"0x84fd27fffe0e709f": {
 		"current_heating_setpoint": {
