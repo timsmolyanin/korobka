@@ -227,5 +227,5 @@ def mqtt_set_heating_setpoint(mqtt_dev_id: str, val: int):
 
 
 if __name__ == "__main__":
-    # mqtt_set_heating_setpoint("0x50325ffffe033772", 18)
-    test()
+    mqtt_set_heating_setpoint("0x50325ffffe033772", 25)
+    # test()

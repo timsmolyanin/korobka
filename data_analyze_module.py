@@ -158,7 +158,7 @@ class DataAnalyzeModule(Thread):
             
              # Проверяем соответствует ли температуры уставке
             if not self.temp1_local_status == 1:
-                if int(self.temp_sens1_value) < self.electrol_heater1_setpoint_value:
+                if int(self.temp_sens1_value) < int(self.electrol_heater1_setpoint_value):
                     self.mqtt.publish_topic(self.topic_list["output_temp1_status"], 2)  # Low
                 elif int(self.temp_sens1_value) > self.electrol_heater1_setpoint_value:
                     self.mqtt.publish_topic(self.topic_list["output_temp1_status"], 3)  # High
@@ -171,9 +171,9 @@ class DataAnalyzeModule(Thread):
                     self.mqtt.publish_topic(self.topic_list["output_temp1_battery_status"], 1)
 
             if not self.temp2_local_status == 1:
-                if int(self.temp_sens2_value) < self.electrol_heater1_setpoint_value:   
+                if int(self.temp_sens2_value) < int(self.water_heater1_setpoint_value):   
                     self.mqtt.publish_topic(self.topic_list["output_temp2_status"], 2)  # Low
-                elif int(self.temp_sens2_value) > self.electrol_heater1_setpoint_value: 
+                elif int(self.temp_sens2_value) > self.water_heater1_setpoint_value: 
                     self.mqtt.publish_topic(self.topic_list["output_temp2_status"], 3)  # High
                 else:   
                     self.mqtt.publish_topic(self.topic_list["output_temp2_status"], 0)  # Fine
