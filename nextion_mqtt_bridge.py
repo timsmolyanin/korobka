@@ -116,6 +116,11 @@ class NextionMqttBridge(Thread):
 
     def nextion_callback(self, data):
         data_list = data.split("/")
+        if data_list[0] == "0x50325ffffe033772":
+            topic = f"zigbee2mqtt/{data_list[0]}/set"
+            cmd = {"current_heating_setpoint": data_list[-1]}
+            cmd_str = json.dumps(cmd)
+            self.set_mqtt_topic_value(topic, cmd_str)
         self.set_mqtt_topic_value(f"/devices/{data_list[0]}/controls/{data_list[1]}/on", data_list[-1])
     
 

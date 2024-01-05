@@ -1,7 +1,5 @@
 from threading import Thread
 import time
-import paho.mqtt.client as mqtt
-import paho.mqtt.publish as publish
 import mqtt_communication_module
 import os
 import nmcli
@@ -17,7 +15,6 @@ logger.add("debug.log", format="{time} {level} {message}", level="DEBUG")
 
 class SystemModule(Thread):
     def __init__(self, mqtt_broker:str, mqtt_port:int, mqtt_user: str, mqtt_password:str, parent=None):
-        
         super(SystemModule, self).__init__(parent)
         self.name = "system_module"
         self.topic_list = mqtt_topics_system_module
@@ -46,17 +43,15 @@ class SystemModule(Thread):
 
     def set_wifi_state(self, value):
         self.wifi_state = int(value)
+        logger.debug(f"{self.name}: Change Wifi State")
         if self.wifi_state == 0:
-            # self.wifi_adapter_off()
+            logger.debug(f"{self.name}: Wifi adapter is OFF")
+            self.wifi_adapter_on()
             return
         if self.wifi_state == 1:
-            # self.wifi_adapter_on()
-            return
-    
-    def wifi_adapter_off(self):
-        nmcli.radio.wifi_off()
-        logger.debug(f"{self.name}: Wifi adapter is OFF")
-        
+            self.wifi_adapter_on()
+            self.wifi_client_mode()
+
     def wifi_adapter_on(self):
         nmcli.radio.wifi_on()
         self.delete_wifi_conn()
@@ -131,9 +126,7 @@ class SystemModule(Thread):
         nmcli.connection.up("eth_port")
     
     def wifi_client_mode(self):
-        print(self.wifi_client_ssid)
-        print(self.wifi_client_password)
-        self.wifi_adapter_on()
+        # self.wifi_adapter_on()
         try:
             logger.debug(f'Подключение к Wi-Fi сети "{self.wifi_client_ssid}", используя пароль "{self.wifi_client_password}"')
             nmcli.device.wifi_connect(ssid=self.wifi_client_ssid, password=self.wifi_client_password)
@@ -156,8 +149,8 @@ class SystemModule(Thread):
             
 
 def test():
-    broker = "127.0.0.1"
-    # broker = "192.168.44.11"
+    # broker = "127.0.0.1"
+    broker = "192.168.44.11"
     port = 1883
     test = SystemModule(broker, port, 'abc', 'abc')
     while True:

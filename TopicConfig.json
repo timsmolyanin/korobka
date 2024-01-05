@@ -96,36 +96,59 @@
 			"0": ["water_ctrl.q0.picc=63", "main.b4.picc=25", "main.b1.picc2=26"],
 			"1": ["water_ctrl.q0.picc=219", "main.b4.picc=23", "main.b4.picc2=24"]
 		},
-		"Temp1SensorTimeError": {
+		"Temp1Status": {
 			"Condition": "True",
-			"0": ["temp_ctrl.q24.picc=170", "temp_ctrl.t20.pco=23243", "temp_ctrl.t21.pco=23243",
-			"temp_ctrl.t22.pco=23243", "main.b3.picc=19", "main.b3.picc2=20", "temp_ctrl.q28.picc=178"],
-			"1": ["temp_ctrl.q24.picc=166", "temp_ctrl.t20.pco=23896", "temp_ctrl.t21.pco=23896",
-			"temp_ctrl.t22.pco=23896", "main.b3.picc=21", "main.b3.picc2=22", "temp_ctrl.q28.picc=174"]
+			"0": ["temp_ctrl.q24.picc=170", "temp_ctrl.t20.pco=23243", "temp_ctrl.t21.pco=23243", "temp_ctrl.t22.pco=23243"],
+			"1": ["temp_ctrl.q24.picc=166", "temp_ctrl.t20.pco=23896", "temp_ctrl.t21.pco=23896", "temp_ctrl.t22.pco=23896",
+			"temp_ctrl.q28.picc=174"],
+
+			"2": ["temp_ctrl.q24.picc=170", "temp_ctrl.t20.pco=23243", "temp_ctrl.t21.pco=23896", "temp_ctrl.t22.pco=23243"],
+			"3": ["temp_ctrl.q24.picc=170", "temp_ctrl.t20.pco=23243", "temp_ctrl.t21.pco=64133", "temp_ctrl.t22.pco=23243"]
 		},
-		"Temp2SensorTimeError": {
+		"Temp2Status": {
 			"Condition": "True",
-			"0": ["temp_ctrl.q26.picc=172", "temp_ctrl.t28.pco=23243", "temp_ctrl.t27.pco=23243",
-			"temp_ctrl.t26.pco=23243", "main.b3.picc=19", "main.b3.picc2=20", "temp_ctrl.q30.picc=180"],
-			"1": ["temp_ctrl.q26.picc=168", "temp_ctrl.t28.pco=23896", "temp_ctrl.t27.pco=23896",
-			"temp_ctrl.t26.pco=23896", "main.b3.picc=21", "main.b3.picc2=22", "temp_ctrl.q30.picc=176"]
+			"0": ["temp_ctrl.q26.picc=172", "temp_ctrl.t28.pco=23243", "temp_ctrl.t27.pco=23243", "temp_ctrl.t26.pco=23243"],
+			"1": ["temp_ctrl.q26.picc=168", "temp_ctrl.t28.pco=23896", "temp_ctrl.t27.pco=23896", "temp_ctrl.t26.pco=23896",
+			"temp_ctrl.q30.picc=176"],
+			"2": ["temp_ctrl.q26.picc=172", "temp_ctrl.t28.pco=23243", "temp_ctrl.t27.pco=23896", "temp_ctrl.t26.pco=23243"],
+			"3": ["temp_ctrl.q26.picc=172", "temp_ctrl.t28.pco=23243", "temp_ctrl.t27.pco=64133", "temp_ctrl.t26.pco=23243"]
 		},
-		"ThermoHeaterTimeError": {
+		"ThermoHeaterStatus": {
 			"Condition": "True",
-			"0": ["temp_ctrl.q8.picc=127", "main.b3.picc=19", "main.b3.picc=20"],
-			"1": ["temp_ctrl.q8.picc=128", "main.b3.picc=21", "main.b3.picc2=22"]
+			"0": ["temp_ctrl.q8.picc=127"],
+			"1": ["temp_ctrl.q8.picc=126", "temp_ctrl.q16.picc=150"]
 		},
-		"TempRegulator1Status": {
+		"TemperatureGlobaErrorlFlag": {
 			"Condition": "True",
-			"0": ["temp_ctrl.t21.pco=23243"],
-			"1": ["temp_ctrl.t21.pco=23896"],
-			"2": ["temp_ctrl.t21.pco=64133"]
+			"0": ["main.b3.picc=19", "main.b3.picc2=20"],
+			"1": ["main.b3.picc=21", "main.b3.picc2=22"]
 		},
-		"TempRegulator3Status": {
+		"LeakSensorStatus": {
 			"Condition": "True",
-			"0": ["temp_ctrl.t27.pco=23243"],
-			"1": ["temp_ctrl.t27.pco=23896"],
-			"2": ["temp_ctrl.t27.pco=64133"]
+			"0": ["water_ctrl.q0.picc=63", "water_ctrl.q7.picc=187", "water_ctrl.q9.picc=190"],
+			"1": ["water_ctrl.q0.picc=210"],
+			"2": ["water_ctrl.q0.picc=69", "water_ctrl.q7.picc=188", "water_ctrl.q9.picc=189"]
+		},
+		"Temp1BatteryStatus": {
+			"Condition": "True",
+			"0": ["temp_ctrl.q28.picc=178"],
+			"1": ["temp_ctrl.q28.picc=182"]
+		},
+		"Temp2BatteryStatus": {
+			"Condition": "True",
+			"0": ["temp_ctrl.q30.picc=180"],
+			"1": ["temp_ctrl.q30.picc=184"]
+		},
+		"ThermoHeaterBatteryStatus": {
+			"Condition": "True",
+			"0": ["temp_ctrl.q16.picc=151"],
+			"1": ["temp_ctrl.q16.picc=150"]
+		}
+	},
+	"ElectroHeaterModule": {
+		"Heater1 Setpoint": {
+			"Condition": "False",
+			"Cmd": ["temp_ctrl.t22.txt="]
 		}
 	},
 	"0x50325ffffe033772": {
@@ -137,12 +160,6 @@
 			"Condition": "True",
 			"false": ["temp_ctrl.q8.picc=141", "temp_ctrl.q16.picc2=165"],
 			"true": ["temp_ctrl.q8.picc=142", "temp_ctrl.q16.picc2=164"]
-		}
-	},
-	"ElectrolHeaterModule": {
-		"Heater1 Setpoint": {
-			"Condition": "False",
-			"Cmd": ["temp_ctrl.t22.txt="]
 		}
 	},
 	"0xa4c138da7c2d6d15": {

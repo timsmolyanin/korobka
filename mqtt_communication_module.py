@@ -13,7 +13,7 @@ class Mqtt(Thread):
         
         self.broker = mqtt_broker
         self.port = mqtt_port
-        self.client_id = f"dialtek-mqtt-{random.randint(0, 100)}"
+        self.client_id = f"korobka-mqtt-{random.randint(0, 100)}"
         
         self.name = module_name
         self.topic_list = topic_list
@@ -58,7 +58,7 @@ class Mqtt(Thread):
     def on_message(self, client, userdata, msg):
         topic_name = msg.topic 
         topic_value = msg.payload.decode("utf-8")
-        
+        print(topic_name, topic_value)
         if ("change_topic" in self.get_key_by_value(topic_name)):
             self.change_topic(self.get_key_by_value(topic_name), topic_value)
         else:
