@@ -29,6 +29,8 @@ list_of_mqtt_topics = [("/devices/wb-led_66/controls/Channel 1", 0),
                         ("/devices/DataAnalyzeModule/controls/Temp1BatteryStatus", 0),
                         ("/devices/DataAnalyzeModule/controls/Temp2BatteryStatus", 0),
                         ("/devices/DataAnalyzeModule/controls/ThermoHeaterBatteryStatus", 0),
+                        ("/devices/DataAnalyzeModule/controls/WaterTap1Status", 0),
+                        ("/devices/DataAnalyzeModule/controls/WaterTap2Status", 0)
                         ]
 
 mqtt_topics_data_analyze_module = {
@@ -53,8 +55,14 @@ mqtt_topics_data_analyze_module = {
     "input_temp_sens_norm_time": "/devices/DataAnalyzeModule/controls/TempSenNormTime",
     "input_water_sens_norm_time": "/devices/DataAnalyzeModule/controls/WaterLeakSenNormTime",
     "input_thermo_heat_norm_time": "/devices/DataAnalyzeModule/controls/ThermoHeatNormTime",
+    "input_cold_water_tap": "/devices/DataAnalyzeModule/controls/ColdWaterTap",
+    "input_hot_water_tap": "/devices/DataAnalyzeModule/controls/HotWaterTap",
+    "input_water_tape1_status": "/devices/DataAnalyzeModule/controls/WaterTap1Status",
+    "input_water_tape2_status": "/devices/DataAnalyzeModule/controls/WaterTap2Status",
     "output_water_tape1_state": "/devices/wb-mwac_123/controls/K1/on",
     "output_water_tape2_state": "/devices/wb-mwac_123/controls/K2/on",
+    "output_water_tape1_status": "/devices/DataAnalyzeModule/controls/WaterTap1Status",
+    "output_water_tape2_status": "/devices/DataAnalyzeModule/controls/WaterTap2Status",
     "output_water_alarm": "/devices/wb-mwac_123/controls/Alarm/on",
     "output_water_leak_status": "/devices/DataAnalyzeModule/controls/LeakSensorStatus",
     "output_temp1_status": "/devices/DataAnalyzeModule/controls/Temp1Status",

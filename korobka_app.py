@@ -25,7 +25,7 @@ def main():
     data_analyze_mod = data_analyze_module.DataAnalyzeModule(broker, port, topic_list=mqtt_topics_data_analyze_module, mqtt_user=None, mqtt_password=None)
     data_analyze_mod.start()
 
-    system_mod = system_module.SystemModule(broker, port, None, None)
+    # system_mod = system_module.SystemModule(broker, port, None, None)
 
 
 if __name__ == "__main__":

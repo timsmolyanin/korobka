@@ -85,6 +85,11 @@ class DataAnalyzeModule(Thread):
             self.topic_list["input_temp1_battery"] : self.set_temp1_battery,
             self.topic_list["input_temp2_battery"] : self.set_temp2_battery,
             self.topic_list["input_thermo_heater_battery"] : self.thermo_heater_battery,
+            self.topic_list["input_cold_water_tap"] : self.cold_water_tap,
+            self.topic_list["input_hot_water_tap"] : self.hot_water_tap,
+            self.topic_list["input_water_tape1_status"] : self.tap1_status,
+            self.topic_list["input_water_tape2_status"] : self.tap2_status,
+            
         }
 
         self.mqtt = mqtt_communication_module.Mqtt(mqtt_broker, mqtt_port, mqtt_user, mqtt_password, self.name, self.on_message_config, self.topic_list)
@@ -238,17 +243,45 @@ class DataAnalyzeModule(Thread):
         except Exception as e:
             logger.debug(f"Ошибка при переводе str->int. {e}")
 
+    def tap1_status(self, value):
+        match value:
+            case "0":
+                self.mqtt.publish_topic(self.topic_list["output_water_tape1_state"], "0")
+            case "1":
+                self.mqtt.publish_topic(self.topic_list["output_water_tape1_state"], "1")
+            case "2":
+                self.mqtt.publish_topic(self.topic_list["output_water_tape1_state"], "0")
+    
+    def tap2_status(self, value):
+        match value:
+            case "0":
+                self.mqtt.publish_topic(self.topic_list["output_water_tape2_state"], "0")
+            case "1":
+                self.mqtt.publish_topic(self.topic_list["output_water_tape2_state"], "1")
+            case "2":
+                self.mqtt.publish_topic(self.topic_list["output_water_tape2_state"], "0")
+    
+    def cold_water_tap(self, value):
+        self.mqtt.publish_topic(self.topic_list["output_water_tape1_status"], value)
+
+    def hot_water_tap(self, value):
+        self.mqtt.publish_topic(self.topic_list["output_water_tape2_status"], value)
+
     def water_leak_event(self, value):
         try:
             if value == "false":
                 self.water_leak_sensor_state = False
-                self.mqtt.publish_topic(self.topic_list["output_water_tape1_state"], "0")
-                self.mqtt.publish_topic(self.topic_list["output_water_tape2_state"], "0")
+                self.mqtt.publish_topic(self.topic_list["output_water_tape1_status"], "1")
+                self.mqtt.publish_topic(self.topic_list["output_water_tape2_status"], "1")
+                # self.mqtt.publish_topic(self.topic_list["output_water_tape1_state"], "0")
+                # self.mqtt.publish_topic(self.topic_list["output_water_tape2_state"], "0")
                 self.mqtt.publish_topic(self.topic_list["output_water_alarm"], "0")
             elif value == "true":
                 self.water_leak_sensor_state = True
-                self.mqtt.publish_topic(self.topic_list["output_water_tape1_state"], "1")
-                self.mqtt.publish_topic(self.topic_list["output_water_tape2_state"], "1")
+                self.mqtt.publish_topic(self.topic_list["output_water_tape1_status"], "2")
+                self.mqtt.publish_topic(self.topic_list["output_water_tape2_status"], "2")
+                # self.mqtt.publish_topic(self.topic_list["output_water_tape1_state"], "1")
+                # self.mqtt.publish_topic(self.topic_list["output_water_tape2_state"], "1")
                 self.mqtt.publish_topic(self.topic_list["output_water_alarm"], "1")
         except Exception as e:
             logger.debug(f"Ошибка при переводе str->int. {e}")

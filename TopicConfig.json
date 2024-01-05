@@ -143,6 +143,18 @@
 			"Condition": "True",
 			"0": ["temp_ctrl.q16.picc=151"],
 			"1": ["temp_ctrl.q16.picc=150"]
+		},
+		"WaterTap1Status": {
+			"Condition": "True",
+			"0": ["water_ctrl.q6.picc=192"],
+			"1": ["water_ctrl.q6.picc=193"],
+			"2": ["water_ctrl.q6.picc=196"]
+		},
+		"WaterTap2Status": {
+			"Condition": "True",
+			"0": ["water_ctrl.q8.picc=191"],
+			"1": ["water_ctrl.q8.picc=194"],
+			"2": ["water_ctrl.q8.picc=195"]
 		}
 	},
 	"ElectroHeaterModule": {
@@ -169,18 +181,6 @@
 			"water_ctrl.q9.picc=190", "main.b4.picc=25", "main.b4.picc2=26"],
 			"true": ["water_ctrl.q0.picc=69", "water_ctrl.q7.picc=188", 
 			"water_ctrl.q9.picc=189", "main.b4.picc=27", "main.b4.picc2=28"]
-		}
-	},
-	"wb-mwac_123": {
-		"K1": {
-			"Condition": "True",
-			"0": ["water_ctrl.q6.picc=193"],
-			"1": ["water_ctrl.q6.picc=196"]
-		},
-		"K2": {
-			"Condition": "True",
-			"0": ["water_ctrl.q8.picc=194"],
-			"1": ["water_ctrl.q8.picc=195"]
 		}
 	}
 }

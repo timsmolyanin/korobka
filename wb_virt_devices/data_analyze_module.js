@@ -96,6 +96,25 @@ defineVirtualDevice("DataAnalyzeModule", {
     value: false,
     readonly: false
     },
-    
+    "WaterTap1Status": {
+    type: "value",
+    value: 0,
+    readonly: false
+    },
+    "WaterTap2Status": {
+    type: "value",
+    value: 0,
+    readonly: false
+    },
+    "ColdWaterTap": {
+    type: "value",
+    value: 0,
+    readonly: false
+    },
+    "HotWaterTap": {
+    type: "value",
+    value: 0,
+    readonly: false
+    }
   }
 });
