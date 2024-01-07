@@ -49,6 +49,7 @@ class SystemModule(Thread):
             self.wifi_adapter_on()
             return
         if self.wifi_state == 1:
+            pass
             self.wifi_adapter_on()
             self.wifi_client_mode()
 

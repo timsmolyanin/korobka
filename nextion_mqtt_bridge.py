@@ -115,6 +115,7 @@ class NextionMqttBridge(Thread):
 
 
     def nextion_callback(self, data):
+        print(data)
         data_list = data.split("/")
         if data_list[0] == "0x50325ffffe033772":
             topic = f"zigbee2mqtt/{data_list[0]}/set"

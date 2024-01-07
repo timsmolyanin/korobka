@@ -91,11 +91,6 @@
 			"0": ["main.b1.picc=5", "main.b1.picc2=6"],
 			"1": ["main.b1.picc=7", "main.b1.picc2=8"]
 		},
-		"LeakSensorTimeError": {
-			"Condition": "True",
-			"0": ["water_ctrl.q0.picc=63", "main.b4.picc=25", "main.b1.picc2=26"],
-			"1": ["water_ctrl.q0.picc=219", "main.b4.picc=23", "main.b4.picc2=24"]
-		},
 		"Temp1Status": {
 			"Condition": "True",
 			"0": ["temp_ctrl.q24.picc=170", "temp_ctrl.t20.pco=23243", "temp_ctrl.t21.pco=23243", "temp_ctrl.t22.pco=23243"],
@@ -123,10 +118,15 @@
 			"0": ["main.b3.picc=19", "main.b3.picc2=20"],
 			"1": ["main.b3.picc=21", "main.b3.picc2=22"]
 		},
+		"WaterGlobaErrorlFlag": {
+			"Condition": "True",
+			"0": ["main.b4.picc=25", "main.b4.picc2=26"],
+			"1": ["main.b4.picc=27", "main.b4.picc2=28"]
+		},
 		"LeakSensorStatus": {
 			"Condition": "True",
 			"0": ["water_ctrl.q0.picc=63", "water_ctrl.q7.picc=187", "water_ctrl.q9.picc=190"],
-			"1": ["water_ctrl.q0.picc=210"],
+			"1": ["water_ctrl.q0.picc=219"],
 			"2": ["water_ctrl.q0.picc=69", "water_ctrl.q7.picc=188", "water_ctrl.q9.picc=189"]
 		},
 		"Temp1BatteryStatus": {
@@ -177,10 +177,8 @@
 	"0xa4c138da7c2d6d15": {
 		"water_leak": {
 			"Condition": "True",
-			"false": ["water_ctrl.q0.picc=63", "water_ctrl.q7.picc=187", 
-			"water_ctrl.q9.picc=190", "main.b4.picc=25", "main.b4.picc2=26"],
-			"true": ["water_ctrl.q0.picc=69", "water_ctrl.q7.picc=188", 
-			"water_ctrl.q9.picc=189", "main.b4.picc=27", "main.b4.picc2=28"]
+			"false": ["water_ctrl.q0.picc=63", "water_ctrl.q7.picc=187", "water_ctrl.q9.picc=190"],
+			"true": ["water_ctrl.q0.picc=69", "water_ctrl.q7.picc=188", "water_ctrl.q9.picc=189"]
 		}
 	}
 }

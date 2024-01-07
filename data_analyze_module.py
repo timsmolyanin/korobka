@@ -56,7 +56,7 @@ class DataAnalyzeModule(Thread):
         self.electrol_heater1_setpoint_value = 0
         self.water_heater1_setpoint_value = 0
 
-        self.water_leak_status = False
+        self.water_leak_status = 0
 
         self.water_leak_sensor_norm_time = 2880
         self.temp_sensor_norm_time = 60
@@ -152,10 +152,10 @@ class DataAnalyzeModule(Thread):
             else:
                 self.water_leak_status = 0
             
-            if self.water_leak_status == 1:
+            if self.water_leak_status == 1 or self.water_leak_sensor_state:
                 self.water_global_error_flag = True
                 self.mqtt.publish_topic(self.topic_list["output_water_global_error"], 1)
-            else:
+            elif self.water_leak_status == 0 and self.water_leak_sensor_state == False:
                 self.water_global_error_flag = False
                 self.mqtt.publish_topic(self.topic_list["output_water_global_error"], 0)
             
@@ -273,15 +273,11 @@ class DataAnalyzeModule(Thread):
                 self.water_leak_sensor_state = False
                 self.mqtt.publish_topic(self.topic_list["output_water_tape1_status"], "1")
                 self.mqtt.publish_topic(self.topic_list["output_water_tape2_status"], "1")
-                # self.mqtt.publish_topic(self.topic_list["output_water_tape1_state"], "0")
-                # self.mqtt.publish_topic(self.topic_list["output_water_tape2_state"], "0")
                 self.mqtt.publish_topic(self.topic_list["output_water_alarm"], "0")
             elif value == "true":
                 self.water_leak_sensor_state = True
                 self.mqtt.publish_topic(self.topic_list["output_water_tape1_status"], "2")
                 self.mqtt.publish_topic(self.topic_list["output_water_tape2_status"], "2")
-                # self.mqtt.publish_topic(self.topic_list["output_water_tape1_state"], "1")
-                # self.mqtt.publish_topic(self.topic_list["output_water_tape2_state"], "1")
                 self.mqtt.publish_topic(self.topic_list["output_water_alarm"], "1")
         except Exception as e:
             logger.debug(f"Ошибка при переводе str->int. {e}")
