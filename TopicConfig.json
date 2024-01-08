@@ -78,6 +78,10 @@
 			"Condition": "True",
 			"0": ["main.b0.picc=0", "main.b0.picc2=85", "network_conf.bt0.val=0"],
 			"1": ["main.b0.picc=1", "main.b0.picc2=2", "network_conf.bt0.val=1"]
+		},
+		"Internet Connection": {
+			"Condition": "False",
+			"Cmd": ["network_conf.t0.txt="]
 		}
 	},
 	"DataAnalyzeModule": {

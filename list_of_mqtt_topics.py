@@ -31,7 +31,8 @@ list_of_mqtt_topics = [("/devices/wb-led_66/controls/Channel 1", 0),
                         ("/devices/DataAnalyzeModule/controls/Temp2BatteryStatus", 0),
                         ("/devices/DataAnalyzeModule/controls/ThermoHeaterBatteryStatus", 0),
                         ("/devices/DataAnalyzeModule/controls/WaterTap1Status", 0),
-                        ("/devices/DataAnalyzeModule/controls/WaterTap2Status", 0)
+                        ("/devices/DataAnalyzeModule/controls/WaterTap2Status", 0),
+                        (" 	/devices/network/controls/Internet Connection", 0)
                         ]
 
 mqtt_topics_data_analyze_module = {

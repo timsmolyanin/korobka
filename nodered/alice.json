@@ -1,0 +1,840 @@
+[
+    {
+        "id": "0722965eb5feda3e",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "303af6540cfafc39",
+        "type": "On_Off",
+        "z": "0722965eb5feda3e",
+        "device": "b371b0c5e2b344e8",
+        "name": "Коробка1:Розетка1",
+        "retrievable": true,
+        "response": true,
+        "x": 140,
+        "y": 100,
+        "wires": [
+            [
+                "aefef5aa8aac471c",
+                "cedabc830cc813b8"
+            ]
+        ]
+    },
+    {
+        "id": "4b32272b595c48c3",
+        "type": "wirenboard-out",
+        "z": "0722965eb5feda3e",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/wb-mr3_147/controls/K1"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "1",
+        "payloadType": "num",
+        "rbe": false,
+        "x": 720,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "aefef5aa8aac471c",
+        "type": "switch",
+        "z": "0722965eb5feda3e",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 450,
+        "y": 100,
+        "wires": [
+            [
+                "4b32272b595c48c3"
+            ]
+        ]
+    },
+    {
+        "id": "cedabc830cc813b8",
+        "type": "switch",
+        "z": "0722965eb5feda3e",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 450,
+        "y": 180,
+        "wires": [
+            [
+                "693e8fee1106f874"
+            ]
+        ]
+    },
+    {
+        "id": "693e8fee1106f874",
+        "type": "wirenboard-out",
+        "z": "0722965eb5feda3e",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/wb-mr3_147/controls/K1"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "0",
+        "payloadType": "num",
+        "rbe": false,
+        "x": 720,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "228ba8d5f7b890da",
+        "type": "On_Off",
+        "z": "0722965eb5feda3e",
+        "device": "853ae3c0ea514708",
+        "name": "Коробка1:Розетка2",
+        "retrievable": true,
+        "response": true,
+        "x": 140,
+        "y": 300,
+        "wires": [
+            [
+                "45c40bfb1787901d",
+                "c9e941317d7635fb"
+            ]
+        ]
+    },
+    {
+        "id": "3c99a897a5a5c2ba",
+        "type": "wirenboard-out",
+        "z": "0722965eb5feda3e",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/wb-mr3_147/controls/K2"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "1",
+        "payloadType": "num",
+        "rbe": false,
+        "x": 720,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "45c40bfb1787901d",
+        "type": "switch",
+        "z": "0722965eb5feda3e",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 450,
+        "y": 300,
+        "wires": [
+            [
+                "3c99a897a5a5c2ba"
+            ]
+        ]
+    },
+    {
+        "id": "c9e941317d7635fb",
+        "type": "switch",
+        "z": "0722965eb5feda3e",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 450,
+        "y": 380,
+        "wires": [
+            [
+                "0bc18610ee0a2d81"
+            ]
+        ]
+    },
+    {
+        "id": "0bc18610ee0a2d81",
+        "type": "wirenboard-out",
+        "z": "0722965eb5feda3e",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/wb-mr3_147/controls/K2"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "0",
+        "payloadType": "num",
+        "rbe": false,
+        "x": 720,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "e731c36077f88720",
+        "type": "On_Off",
+        "z": "0722965eb5feda3e",
+        "device": "6bd1356658660e0e",
+        "name": "Коробка1:Розетка3",
+        "retrievable": true,
+        "response": true,
+        "x": 140,
+        "y": 500,
+        "wires": [
+            [
+                "b11c6b78db213a3e",
+                "b850803da8baaf79"
+            ]
+        ]
+    },
+    {
+        "id": "b5d292c7d809a764",
+        "type": "wirenboard-out",
+        "z": "0722965eb5feda3e",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/wb-mr3_147/controls/K3"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "1",
+        "payloadType": "num",
+        "rbe": false,
+        "x": 720,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "b11c6b78db213a3e",
+        "type": "switch",
+        "z": "0722965eb5feda3e",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 450,
+        "y": 500,
+        "wires": [
+            [
+                "b5d292c7d809a764"
+            ]
+        ]
+    },
+    {
+        "id": "b850803da8baaf79",
+        "type": "switch",
+        "z": "0722965eb5feda3e",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 450,
+        "y": 580,
+        "wires": [
+            [
+                "ccd84dcceb7e54fc"
+            ]
+        ]
+    },
+    {
+        "id": "ccd84dcceb7e54fc",
+        "type": "wirenboard-out",
+        "z": "0722965eb5feda3e",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/wb-mr3_147/controls/K3"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "0",
+        "payloadType": "num",
+        "rbe": false,
+        "x": 720,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "d2b93c90dd37d0d2",
+        "type": "Range",
+        "z": "0722965eb5feda3e",
+        "device": "319736f4528e0411",
+        "name": "Коробка1:LED 1",
+        "instance": "brightness",
+        "unit": "unit.percent",
+        "min": "0",
+        "max": 100,
+        "precision": 1,
+        "response": true,
+        "retrievable": true,
+        "x": 140,
+        "y": 1300,
+        "wires": [
+            [
+                "56ac65914e9369b4"
+            ]
+        ]
+    },
+    {
+        "id": "56ac65914e9369b4",
+        "type": "wirenboard-out",
+        "z": "0722965eb5feda3e",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/wb-led_66/controls/Channel 1 Brightness"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "payload",
+        "payloadType": "msg",
+        "rbe": false,
+        "x": 470,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "a635268a6c2d25c9",
+        "type": "wirenboard-out",
+        "z": "0722965eb5feda3e",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/wb-led_66/controls/Channel 1"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "1",
+        "payloadType": "num",
+        "rbe": false,
+        "x": 700,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "8bbf3bd7a3013cc3",
+        "type": "switch",
+        "z": "0722965eb5feda3e",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 410,
+        "y": 700,
+        "wires": [
+            [
+                "a635268a6c2d25c9"
+            ]
+        ]
+    },
+    {
+        "id": "ac8379e6278431b4",
+        "type": "switch",
+        "z": "0722965eb5feda3e",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 410,
+        "y": 780,
+        "wires": [
+            [
+                "55e093fbe199920c"
+            ]
+        ]
+    },
+    {
+        "id": "55e093fbe199920c",
+        "type": "wirenboard-out",
+        "z": "0722965eb5feda3e",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/wb-led_66/controls/Channel 1"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "0",
+        "payloadType": "num",
+        "rbe": false,
+        "x": 700,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "576a0267c39b2ba0",
+        "type": "On_Off",
+        "z": "0722965eb5feda3e",
+        "device": "261313d8866ca26f",
+        "name": "Коробка1:LED 1",
+        "retrievable": true,
+        "response": true,
+        "x": 130,
+        "y": 720,
+        "wires": [
+            [
+                "8bbf3bd7a3013cc3",
+                "ac8379e6278431b4"
+            ]
+        ]
+    },
+    {
+        "id": "758e7d2951541e4a",
+        "type": "wirenboard-out",
+        "z": "0722965eb5feda3e",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/wb-led_66/controls/Channel 2"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "1",
+        "payloadType": "num",
+        "rbe": false,
+        "x": 700,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "bc6833ca9dc61076",
+        "type": "switch",
+        "z": "0722965eb5feda3e",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 410,
+        "y": 880,
+        "wires": [
+            [
+                "758e7d2951541e4a"
+            ]
+        ]
+    },
+    {
+        "id": "741c16be80c4b1f3",
+        "type": "switch",
+        "z": "0722965eb5feda3e",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 410,
+        "y": 960,
+        "wires": [
+            [
+                "0c96abaeb426f094"
+            ]
+        ]
+    },
+    {
+        "id": "0c96abaeb426f094",
+        "type": "wirenboard-out",
+        "z": "0722965eb5feda3e",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/wb-led_66/controls/Channel 2"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "0",
+        "payloadType": "num",
+        "rbe": false,
+        "x": 700,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "1479e0f0676b1f6a",
+        "type": "wirenboard-out",
+        "z": "0722965eb5feda3e",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/wb-led_66/controls/Channel 3"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "1",
+        "payloadType": "num",
+        "rbe": false,
+        "x": 700,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "dc36d0cf1ec334f2",
+        "type": "switch",
+        "z": "0722965eb5feda3e",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 410,
+        "y": 1080,
+        "wires": [
+            [
+                "1479e0f0676b1f6a"
+            ]
+        ]
+    },
+    {
+        "id": "d7b743a3565826d2",
+        "type": "switch",
+        "z": "0722965eb5feda3e",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 410,
+        "y": 1160,
+        "wires": [
+            [
+                "1bb19f9278265983"
+            ]
+        ]
+    },
+    {
+        "id": "1bb19f9278265983",
+        "type": "wirenboard-out",
+        "z": "0722965eb5feda3e",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/wb-led_66/controls/Channel 3"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "0",
+        "payloadType": "num",
+        "rbe": false,
+        "x": 700,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "7a565dfcb2071ac3",
+        "type": "wirenboard-out",
+        "z": "0722965eb5feda3e",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/wb-led_66/controls/Channel 2 Brightness"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "payload",
+        "payloadType": "msg",
+        "rbe": false,
+        "x": 470,
+        "y": 1400,
+        "wires": []
+    },
+    {
+        "id": "ed2dbd46f2090e53",
+        "type": "wirenboard-out",
+        "z": "0722965eb5feda3e",
+        "name": "",
+        "server": "e0ede3cc625c8b33",
+        "channel": [
+            "/devices/wb-led_66/controls/Channel 3 Brightness"
+        ],
+        "command": "/on",
+        "commandType": "wb_cmd",
+        "payload": "payload",
+        "payloadType": "msg",
+        "rbe": false,
+        "x": 470,
+        "y": 1480,
+        "wires": []
+    },
+    {
+        "id": "8c40b00e96b8144e",
+        "type": "Range",
+        "z": "0722965eb5feda3e",
+        "device": "6e9c826868186dee",
+        "name": "Коробка1:LED 2",
+        "instance": "brightness",
+        "unit": "unit.percent",
+        "min": "0",
+        "max": 100,
+        "precision": "10",
+        "response": true,
+        "retrievable": true,
+        "x": 140,
+        "y": 1400,
+        "wires": [
+            [
+                "7a565dfcb2071ac3"
+            ]
+        ]
+    },
+    {
+        "id": "50a206f58aec21db",
+        "type": "Range",
+        "z": "0722965eb5feda3e",
+        "device": "065f88d2ee328863",
+        "name": "Коробка1:LED 3",
+        "instance": "brightness",
+        "unit": "unit.percent",
+        "min": "0",
+        "max": 100,
+        "precision": "10",
+        "response": true,
+        "retrievable": true,
+        "x": 140,
+        "y": 1480,
+        "wires": [
+            [
+                "ed2dbd46f2090e53"
+            ]
+        ]
+    },
+    {
+        "id": "145e5bfd5a29ce17",
+        "type": "On_Off",
+        "z": "0722965eb5feda3e",
+        "device": "28b93d9baadcee6d",
+        "name": "Коробка1:LED 3",
+        "retrievable": true,
+        "response": true,
+        "x": 130,
+        "y": 1120,
+        "wires": [
+            [
+                "dc36d0cf1ec334f2",
+                "d7b743a3565826d2"
+            ]
+        ]
+    },
+    {
+        "id": "3d884fcab5be04ec",
+        "type": "On_Off",
+        "z": "0722965eb5feda3e",
+        "device": "abbf2c80f78c2fb5",
+        "name": "Коробка1:LED 2",
+        "retrievable": true,
+        "response": true,
+        "x": 130,
+        "y": 920,
+        "wires": [
+            [
+                "bc6833ca9dc61076",
+                "741c16be80c4b1f3"
+            ]
+        ]
+    },
+    {
+        "id": "b371b0c5e2b344e8",
+        "type": "alice-device",
+        "service": "ae7581207c7567bf",
+        "name": "Розетка1",
+        "description": "",
+        "room": "Коробка1",
+        "dtype": "devices.types.socket"
+    },
+    {
+        "id": "e0ede3cc625c8b33",
+        "type": "wirenboard-server",
+        "name": "WB-MQTT-Broker",
+        "host": "localhost",
+        "mqtt_port": "1883",
+        "mqtt_username": "",
+        "mqtt_password": ""
+    },
+    {
+        "id": "853ae3c0ea514708",
+        "type": "alice-device",
+        "service": "ae7581207c7567bf",
+        "name": "Розетка2",
+        "description": "",
+        "room": "Коробка1",
+        "dtype": "devices.types.socket"
+    },
+    {
+        "id": "6bd1356658660e0e",
+        "type": "alice-device",
+        "service": "ae7581207c7567bf",
+        "name": "LED 1",
+        "description": "",
+        "room": "Коробка1",
+        "dtype": "devices.types.light"
+    },
+    {
+        "id": "319736f4528e0411",
+        "type": "alice-device",
+        "service": "ae7581207c7567bf",
+        "name": "LED 2",
+        "description": "",
+        "room": "Коробка1",
+        "dtype": "devices.types.light"
+    },
+    {
+        "id": "261313d8866ca26f",
+        "type": "alice-device",
+        "service": "ae7581207c7567bf",
+        "name": "LED 1",
+        "description": "",
+        "room": "Коробка1",
+        "dtype": "devices.types.light"
+    },
+    {
+        "id": "6e9c826868186dee",
+        "type": "alice-device",
+        "service": "ae7581207c7567bf",
+        "name": "LED 2",
+        "description": "",
+        "room": "Коробка1",
+        "dtype": "devices.types.light"
+    },
+    {
+        "id": "065f88d2ee328863",
+        "type": "alice-device",
+        "service": "ae7581207c7567bf",
+        "name": "LED 3",
+        "description": "",
+        "room": "Коробка1",
+        "dtype": "devices.types.light"
+    },
+    {
+        "id": "28b93d9baadcee6d",
+        "type": "alice-device",
+        "service": "ae7581207c7567bf",
+        "name": "LED 3",
+        "description": "",
+        "room": "Коробка1",
+        "dtype": "devices.types.light"
+    },
+    {
+        "id": "abbf2c80f78c2fb5",
+        "type": "alice-device",
+        "service": "ae7581207c7567bf",
+        "name": "LED 2",
+        "description": "",
+        "room": "Коробка1",
+        "dtype": "devices.types.light"
+    },
+    {
+        "id": "ae7581207c7567bf",
+        "type": "alice-service",
+        "name": "metallhead97@yandex.ru"
+    }
+]

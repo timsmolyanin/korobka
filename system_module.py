@@ -33,8 +33,8 @@ class SystemModule(Thread):
         
         self.wifi_state = 1
         
-        self.wifi_client_ssid = "rp-link"
-        self.wifi_client_password = "meowkissme"
+        self.wifi_client_ssid = ""
+        self.wifi_client_password = ""
         
         self.eth_mode = "static"
         self.eth_ip = "192.168.44.11"
